@@ -1,6 +1,6 @@
 @extends('layouts.template')
 @section('title')
-    Pagina de prueba dahsjkfhdakjs
+    Pagina de prueba SICERE modificado
 @stop
 @section('user')
     JDFSLKSDJAFLK
