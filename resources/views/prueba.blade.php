@@ -3,7 +3,7 @@
     Pagina de prueba SICERE modificado
 @stop
 @section('user')
-    JDFSLKSDJAFLK
+    Nombre de usuario
 @stop
 @section('title_content')
     Pagin
