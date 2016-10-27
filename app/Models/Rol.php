@@ -18,10 +18,7 @@ class Rol extends Model
     protected $fillable = [
         'rol_codigo',
         'rol_nombre',
-        'rol_seleccionable',
-        'rol_fec_alta',
-        'rol_fec_mod',
-        'sistema_id'
+        'rol_seleccionable'
     ];
 
     protected $guarded = [];

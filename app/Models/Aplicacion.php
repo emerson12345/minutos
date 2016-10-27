@@ -21,7 +21,6 @@ class Aplicacion extends Model
         'app_nombre',
         'app_enlace_menu',
         'app_seleccionable',
-        'sistema_id',
         'app_fec_alta',
         'app_orden'
     ];

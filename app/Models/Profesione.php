@@ -5,7 +5,7 @@ namespace Sicere\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Profesione sicer
+ * Class Profesione
  */
 class Profesione extends Model
 {

@@ -22,11 +22,7 @@ class Usuario extends Model
         'user_email',
         'user_seleccionable',
         'user_fec_alta',
-        'user_fec_mod',
-        'inst_nombre',
-        'user_alta_confirmada',
-        'user_cargo',
-        'user_razon_solicitud'
+        'user_fec_mod'
     ];
 
     protected $guarded = [];
