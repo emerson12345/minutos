@@ -81,7 +81,7 @@
                 <div class="form-group">
                     {!! Form::label('app_list','PERMISOS',['class'=>'col-sm-2 control-label']) !!}
                     <div class="col-sm-10">
-                        {!! Form::select('app_list[]',\Sicere\Models\Aplicacion::pluck('app_nombre','app_id'),null,['class'=>'form-control', 'multiple'=>true]) !!}
+                        {!! Form::select('app_list[]',\Sicere\Models\Aplicacion::pluck('app_nombre','app_id'),null,['class'=>'form-control', 'multiple'=>true,'id'=>'role_list','style'=>'width:100%']) !!}
                     </div>
                 </div>
             </div>
@@ -93,4 +93,12 @@
             {!! Form::close() !!}
         </div>
     </section>
+@stop
+
+@section('script')
+    <link rel="stylesheet" href="{{asset('template/plugins/select2/select2.css')}}">
+    <script src="{{asset('template/plugins/select2/select2.min.js')}}"></script>
+    <script>
+        $("#role_list").select2();
+    </script>
 @stop

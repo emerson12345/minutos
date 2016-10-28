@@ -10,6 +10,7 @@ use Sicere\User;
 class UsuarioController extends Controller
 {
     public function index(){
+
         $listUsuarios = User::paginate(2);
         return view('usuario.index',[ 'listUsuarios' => $listUsuarios ]);
     }
