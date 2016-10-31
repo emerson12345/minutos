@@ -45,3 +45,9 @@ Route::group(['prefix'=>'rol'],function(){
     Route::post('create','RolController@store')->name('rol.create.store');
     Route::post('edit/{idRol}','RolController@store')->name('rol.edit.store');
 });
+
+Route::group(['prefix'=>'cuaderno'],function(){
+    Route::get('index','LibCuadernoController@index')->name('cuaderno.index');
+    Route::get('peticion/{id}','LibCuadernoController@peticion')->name('cuaderno.peticion');
+    Route::get('peticion_listas/{intIDColumna}','LibCuadernoController@peticionListas')->name('cuaderno.peticionListas');
+});
