@@ -18,7 +18,6 @@ Route::get('/', function () {
 Route::get('prueba',function(){
     return "Hola desde laravel";
 });
-/*
 Route::get('persona/{nombre}',function($nombre){
     return "Buenos dias ".$nombre;
 });
@@ -57,3 +56,16 @@ Route::get('error401',function(){
 $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
 $this->post('login', 'Auth\LoginController@login');
 $this->post('logout', 'Auth\LoginController@logout')->name('logout');
+Route::group(['prefix'=>'cuaderno'],function(){
+    Route::get('index','LibCuadernoController@index')->name('cuaderno.index');
+    Route::get('peticion/{id}','LibCuadernoController@peticion')->name('cuaderno.peticion');
+    Route::get('peticion_listas/{intIDColumna}','LibCuadernoController@peticionListas')->name('cuaderno.peticionListas');
+});
+
+Route::group(['prefix'=>'institucion','middleware'=>'log'],function(){
+    Route::get('index','InstitucionController@index')->name('intitucion.index');
+    Route::get('create','InstitucionController@create')->name('intitucion.create');
+    Route::post('store','InstitucionController@store')->name('intitucion.store');
+    Route::get('edit/{idUser}','InstitucionController@edit')->name('intitucion.edit');
+    Route::post('update/{idUser}','InstitucionController@update')->name('intitucion.update');
+});
