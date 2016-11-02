@@ -12,11 +12,10 @@ class User extends Authenticatable
     const UPDATED_AT = 'user_fec_mod';
     protected $table = 'usuario';
     protected $primaryKey = 'user_id';
-
+    //protected $dateFormat = 'Y-m-d H:i:s';
     use Notifiable;
 
-    protected $dateFormat = 'd/m/Y H:i:s';
-    protected $guarded = ['_token','user_password2'];
+    protected $fillable = ['user_nombre', 'user_codigo', 'user_password', 'user_email', 'user_seleccionable'];
 
     protected $hidden = [
         'remember_token',
@@ -26,19 +25,23 @@ class User extends Authenticatable
         $this->attributes['user_password'] = bcrypt($value);
     }
 
-    public function getRules(){
-        return [
-            'user_nombre' => 'required',
-            'user_codigo' => 'required',
-            'user_password' => 'required',
-            'user_email' => 'email',
-            'user_seleccionable' => 'boolean'
-        ];
+    public function getPasswordAttribute(){
+        return $this->user_password;
     }
 
-    public function messages(){
-        return [
-            'required' => 'este campo es requerido'
-        ];
+/*
+        public function setCreateAtAttribute($data){
+            $this->attributes['user_fec_alta'] = $data;
+        }
+
+        public function getUpdateAtAttribute(){
+            return $this->user_fec_mod;
+        }
+        public function setUpdateAtAttribute($data){
+            $this->attributes['user_fec_mod'] = $data;
+        }*/
+
+    public function roles(){
+        return $this->belongsToMany('Sicere\Models\Rol','usuario_rol','user_id','rol_id');
     }
 }

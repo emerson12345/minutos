@@ -3,16 +3,20 @@
 namespace Sicere\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Validator;
 use Sicere\Http\Requests;
 use Sicere\User;
+use Yajra\Datatables\Datatables;
 
 class UsuarioController extends Controller
 {
     public function index(){
+        return view('usuario.index');
+    }
 
-        $listUsuarios = User::paginate(2);
-        return view('usuario.index',[ 'listUsuarios' => $listUsuarios ]);
+    public function users(){
+        return Datatables::of(User::all())->make(true);
     }
 
     public function create(){
@@ -23,21 +27,23 @@ class UsuarioController extends Controller
     public function store(Request $request){
         $this->validate($request,[
             'user_nombre' => 'required',
-            'user_codigo' => 'required',
+            'user_codigo' => 'required| unique:usuario,user_codigo',
             'user_password' => 'required',
             'user_password2' => 'required| same:user_password',
-            'user_email' => 'email',
+            'user_email' => 'email| unique:usuario,user_email',
             'user_seleccionable' => 'boolean'
         ],[
             'required' => 'Este campo es requerido.',
             'user_password2.same' => 'Las contraseñas no coinciden.',
             'email' => 'Debe introducir un correo valido.',
-            'boolean' => 'Seleccione una opcion valida.'
+            'boolean' => 'Seleccione una opcion valida.',
+            'unique' => 'Este valor ya ha sido registrado'
         ]);
 
-        $usuario = new User($request->all());
-        $usuario->save();
-        return redirect()->route('usuario.index');
+        $usuario = User::create($request->all());
+        $this->setRoles($usuario,$request->role_list);
+        return response()->json($usuario);
+        //return redirect()->route('usuario.index');
     }
 
     public function edit($idUser){
@@ -64,16 +70,24 @@ class UsuarioController extends Controller
         $listUsuarioData = ['user_nombre'=> $request->user_nombre, 'user_codigo' => $request->user_codigo, 'user_email'=> $request->user_email, 'user_seleccionable'=>$request->user_seleccionable];
         Validator::make($listUsuarioData,[
             'user_nombre' => 'required',
-            'user_codigo' => 'required',
-            'user_email' => 'email',
+            'user_codigo' => ['required',Rule::unique('usuario')->ignore($usuario->user_id,'user_id')],
+            'user_email' => ['email',Rule::unique('usuario')->ignore($usuario->user_id,'user_id')],
             'user_seleccionable' => 'boolean'
         ],[
             'required' => 'Este campo es requerido.',
             'email' => 'Debe introducir un correo valido.',
-            'boolean' => 'Seleccione una opcion valida.'
+            'boolean' => 'Seleccione una opcion valida.',
+            'unique' => 'Este valor ya ha sido registrado'
         ])->validate();
         $usuario->fill($listUsuarioData)->save();
+        $this->setRoles($usuario,$request->role_list);
+        return response()->json($usuario);
+        //return redirect()->route('usuario.index');
+    }
 
-        return redirect()->route('usuario.index');
+    private function setRoles(User $user, $listRoles = []){
+        if(!is_array($listRoles))
+            $listRoles=[];
+        $user->roles()->sync($listRoles);
     }
 }

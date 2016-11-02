@@ -13,7 +13,7 @@ class Rol extends Model
 
     protected $primaryKey = 'rol_id';
 
-	public $timestamps = false;
+    public $timestamps = false;
 
     protected $fillable = [
         'rol_codigo',
@@ -23,5 +23,11 @@ class Rol extends Model
 
     protected $guarded = [];
 
-        
+    public function usuarios(){
+        return $this->belongsToMany('Sicere\User','usuario_rol','rol_id','user_id');
+    }
+
+    public function aplicaciones(){
+        return $this->belongsToMany('Sicere\Models\Aplicacion','aplicacion_rol','rol_id','app_id');
+    }
 }

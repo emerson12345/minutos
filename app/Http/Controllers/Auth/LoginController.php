@@ -4,7 +4,7 @@ namespace Sicere\Http\Controllers\Auth;
 
 use Sicere\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Illuminate\Http\Request;
 class LoginController extends Controller
 {
     /*
@@ -32,6 +32,15 @@ class LoginController extends Controller
      *
      * @return void
      */
+    public function username(){
+        return 'user_codigo';
+    }
+
+    protected function credentials(Request $request)
+    {
+        return array_merge($request->only($this->username(), 'password'), ['user_seleccionable' => 1]);
+    }
+
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'logout']);

@@ -27,5 +27,7 @@ class Aplicacion extends Model
 
     protected $guarded = [];
 
-        
+    public function roles(){
+        return $this->belongsToMany('Sicere\Models\Rol','aplicacion_rol','app_id','rol_id');
+    }
 }

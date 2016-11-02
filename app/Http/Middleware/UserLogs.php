@@ -18,7 +18,7 @@ class UserLogs
     {
         $filename = date('dmY').'.log';
         $content  = date('H:i:s')."    ";
-        $content .= 'usuario'."    ";
+        $content .= $request->user()->user_codigo."    ";
         $content .= $request->url()."    ";
         $content .= $request->ip();
 

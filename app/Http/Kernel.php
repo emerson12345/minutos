@@ -53,5 +53,6 @@ class Kernel extends HttpKernel
         'guest' => \Sicere\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'log' => \Sicere\Http\Middleware\UserLogs::class,
+        'access' => \Sicere\Http\Middleware\Permisos::class,
     ];
 }
