@@ -24,5 +24,9 @@ class LugarDepartamento extends Model
 
     protected $guarded = [];
 
-        
+    public static function listas(){
+        //return LugarDepartamento::where('dep_seleccionable','=',1)->select('dep_nombre','dep_id')->get();
+        $lista = LugarDepartamento::pluck('dep_nombre', 'dep_id');
+        return $lista;
+    }
 }

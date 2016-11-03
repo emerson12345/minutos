@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class LugarProvincium
  */
-class LugarProvincium extends Model
+class LugarProvincia extends Model
 {
     protected $table = 'lugar_provincia';
 
@@ -25,5 +25,10 @@ class LugarProvincium extends Model
 
     protected $guarded = [];
 
-        
+    public static function Provincias($id){
+        return LugarProvincia::where('dep_id','=',$id)->pluck('prov_nombre', 'prov_id');
+        //return LugarDepartamento::where('dep_seleccionable','=',1)->select('dep_nombre','dep_id')->get();
+        //$lista = LugarDepartamento::pluck('dep_nombre', 'dep_id');
+        //return $lista;
+    }
 }

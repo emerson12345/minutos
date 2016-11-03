@@ -63,9 +63,13 @@ Route::group(['prefix'=>'cuaderno'],function(){
 });
 
 Route::group(['prefix'=>'institucion','middleware'=>'log'],function(){
-    Route::get('index','InstitucionController@index')->name('intitucion.index');
-    Route::get('create','InstitucionController@create')->name('intitucion.create');
-    Route::post('store','InstitucionController@store')->name('intitucion.store');
-    Route::get('edit/{idUser}','InstitucionController@edit')->name('intitucion.edit');
-    Route::post('update/{idUser}','InstitucionController@update')->name('intitucion.update');
+    Route::get('index','InstitucionController@index')->name('institucion.index');
+    Route::get('create','InstitucionController@create')->name('institucion.create');
+    Route::post('store','InstitucionController@store')->name('institucion.store');
+    Route::get('edit/{idInst}','InstitucionController@edit')->name('institucion.edit');
+    Route::post('update/{idInst}','InstitucionController@update')->name('institucion.update');
 });
+
+//Route::get('provincia/{id}','LugarProvinciaController@getprovincia');
+Route::get('/provincia/getprovincia', ['uses' => 'LugarProvinciaController@getprovincia','as' => 'provincia.getprovincia']);
+Route::get('/municipio/getmunicipio', ['uses' => 'LugarMunicipioController@getmunicipio','as' => 'municipio.getmunicipio']);

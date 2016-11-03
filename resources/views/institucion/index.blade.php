@@ -26,7 +26,7 @@
 
 @section('content')
     <section class="content">
-        <a href="{{route('intitucion.create')}}" class="btn btn-primary">
+        <a href="{{route('institucion.create')}}" class="btn btn-primary">
             <i class="fa fa-plus"></i> Nueva institucion
         </a>
 
@@ -35,9 +35,9 @@
                 <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
+                        <th>Código</th>
                         <th>Nombre</th>
-                        <th>Nombre</th>
-                        <th>Email</th>
+                        <th>Teléfono</th>
                         <th>Seleccionable</th>
                         <th></th>
                     </tr>
@@ -50,8 +50,8 @@
                             <td>{{$institucion->inst_telf1}}</td>
                             <td>{{$institucion->inst_seleccionable}}</td>
                             <td>
-                            Bla
-                            </td>
+                                <a href="{{route('institucion.edit',[$institucion->inst_id])}}" class="btn btn-primary btn-xs">Editar</a>
+                           </td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -59,5 +59,6 @@
                 {{$listInstitucion->links()}}
             </div>
         </div>
+
     </section>
 @stop
