@@ -11,7 +11,9 @@
 |
 */
 
-Route::get('/', 'HomeController@index')->middleware(['auth','access']);
+Route::get('/', function () {
+    return view('welcome');
+});
 /*
 Route::get('prueba',function(){
     return "Hola desde laravel";
@@ -64,15 +66,15 @@ Route::group(['prefix'=>'cuaderno'],function(){
     Route::get('peticion_listas/{intIDColumna}','LibCuadernoController@peticionListas')->name('cuaderno.peticionListas');
 });
 
-Route::group(['prefix'=>'institucion','middleware'=>'log'],function(){
+Route::group(['prefix'=>'institucion'],function(){
     Route::get('index','InstitucionController@index')->name('institucion.index');
+    Route::get('institucion','InstitucionController@institucion')->name('institucion.list');
     Route::get('create','InstitucionController@create')->name('institucion.create');
-    Route::post('store','InstitucionController@store')->name('institucion.store');
     Route::get('edit/{idInst}','InstitucionController@edit')->name('institucion.edit');
-    Route::post('update/{idInst}','InstitucionController@update')->name('institucion.update');
+    Route::post('create','InstitucionController@store')->name('institucion.create.store');
+    Route::post('edit/{idInst}','InstitucionController@update')->name('institucion.edit.store');
 });
 
-//Route::get('provincia/{id}','LugarProvinciaController@getprovincia');
 Route::get('/provincia/getprovincia', ['uses' => 'LugarProvinciaController@getprovincia','as' => 'provincia.getprovincia']);
 Route::get('/municipio/getmunicipio', ['uses' => 'LugarMunicipioController@getmunicipio','as' => 'municipio.getmunicipio']);
 

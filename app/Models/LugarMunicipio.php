@@ -29,5 +29,7 @@ class LugarMunicipio extends Model
 
     protected $guarded = [];
 
-        
+    public static function Municipios($id){
+        return LugarMunicipio::where('prov_id','=',$id)->pluck('mun_nombre', 'mun_id');
+    }
 }

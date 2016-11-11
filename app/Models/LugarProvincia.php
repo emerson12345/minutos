@@ -27,8 +27,5 @@ class LugarProvincia extends Model
 
     public static function Provincias($id){
         return LugarProvincia::where('dep_id','=',$id)->pluck('prov_nombre', 'prov_id');
-        //return LugarDepartamento::where('dep_seleccionable','=',1)->select('dep_nombre','dep_id')->get();
-        //$lista = LugarDepartamento::pluck('dep_nombre', 'dep_id');
-        //return $lista;
     }
 }
