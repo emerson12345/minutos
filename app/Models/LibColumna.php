@@ -28,4 +28,8 @@ class LibColumna extends Model
     ];
 
     protected $guarded = [];
+
+    public function formulario(){
+        return $this->hasMany('Sicere\Models\LibFormulario','col_id','col_id');
+    }
 }

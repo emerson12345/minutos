@@ -16,11 +16,16 @@ class Permisos
      */
     public function handle($request, Closure $next)
     {
+        if(!session()->has('institucion')){
+            return redirect()->route('account.init');
+        }
+        /*
         $appName = $request->route()->getName();
         $app = Aplicacion::where('app_enlace_menu',$appName)->where('app_seleccionable',1)->first();
-        if(!$app)
+        if(!$app || !$app->app_padre)
             return redirect()->route('error401');
 
+        $app = $app->app_padre;
         $user = $request->user();
 
         $results = DB::table('usuario_rol')
@@ -32,7 +37,7 @@ class Permisos
             ->count();
         if($results < 1)
             return redirect()->route('error401');
-
+*/
         return $next($request);
     }
 }

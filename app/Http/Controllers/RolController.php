@@ -22,30 +22,29 @@ class RolController extends Controller
         return view('rol.form',['rol'=>$rol]);
     }
 
-    public function edit($idRol){
-        $rol = Rol::find($idRol);
+    public function edit($rol_id){
+        $rol = Rol::find($rol_id);
         return view('rol.form',['rol'=>$rol]);
     }
 
-    public function store(Request $request,$idRol = 0){
+    public function store(Request $request,$rol_id = 0){
         $rol = new Rol();
-        if($idRol)
-            $rol = Rol::find($idRol);
+        if($rol_id)
+            $rol = Rol::find($rol_id);
         $this->validate($request,[
-            'rol_nombre' => ['required',Rule::unique('rol')->ignore($idRol,'rol_id')],
-            'rol_codigo' => ['required',Rule::unique('rol')->ignore($idRol,'rol_id')],
+            'rol_nombre' => ['required',Rule::unique('rol')->ignore($rol_id,'rol_id')],
+            'rol_codigo' => ['required',Rule::unique('rol')->ignore($rol_id,'rol_id')],
             'rol_seleccionable' => 'boolean'
         ],[
             'required' => 'Este campo es requerido.',
             'boolean' => 'Seleccione una opcion valida.',
             'unique'=> 'Este valor ya ha sido registrado'
         ]);
-        //dd($request->all());
+
         $rol->fill($request->all())->save();
 
         $this->setApp($rol,$request->app_list);
         return response()->json($rol);
-        //return redirect()->route('rol.index');
     }
 
     private function setApp($rol,$apps = []){

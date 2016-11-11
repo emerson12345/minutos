@@ -24,4 +24,8 @@ class LibCuaderno extends Model
     ];
 
     protected $guarded = [];
+
+    public function formulario(){
+        return $this->hasMany('Sicere\Models\LibFormulario','cua_id','cua_id');
+    }
 }

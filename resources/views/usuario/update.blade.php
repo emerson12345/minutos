@@ -1,4 +1,4 @@
-{!! Form::model($usuario,['route' => ['usuario.update',$usuario->user_id] ,'class'=>'form-horizontal']) !!}
+{!! Form::model($usuario,['route' => ['adm.usuario.edit',$usuario->user_id] ,'class'=>'form-horizontal']) !!}
 
 <div class="form-group">
     {!! Form::label('user_nombre', 'NOMBRE COMPLETO', ['class' => 'col-sm-2 control-label']) !!}

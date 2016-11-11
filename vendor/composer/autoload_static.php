@@ -90,6 +90,10 @@ class ComposerStaticInit28a7e1f0549b9a404caecbb314578205
         array (
             'Faker\\' => 6,
         ),
+        'E' => 
+        array (
+            'Elibyy\\TCPDF\\' => 13,
+        ),
         'D' => 
         array (
             'Dotenv\\' => 7,
@@ -247,6 +251,10 @@ class ComposerStaticInit28a7e1f0549b9a404caecbb314578205
         'Faker\\' => 
         array (
             0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
+        ),
+        'Elibyy\\TCPDF\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/elibyy/tcpdf-laravel/src',
         ),
         'Dotenv\\' => 
         array (
@@ -424,6 +432,7 @@ class ComposerStaticInit28a7e1f0549b9a404caecbb314578205
         'Cron\\MonthField' => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron/MonthField.php',
         'Cron\\YearField' => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron/YearField.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
+        'Datamatrix' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/datamatrix.php',
         'DeepCopy\\DeepCopy' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/DeepCopy.php',
         'DeepCopy\\Exception\\CloneException' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/Exception/CloneException.php',
         'DeepCopy\\Filter\\Doctrine\\DoctrineCollectionFilter' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/Filter/Doctrine/DoctrineCollectionFilter.php',
@@ -526,6 +535,10 @@ class ComposerStaticInit28a7e1f0549b9a404caecbb314578205
         'Dotenv\\Exception\\ValidationException' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Exception/ValidationException.php',
         'Dotenv\\Loader' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Loader.php',
         'Dotenv\\Validator' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Validator.php',
+        'Elibyy\\TCPDF\\Facades\\TCPDF' => __DIR__ . '/..' . '/elibyy/tcpdf-laravel/src/Facades/TCPDF.php',
+        'Elibyy\\TCPDF\\ServiceProvider' => __DIR__ . '/..' . '/elibyy/tcpdf-laravel/src/ServiceProvider.php',
+        'Elibyy\\TCPDF\\TCPDF' => __DIR__ . '/..' . '/elibyy/tcpdf-laravel/src/TCPDF.php',
+        'Elibyy\\TCPDF\\TCPDFHelper' => __DIR__ . '/..' . '/elibyy/tcpdf-laravel/src/TCPDFHelper.php',
         'Faker\\Calculator\\Iban' => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker/Calculator/Iban.php',
         'Faker\\Calculator\\Luhn' => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker/Calculator/Luhn.php',
         'Faker\\DefaultGenerator' => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker/DefaultGenerator.php',
@@ -1899,6 +1912,7 @@ class ComposerStaticInit28a7e1f0549b9a404caecbb314578205
         'Monolog\\Processor\\UidProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/UidProcessor.php',
         'Monolog\\Processor\\WebProcessor' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Processor/WebProcessor.php',
         'Monolog\\Registry' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Registry.php',
+        'PDF417' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/pdf417.php',
         'PHPExcel' => __DIR__ . '/..' . '/phpoffice/phpexcel/Classes/PHPExcel.php',
         'PHPExcel_Autoloader' => __DIR__ . '/..' . '/phpoffice/phpexcel/Classes/PHPExcel/Autoloader.php',
         'PHPExcel_Best_Fit' => __DIR__ . '/..' . '/phpoffice/phpexcel/Classes/PHPExcel/Shared/trend/bestFitClass.php',
@@ -2871,6 +2885,7 @@ class ComposerStaticInit28a7e1f0549b9a404caecbb314578205
         'Psy\\VarDumper\\Dumper' => __DIR__ . '/..' . '/psy/psysh/src/Psy/VarDumper/Dumper.php',
         'Psy\\VarDumper\\Presenter' => __DIR__ . '/..' . '/psy/psysh/src/Psy/VarDumper/Presenter.php',
         'Psy\\VarDumper\\PresenterAware' => __DIR__ . '/..' . '/psy/psysh/src/Psy/VarDumper/PresenterAware.php',
+        'QRcode' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/qrcode.php',
         'Ramsey\\Uuid\\BinaryUtils' => __DIR__ . '/..' . '/ramsey/uuid/src/BinaryUtils.php',
         'Ramsey\\Uuid\\Builder\\DefaultUuidBuilder' => __DIR__ . '/..' . '/ramsey/uuid/src/Builder/DefaultUuidBuilder.php',
         'Ramsey\\Uuid\\Builder\\DegradedUuidBuilder' => __DIR__ . '/..' . '/ramsey/uuid/src/Builder/DegradedUuidBuilder.php',
@@ -3000,6 +3015,7 @@ class ComposerStaticInit28a7e1f0549b9a404caecbb314578205
         'Sicere\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'Sicere\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'Sicere\\Http\\Controllers\\EstadoCivilController' => __DIR__ . '/../..' . '/app/Http/Controllers/EstadoCivilController.php',
+        'Sicere\\Http\\Controllers\\LibCuadernoController' => __DIR__ . '/../..' . '/app/Http/Controllers/LibCuadernoController.php',
         'Sicere\\Http\\Controllers\\PhotoController' => __DIR__ . '/../..' . '/app/Http/Controllers/PhotoController.php',
         'Sicere\\Http\\Controllers\\PruebaController' => __DIR__ . '/../..' . '/app/Http/Controllers/PruebaController.php',
         'Sicere\\Http\\Controllers\\RolController' => __DIR__ . '/../..' . '/app/Http/Controllers/RolController.php',
@@ -3019,10 +3035,15 @@ class ComposerStaticInit28a7e1f0549b9a404caecbb314578205
         'Sicere\\Models\\EstadoCivil' => __DIR__ . '/../..' . '/app/Models/EstadoCivil.php',
         'Sicere\\Models\\Institucion' => __DIR__ . '/../..' . '/app/Models/Institucion.php',
         'Sicere\\Models\\InstitucionConvenio' => __DIR__ . '/../..' . '/app/Models/InstitucionConvenio.php',
+        'Sicere\\Models\\LibColumna' => __DIR__ . '/../..' . '/app/Models/LibColumna.php',
+        'Sicere\\Models\\LibCuaderno' => __DIR__ . '/../..' . '/app/Models/LibCuaderno.php',
+        'Sicere\\Models\\LibFormulario' => __DIR__ . '/../..' . '/app/Models/LibFormulario.php',
+        'Sicere\\Models\\LibListaGenerica' => __DIR__ . '/../..' . '/app/Models/LibListaGenerica.php',
+        'Sicere\\Models\\LibRelacionaTabla' => __DIR__ . '/../..' . '/app/Models/LibRelacionaTabla.php',
         'Sicere\\Models\\LugarDepartamento' => __DIR__ . '/../..' . '/app/Models/LugarDepartamento.php',
         'Sicere\\Models\\LugarLocalidad' => __DIR__ . '/../..' . '/app/Models/LugarLocalidad.php',
         'Sicere\\Models\\LugarMunicipio' => __DIR__ . '/../..' . '/app/Models/LugarMunicipio.php',
-        'Sicere\\Models\\LugarProvincium' => __DIR__ . '/../..' . '/app/Models/LugarProvincium.php',
+        'Sicere\\Models\\LugarProvincia' => __DIR__ . '/../..' . '/app/Models/LugarProvincia.php',
         'Sicere\\Models\\Ocupacion' => __DIR__ . '/../..' . '/app/Models/Ocupacion.php',
         'Sicere\\Models\\Paciente' => __DIR__ . '/../..' . '/app/Models/Paciente.php',
         'Sicere\\Models\\PacienteGrupoFamilium' => __DIR__ . '/../..' . '/app/Models/PacienteGrupoFamilium.php',
@@ -3607,6 +3628,17 @@ class ComposerStaticInit28a7e1f0549b9a404caecbb314578205
         'Symfony\\Polyfill\\Util\\BinaryNoFuncOverload' => __DIR__ . '/..' . '/symfony/polyfill-util/BinaryNoFuncOverload.php',
         'Symfony\\Polyfill\\Util\\BinaryOnFuncOverload' => __DIR__ . '/..' . '/symfony/polyfill-util/BinaryOnFuncOverload.php',
         'Symfony\\Polyfill\\Util\\TestListener' => __DIR__ . '/..' . '/symfony/polyfill-util/TestListener.php',
+        'TCPDF' => __DIR__ . '/..' . '/tecnickcom/tcpdf/tcpdf.php',
+        'TCPDF2DBarcode' => __DIR__ . '/..' . '/tecnickcom/tcpdf/tcpdf_barcodes_2d.php',
+        'TCPDFBarcode' => __DIR__ . '/..' . '/tecnickcom/tcpdf/tcpdf_barcodes_1d.php',
+        'TCPDF_COLORS' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/tcpdf_colors.php',
+        'TCPDF_FILTERS' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/tcpdf_filters.php',
+        'TCPDF_FONTS' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/tcpdf_fonts.php',
+        'TCPDF_FONT_DATA' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/tcpdf_font_data.php',
+        'TCPDF_IMAGES' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/tcpdf_images.php',
+        'TCPDF_IMPORT' => __DIR__ . '/..' . '/tecnickcom/tcpdf/tcpdf_import.php',
+        'TCPDF_PARSER' => __DIR__ . '/..' . '/tecnickcom/tcpdf/tcpdf_parser.php',
+        'TCPDF_STATIC' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/tcpdf_static.php',
         'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
         'TijsVerkoyen\\CssToInlineStyles\\CssToInlineStyles' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/CssToInlineStyles.php',

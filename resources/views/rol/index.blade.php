@@ -16,7 +16,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li>
-            <a href="{{route('rol.index')}}">Roles</a>
+            <a href="{{route('adm.rol.index')}}">Roles</a>
         </li>
     </ol>
 @stop
@@ -28,14 +28,14 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <button type="button" class="btn btn-add btn-primary pull-right margin-bottom" data-url="{{route('rol.create')}}">
+                        <button type="button" class="btn btn-add btn-primary pull-right margin-bottom" data-url="{{route('adm.rol.create')}}">
                             <i class="fa fa-plus"></i> Agregar rol
                         </button>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="roles-table" class="table table-bordered table-hover">
+                        <table id="roles-table" class="table table-bordered table-hover" data-url="{{route('adm.rol.list')}}">
                             <thead>
                             <tr>
                                 <th>Codigo</th>
@@ -47,14 +47,6 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -73,7 +65,7 @@
                 <div class="modal-body">
                     <div class="box box-primary box-solid">
                         <div class="box-body">
-                            The body of the box
+                            Cargando...
                         </div>
                     </div>
                 </div>
@@ -88,87 +80,5 @@
 @stop
 
 @section('script')
-
-    <script>
-        var rolesTable = $("#roles-table").DataTable({
-            "lengthMenu": [5,10, 25, 50],
-            "processing":true,
-            "serverSide":true,
-            "ajax": "{{route('rol.list')}}",
-            "columns":[
-                {data:'rol_codigo'},
-                {data:'rol_nombre'},
-                {data:'rol_fec_alta'},
-                {data:'rol_fec_mod'},
-                {
-                    data:function (row,type,val,meta) {
-                        var valReturn = "";
-                        if(row.rol_seleccionable == 1)
-                            valReturn = "<span class='label label-primary'>SI</span>";
-                        else
-                            valReturn = "<span class='label label-danger'>NO</span>"
-                        return valReturn;
-                    },
-                    orderable:false
-                },
-                {
-                    data:function (row,type,val,meta) {
-                        return '<button type="button" class="btn btn-edit btn-xs btn-primary" data-url="edit/'+row.rol_id+'"><i class="fa fa-edit"></i> Editar</button>'
-                    },
-                    orderable:false
-                }
-            ]
-        });
-
-        $("#roles-table").on('draw.dt',function () {
-            $(".btn-edit").off().on('click',handleEvent);
-        });
-
-        $(".btn-add").on('click',handleEvent);
-
-        function handleEvent(){
-            var url = $(this).data("url");
-            $.ajax({
-                url:url,
-                beforeSend:function () {
-                    var $over = $("<div class='overlay'><i class='fa fa-refresh fa-spin'></i></div>");
-                    $("#myModal").find(".box").append($over);
-                },
-                success:function (data) {
-                    $("#myModal").find(".box .box-body").html(data);
-                },
-                complete:function () {
-                    $("#myModal").find(".overlay").remove();
-                }
-            });
-            $("#myModal").modal("show");
-        }
-
-        $("#btn-save").on("click",function(){
-            var $form =$(this).closest(".modal-content").find(".modal-body form");
-            $.ajax({
-                url:$form.attr("action"),
-                data:$form.serialize(),
-                method:'post',
-                beforeSend:function () {
-                    var $over = $("<div class='overlay'><i class='fa fa-refresh fa-spin'></i></div>");
-                    $("#myModal").find(".box").append($over);
-                    $form.find("span").text("");
-                },
-                success:function(data){
-                    rolesTable.ajax.reload();
-                    $("#myModal").modal('hide');
-                },
-                error:function(data) {
-                    var errors = data.responseJSON;
-                    $.each(errors,function(i,o){
-                        $form.find("[name = '"+i+"']").closest(".col-sm-10").find("span").text(o);
-                    });
-                },
-                complete:function () {
-                    $("#myModal").find(".overlay").remove();
-                }
-            });
-        });
-    </script>
+<script src="{{asset('js/rol/index.js')}}"></script>
 @stop
