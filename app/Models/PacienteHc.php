@@ -34,6 +34,4 @@ class PacienteHc extends Model
     ];
 
     protected $guarded = [];
-
-        
 }

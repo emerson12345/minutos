@@ -27,6 +27,8 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -579,6 +581,8 @@
 <script src="{{asset('template/dist/js/app.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('template/dist/js/demo.js')}}"></script>
+<!-- Cuaderno -->
+<script src="{{asset('js/cuaderno.js')}}"></script>
 @yield('script')
 </body>
 </html>

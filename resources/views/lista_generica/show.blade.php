@@ -12,6 +12,9 @@
                 <div class="col-md-10">
                     <div class="box">
                         <div class="box-body" >
+                            <div class="">
+
+                            </div>
                             <table class="table table-bordered" id="t_cuadernos">
                                 <tbody>
                                 <tr>

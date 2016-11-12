@@ -7,8 +7,11 @@ use Illuminate\Http\Request;
 use Sicere\Http\Requests;
 use Sicere\Http\Controllers\Controller;
 use Sicere\Models\LibCuaderno;
+use Sicere\Models\Paciente;
+use Sicere\Models\Rrhh;
 use Sicere\Models\LibFormulario;
 use Illuminate\Support\Facades\DB;
+use Session;
 
 class LibCuadernoController extends Controller
 {
@@ -19,11 +22,15 @@ class LibCuadernoController extends Controller
      */
     public function index()
     {
+        $url_cuaderno = asset('cuaderno/peticion/');
         $listCuadernos = LibCuaderno::all();
-        return view('cuadernos.show',[ 'listCuadernos' => $listCuadernos ]);
+        $listPacientes = Paciente::all();
+        $listRrhh=  Rrhh::all();
+        return view('cuadernos.show',[ 'listCuadernos' => $listCuadernos,'listPacientes' => $listPacientes,'listRrhh' => $listRrhh ])->with('url_cuaderno', $url_cuaderno);
     }
     public function peticion($id)
     {
+        $url_cuaderno = asset('cuaderno/peticion_listas/');
         $listFormularios = DB::table('lib_cuadernos')
             ->join('lib_formulario', 'lib_cuadernos.cua_id', '=', 'lib_formulario.cua_id')
             ->join('lib_columnas', 'lib_columnas.col_id', '=', 'lib_formulario.col_id')
@@ -35,7 +42,18 @@ class LibCuadernoController extends Controller
         //print_r($users);
 
         //$listFormularios = LibFormulario::all();
-        return view('formulario.show',['listFormularios' => $listFormularios ]);
+        return view('formulario.show',['listFormularios' => $listFormularios,'cua_id'=> $id])->with('url_cuaderno', $url_cuaderno);;
+    }
+    public function detalle($hc_id,$cua_id)
+    {
+        $listFormularios = DB::table('lib_registro')
+            ->join('lib_formulario', 'lib_registro.for_id', '=', 'lib_formulario.for_id')
+            ->join('paciente_hc', 'paciente_hc.hc_id', '=', 'lib_registro.hc_id')
+            ->where('lib_registro.hc_id', '=', $hc_id)
+            ->select('lib_cuadernos.cua_id','lib_cuadernos.cua_nombre' ,'lib_formulario.for_id'
+                ,'lib_columnas.col_id','lib_columnas.col_combre','lib_columnas.col_tipo')
+            ->get();
+        //return view('formulario.show',['listFormularios' => $listFormularios,'cua_id'=> $id]);
     }
     public function peticionListas($intIDColumna)
     {

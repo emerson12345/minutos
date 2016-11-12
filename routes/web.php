@@ -50,4 +50,16 @@ Route::group(['prefix'=>'cuaderno'],function(){
     Route::get('index','LibCuadernoController@index')->name('cuaderno.index');
     Route::get('peticion/{id}','LibCuadernoController@peticion')->name('cuaderno.peticion');
     Route::get('peticion_listas/{intIDColumna}','LibCuadernoController@peticionListas')->name('cuaderno.peticionListas');
+    Route::get('detalle/{hc_id}/{cua_id}','LibCuadernoController@detalle')->name('cuaderno.detalle');
+});
+
+Route::group(['prefix'=>'libregistro'],function(){
+    Route::get('index','LibRegistroController@index')->name('libregistro.index');
+    Route::post('store','LibRegistroController@store')->name('libregistro.store');
+});
+
+Route::group(['prefix'=>'PacienteHc'],function(){
+    Route::get('index','PacienteHcController@index')->name('PacienteHc.index');
+    Route::get('historial_clinico/{id}','PacienteHcController@registroHistoricoPaciente')->name('PacienteHc.registroHistoricoPaciente');
+    Route::get('atencion/{cua_id}/{hc_id}/{fecha}','PacienteHcController@atencionHc')->name('PacienteHc.atencion');
 });
