@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.3.19 on 2016-10-26.
+ * Generated for Laravel 5.3.19 on 2016-11-09.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -12746,6 +12746,116 @@ namespace {
          */
         public static function componentCall($method, $parameters){
             return \Collective\Html\HtmlBuilder::componentCall($method, $parameters);
+        }
+        
+    }
+
+
+    class Datatables extends \Yajra\Datatables\Facades\Datatables{
+        
+        /**
+         * Gets query and returns instance of class.
+         *
+         * @param mixed $builder
+         * @return mixed 
+         * @static 
+         */
+        public static function of($builder){
+            return \Yajra\Datatables\Datatables::of($builder);
+        }
+        
+        /**
+         * Datatables using Query Builder.
+         *
+         * @param \Illuminate\Database\Query\Builder $builder
+         * @return \Yajra\Datatables\Engines\QueryBuilderEngine 
+         * @static 
+         */
+        public static function usingQueryBuilder($builder){
+            return \Yajra\Datatables\Datatables::usingQueryBuilder($builder);
+        }
+        
+        /**
+         * Datatables using Collection.
+         *
+         * @param \Illuminate\Support\Collection $builder
+         * @return \Yajra\Datatables\Engines\CollectionEngine 
+         * @static 
+         */
+        public static function usingCollection($builder){
+            return \Yajra\Datatables\Datatables::usingCollection($builder);
+        }
+        
+        /**
+         * Datatables using Eloquent.
+         *
+         * @param mixed $builder
+         * @return \Yajra\Datatables\Engines\EloquentEngine 
+         * @static 
+         */
+        public static function usingEloquent($builder){
+            return \Yajra\Datatables\Datatables::usingEloquent($builder);
+        }
+        
+        /**
+         * Get html builder class.
+         *
+         * @return \Yajra\Datatables\Html\Builder 
+         * @static 
+         */
+        public static function getHtmlBuilder(){
+            return \Yajra\Datatables\Datatables::getHtmlBuilder();
+        }
+        
+        /**
+         * Get request object.
+         *
+         * @return \Yajra\Datatables\Request|static 
+         * @static 
+         */
+        public static function getRequest(){
+            return \Yajra\Datatables\Datatables::getRequest();
+        }
+        
+    }
+
+
+    class PDF extends \Elibyy\TCPDF\Facades\TCPDF{
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function reset(){
+            return \Elibyy\TCPDF\TCPDF::reset();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function changeFormat($format){
+            return \Elibyy\TCPDF\TCPDF::changeFormat($format);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setHeaderCallback($headerCallback){
+            return \Elibyy\TCPDF\TCPDF::setHeaderCallback($headerCallback);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setFooterCallback($footerCallback){
+            return \Elibyy\TCPDF\TCPDF::setFooterCallback($footerCallback);
         }
         
     }

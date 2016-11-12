@@ -27,5 +27,15 @@ class Aplicacion extends Model
 
     protected $guarded = [];
 
-        
+    public function roles(){
+        return $this->belongsToMany('Sicere\Models\Rol','aplicacion_rol','app_id','rol_id');
+    }
+
+    public function app_padre(){
+        return $this->hasOne('Sicere\Models\Aplicacion','app_id','app_id_padre');
+    }
+
+    public function app_hijos(){
+        return $this->hasMany('Sicere\Models\Aplicacion','app_id_padre','app_id');
+    }
 }

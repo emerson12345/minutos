@@ -207,7 +207,10 @@
                                     <a href="#" class="btn btn-default btn-flat">Profile</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" >
+                                        {{ csrf_field() }}
+                                        <button type="submit" class="btn btn-default btn-flat">Salir</button>
+                                    </form>
                                 </div>
                             </li>
                         </ul>
@@ -247,6 +250,7 @@
             </form>
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
+            <?php $menu = \Sicere\Models\Aplicacion::where('app_renderiza',1)->where('app_nivel_menu',1)->get();?>
             <ul class="sidebar-menu">
                 <li class="header">Menu Principal</li>
                 <li class="treeview">
@@ -269,9 +273,9 @@
                     <a href="#">
                         <i class="fa fa-pie-chart"></i>
                         <span>Medicina General</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> Registrar Diagnostico</a>
@@ -299,9 +303,9 @@
                     <a href="#">
                         <i class="fa fa-pie-chart"></i>
                         <span>fisioterapeuta</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> Registrar Diagnostico</a>
@@ -314,9 +318,9 @@
                     <a href="#">
                         <i class="fa fa-laptop"></i>
                         <span>Kinesiologia</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> Registrar Diagnostico</a>
@@ -329,9 +333,9 @@
                     <a href="#">
                         <i class="fa fa-laptop"></i>
                         <span>Reportes Generales</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> Reporte 1</a></li>
@@ -339,6 +343,27 @@
                         <li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Reporte 3</a></li>
                     </ul>
                 </li>
+                @foreach($menu as $itemMenu)
+                    @if($itemMenu->app_hijos()->count()>0)
+                    <li class="treeview">
+                        <a href="#">
+                        <span>{{$itemMenu->app_nombre}}</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            @foreach($itemMenu->app_hijos as $app_hijo)
+                                <li><a href="#">{{$app_hijo->app_nombre}}</a></li>
+                            @endforeach
+                        </ul>
+                    </li>
+                    @else
+                        <li>
+                            <a href="#">{{$itemMenu->app_nombre}}</a>
+                        </li>
+                    @endif
+                @endforeach
             </ul>
         </section>
         <!-- /.sidebar -->

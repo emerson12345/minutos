@@ -9,7 +9,9 @@
         "laravel/framework": "5.3.*",
         "barryvdh/laravel-ide-helper": "^2.2",
         "caouecs/laravel4-lang": "3.0.17",
-        "laravelcollective/html": "5.3.x-dev"
+        "laravelcollective/html": "5.3.x-dev",
+        "yajra/laravel-datatables-oracle": "^6.21",
+        "elibyy/tcpdf-laravel": "^5.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

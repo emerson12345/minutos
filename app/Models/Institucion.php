@@ -23,18 +23,22 @@ class Institucion extends Model
         'inst_fax',
         'inst_email',
         'inst_nit',
-        'inst_direccion_calle',
-        'inst_seleccionable',
-        'inst_fec_alta',
-        'inst_fec_mod',
         'dep_id',
         'prov_id',
         'mun_id',
         'inst_localidad',
-        'inst_direccion_zona'
+        'inst_direccion_zona',
+        'inst_direccion_calle',
+        'inst_seleccionable',
+        'inst_fec_alta',
+        'inst_fec_mod'
     ];
 
     protected $guarded = [];
 
-        
+   // {{getters}}
+
+    //{{setters}}
+
+
 }

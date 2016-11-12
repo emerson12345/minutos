@@ -15,21 +15,26 @@ class LibFormulario extends Model
 
 	public $timestamps = false;
 
+
+
     protected $fillable = [
-        'for_fecha',
         'cua_id',
         'col_id',
         'for_col_posi',
         'for_seleccionable',
-        'for_ver',
-        'grs_codigo',
-        'for_val_grs',
-        'for_vel_def',
         'for_obliga',
-        'for_modifica',
-        'for_formato',
-        'for_cursiva'
+        'for_modifica'
     ];
-
+  
     protected $guarded = [];
+
+    public function cuaderno(){
+        return $this->belongsTo('Sicere\Models\LibCuaderno','cua_id','cua_id');
+    }
+
+    public function columna(){
+        return $this->belongsTo('Sicere\Models\LibColumna','col_id','col_id');
+    }
+
+
 }

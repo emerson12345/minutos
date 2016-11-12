@@ -4,60 +4,81 @@
 @stop
 @section('user')
     @if(Auth::check())
-        {{Auth::user()}}
+        {{Auth::user()->nombre}}
     @endif
 @stop
 @section('title_page')
     Roles
 @stop
 @section('menu_page')
-    <h4>Lista de roles</h4>
+    <h1>Roles <small>lista</small></h1>
 @stop
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li>
-            <a href="#"><i class="fa fa-dashboard"></i>Inicio</a>
-        </li>
-        <li class="active">
-            <a href="#">Estado civil</a>
+            <a href="{{route('adm.rol.index')}}">Roles</a>
         </li>
     </ol>
 @stop
 
 @section('content')
     <section class="content">
-        <a href="{{route('rol.create')}}" class="btn btn-primary">
-            <i class="fa fa-plus"></i> Nuevo rol
-        </a>
-
         <div class="box box-primary box-solid">
+
             <div class="box-body">
-                <table class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th>Codigo</th>
-                        <th>Nombre</th>
-                        <th>Seleccionable</th>
-                        <th>Fecha</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($listRoles as $rol)
-                        <tr>
-                            <td>{{$rol->rol_codigo}}</td>
-                            <td>{{$rol->rol_nombre}}</td>
-                            <td>{{$rol->rol_seleccionable}}</td>
-                            <td>{{$rol->rol_fec_alta}}</td>
-                            <td>
-                                <a href="{{route('rol.edit',$rol->rol_id)}}" class="btn btn-primary btn-xs">Editar</a>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-                {{$listRoles->links()}}
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-add btn-primary pull-right margin-bottom" data-url="{{route('adm.rol.create')}}">
+                            <i class="fa fa-plus"></i> Agregar rol
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="roles-table" class="table table-bordered table-hover" data-url="{{route('adm.rol.list')}}">
+                            <thead>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Nombre</th>
+                                <th>Fecha alta</th>
+                                <th>Fecha mod</th>
+                                <th>Selec.</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Nuevo rol</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="box box-primary box-solid">
+                        <div class="box-body">
+                            Cargando...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Cancelar</button>
+                    <button type="button" id="btn-save" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+@stop
+
+@section('script')
+<script src="{{asset('js/rol/index.js')}}"></script>
 @stop
