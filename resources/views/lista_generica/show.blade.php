@@ -53,7 +53,7 @@
     $('#myModal').modal('show');
     $("#t_cuadernos-list-generica").on('click','td',function(e){
         form_id='{{$for_id}}';
-        $("#"+form_id).val(e.toElement.id);
+        $("#"+form_id).val(e.toElement.id.split("-")[1]);
         $('#myModal').modal('hide');
     });
 </script>
