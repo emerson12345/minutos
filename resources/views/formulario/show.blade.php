@@ -46,8 +46,11 @@
                                     echo "<textarea rows='4' cols='50' name='".$flight->for_id."'></textarea>";
                                     break;
                                 case 15:
-                                    echo '<a id="'.$flight->col_id.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Lista</a>';
-                                    echo " <input type='text' name='".$flight->for_id."'>";
+                                    echo '
+                                    <div class="list-data">
+                                    <a id="'.$flight->col_id.'-'.$flight->for_id.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
+                                    </div>';
+                                    echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."'>";
                                     break;
                                 default:
                                     echo " <input type='text' name='".$flight->for_id."'>";
@@ -68,28 +71,27 @@
 </div>
     <script>
         var url_data='{{$url_cuaderno}}';
-        //console.log("estos datos");
-        //ajax_formulario(url_data,"a","#listas",'click',"GET");
         $("a").on('click',function(e) {
+
+            data=e.toElement.id.split("-");
+            var col_id=data[0];
+            var for_id=data[1];
             $.ajax({
                 beforeSend: function()
                 {
                     console.log($("#listas").html("cargando..."));
                 },
-                url:url_data+"/"+e.toElement.id,
+                url:url_data+"/"+col_id+"/"+for_id,
                 type:"GET",
                 data:{nom:"xc"},
                 success: function(info){
                     console.log(info);
+
                     console.log($("#listas").html(info));
                 },
                 error:function(jqXHR,estado,error){
                     console.log("errorrr");
                 }
             });
-            //console.log(e.toElement.id);
-            //console.log($("#cuaderno").html(e.toElement.id));
-            //console.log("asfasdfa");
-            //console.log(e.toElement.id);
         });
     </script>

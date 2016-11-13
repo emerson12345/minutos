@@ -32,68 +32,43 @@
                 background-color: #1abc9c;
                 cursor: pointer;
             }
+
         </style>
+
         {!! Form::open(['route' => 'libregistro.store' ,'class'=>'form-horizontal']) !!}
+
             <div class="col-md-4">
-                <input type="submit" class="btn btn-success">
                 <div class="box">
-                    <div class="box-body" >
-                        <table class="table table-bordered" id="t_Rrhh">
-                            <tbody>
-                            <tr>
-                                <th>Rrhh</th>
-                            </tr>
-                            <?php
-                            foreach ($listRrhh as $flight) {
-                            ?>
-                            <tr class="tr-cuadernos">
-                                <td id="<?= $flight->rrhh_id ?>" class="<?= $flight->rrhh_id ?>">
-                                    <?= $flight->rrhh_nombre ?>
-                                    <?= $flight->rrhh_ap_prim ?>
-                                    <?= $flight->rrhh_ap_seg ?>
+                    <div class="box-body">
+                        <input type="submit" class="btn btn-success">
+                    </div>
+                </div>
 
-                                </td>
-                            </tr>
-                            <?php
-                            }
-                            ?>
-                            </tbody>
-                        </table>
+                <div class="box">
+                    <div class="box-body">
+                        <label for="">Paciente:</label><br>
+                        <input type="hidden" name="pac_id" id="tb_id_paciente" size="5" readonly>
+                        <input type="text" id="tb_nombre_paciente" size="30"  required="true">
+                        <input type="button" id="btn-paciente" class="btn-success" value="Buscar">
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="box-body">
+                        <label for="">Referido de Establecimiento: </label>
+                        <?php echo Form::select('referido_de_inst_id', $listInstitucionAll, array('required'=> true)); ?>
+                        <br>
+                        <label for="">Referido a Establecimiento: </label>
+                        {!! Form::select('referido_a_inst_id', $listInstitucionAll, array('id' => 'pact_id2','required'=>true)) !!}
                     </div>
                 </div>
 
                 <div class="box">
                     <div class="box-body" >
-                        <table class="table table-bordered" id="t_pacientes">
-                            <tbody>
-                            <tr>
-                                <th>PACIENTES</th>
-                            </tr>
-                            <?php
-                            foreach ($listPacientes as $flight) {
-                            ?>
-                            <tr class="tr-cuadernos">
-                                <td id="<?= $flight->pac_id ?>">
-                                    <?= $flight->pac_nombre ?>
-                                    <?= $flight->pac_ap_prim ?>
-                                    <?= $flight->pac_ap_seg ?>
-
-                                </td>
-                            </tr>
-                            <?php
-                            }
-                            ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="box">
-                    <div class="box-body" >
+                        <label for="">CUADERNOS</label>
                         <table class="table table-bordered" id="t_cuadernos">
                             <tbody>
                             <tr>
-                                <th>CUADERNOS</th>
+                                <th></th>
                             </tr>
                             <?php
                             foreach ($listCuadernos as $flight) {
@@ -111,72 +86,168 @@
                     </div>
                 </div>
 
+                <!-------------------------------------------------------------------------------------------->
+
+
+
+                <div id="myModal_pacientes" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Pacientes</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-md-10">
+                                    <div class="box">
+                                        <div class="box-body" >
+
+                                            <table id="t_pacientes" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 181px;">
+                                                            Nro HC
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 224px;">
+                                                            NOMBRE
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 197px;">
+                                                            CI
+                                                        </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 154px;">
+                                                            Fecha Nacimiento
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <?php
+                                                foreach ($listPacientes as $value) {
+                                                ?>
+                                                <tr role="row">
+                                                    <td class="tr-cuadernos"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
+                                                        <?= $value->pac_id; ?>
+                                                    </td>
+                                                    <td class="tr-cuadernos"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
+                                                        <?= $value->pac_nombre." ".$value->pac_ap_prim." ".$value->pac_ap_seg; ?>
+                                                    </td>
+
+                                                    <td class="tr-cuadernos"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
+                                                        <?= $value->pac_nro_ci ?>
+                                                    </td>
+
+                                                    <td class="tr-cuadernos"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
+                                                        <?= $value->pac_fecha_nac; ?>
+                                                    </td>
+                                                </tr>
+                                                <?php
+                                                }
+                                                ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
 
             </div>
+
+            <div class="col-md-4">
+                <div class="box">
+                    <div class="box-body">
+                        <label for="">Personal de Salud: </label>
+                        <?php echo Form::select('rrhh_id', $listRrhh, array('required'=> true)); ?>
+                        <br>
+                        <label for="">Tipo de Paciente: </label>
+                        {!! Form::select('pact_id', array('1' => 'INSTITUCIONAL','2' => 'CONVENIO'),'default', array('id' => 'pact_id','required'=>true)) !!}
+                        <div id='institucion'>
+                            <label for="">
+                                Institucion:
+                            </label>
+                            {!! Form::select('conv_id', $listInstitucion)  !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="box">
+                    <div class="box-body">
+                        <label for="">Consulta nueva: </label>
+                        <input type="hidden" name='hc_consulta_nueva' value="0">
+                        {!! Form::checkbox('hc_consulta_nueva', '1',false) !!}<br>
+
+                        <label for="">Consulta dentro: </label>
+                        <input type="hidden" name='hc_consulta_dentro' value="0">
+                        {!! Form::checkbox('hc_consulta_dentro', '1',true) !!}<br>
+
+                        <label for="">Paciente con seguro: </label>
+                        <input type="hidden" name='hc_con_seguro' value="0">
+                        {!! Form::checkbox('hc_con_seguro', '1',false) !!}<br>
+                    </div>
+                </div>
+            </div>
+
             <div id="datos-rhh" class="col-md-8"></div>
             <div id="datos-paciente" class="col-md-8"></div>
-
 
 
             <div id="cuaderno" class="col-md-8">
 
             </div>
-
-        <?php
-        $arrdatos=array("nombre"=>"nombres","apellido"=>"apellidos");
-        $_POST['arrdatos']=$arrdatos;
-        ?>
-        {{ Form::hidden('rrhh_id', 'secret', array('id' => 'rrhh_id')) }}
-        {{ Form::hidden('pac_id', 'secret', array('id' => 'pac_id')) }}
+        {{ Form::hidden('inst_id',session('institucion')->inst_id) }}
 
         {!! Form::close() !!}
     @stop
 @section('script')
     <script>
         var url_data='{{$url_cuaderno}}';
-        ajax_cuaderno(url_data,"#t_cuadernos","#cuaderno",'click',"GET");
-        /*
-        $("#t_cuadernos").on('click', 'td', function(e) {
-            var url_cuaderno='{{$url_cuaderno}}';
-            $.ajax({
-                    beforeSend: function()
-                    {
-                        console.log($("#cuaderno").html("cargando..."));
-                    },
-                    url:url_cuaderno+"/"+e.toElement.id,
-                    type:"GET",
-                    data:{nom:"xc"},
-                    success: function(info){
-                        console.log(info);
-                        console.log($("#cuaderno").html(info));
-                    },
-                    error:function(jqXHR,estado,error){
-                        console.log("errorrr");
-
-                    }
-            });
-        });*/
-        $("#t_Rrhh").on('click', 'td', function(e) {
-            //console.log($("#datos").html("cargando..."));
-            //console.log(e.toElement.id);
-            //console.log(e.toElement);
-            //console.log($(this).html());
-            //'rrhh_id',e.toElement.id); ?>
-            $("#datos-rhh").html("<b>Rhh: </b> "+$(this).html());
-            $("#rrhh_id").val(e.toElement.id);
-            //console.log($("#rrhh_id").val());
-            //console.log($("#cuaderno").html(e.toElement.id));
-        });
         $("#t_pacientes").on('click', 'td', function(e) {
-            //console.log($("#datos-paciente").html("cargando..."));
-            //console.log(e.toElement.id);
-            //console.log(e.toElement);
-            //console.log($(this).html());
-            //'pac_id',e.toElement.id); ?>
+            arr=e.toElement.id.split("-");
+            intIdPac=arr[0];
+            strNombrePac=arr[1];
+            $('#tb_id_paciente').val(intIdPac);
+            $('#tb_nombre_paciente').val(strNombrePac);
+            console.log(e.toElement.id);
+            $('#myModal_pacientes').modal('hide');
+        });
+        /*
+
+        $("#t_pacientes").on('click', 'td', function(e) {
+            console.log("dsfasdfdasf");
+            console.log(e.toElement.id);
+            console.log("dsfasdfdasf");
             $("#pac_id").val(e.toElement.id);
             $("#datos-paciente").html("<b>Paciente: </b> "+$(this).html());
-            //console.log($("#pac_id").val());
-            //console.log($("#cuaderno").html(e.toElement.id));
+        });*/
+
+        $("#btn-paciente").on('click',function(e){
+            $("#t_pacientes").DataTable();
+            $('#myModal_pacientes').modal('show');
+        });
+        $("#pact_id").on('change',function(e){
+            $("#institucion").toggle();
+        });
+
+        $("#institucion").hide();
+
+        ajax_cuaderno(url_data,"#t_cuadernos","#cuaderno",'click',"GET");
+
+        $("#t_Rrhh").on('click', 'td', function(e) {
+            $("#datos-rhh").html("<b>Rhh: </b> "+$(this).html());
+            $("#rrhh_id").val(e.toElement.id);
+        });
+        $("#tb_nombre_paciente").on('keypress', function(e){
+            e.preventDefault();
         });
     </script>
 @stop

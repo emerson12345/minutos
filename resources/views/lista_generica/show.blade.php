@@ -15,7 +15,7 @@
                             <div class="">
 
                             </div>
-                            <table class="table table-bordered" id="t_cuadernos">
+                            <table id="t_cuadernos-list-generica" class="table table-bordered">
                                 <tbody>
                                 <tr>
                                     <th>CODIGO</th>
@@ -25,10 +25,10 @@
                                 foreach ($listFormularios as $value) {
                                 ?>
                                 <tr class="tr-cuadernos">
-                                    <td>
+                                    <td id="<?= $value->lis_codigo; ?>-<?= $value->lis_descripcion; ?>">
                                         <?= $value->lis_codigo; ?>
                                     </td>
-                                    <td>
+                                    <td id="<?= $value->lis_codigo; ?>-<?= $value->lis_descripcion; ?>">
                                         <?= $value->lis_descripcion; ?>
                                     </td>
                                 </tr>
@@ -48,6 +48,12 @@
 
     </div>
 </div>
+
 <script>
-    $('#myModal').modal('show')
+    $('#myModal').modal('show');
+    $("#t_cuadernos-list-generica").on('click','td',function(e){
+        form_id='{{$for_id}}';
+        $("#"+form_id).val(e.toElement.id);
+        $('#myModal').modal('hide');
+    });
 </script>

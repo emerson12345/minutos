@@ -76,7 +76,7 @@ Route::group(['prefix'=>'adm_cuaderno'],function(){
 Route::group(['prefix'=>'cuaderno'],function(){
     Route::get('index','LibCuadernoController@index')->name('cuaderno.index');
     Route::get('peticion/{id}','LibCuadernoController@peticion')->name('cuaderno.peticion');
-    Route::get('peticion_listas/{intIDColumna}','LibCuadernoController@peticionListas')->name('cuaderno.peticionListas');
+    Route::get('peticion_listas/{intIDColumna}/{for_id}','LibCuadernoController@peticionListas')->name('cuaderno.peticionListas');
     Route::get('detalle/{hc_id}/{cua_id}','LibCuadernoController@detalle')->name('cuaderno.detalle');
 });
 

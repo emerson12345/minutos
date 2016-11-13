@@ -9,6 +9,7 @@ use Sicere\Http\Controllers\Controller;
 use Sicere\Models\LibCuaderno;
 use Sicere\Models\Paciente;
 use Sicere\Models\Rrhh;
+use Sicere\Models\institucion;
 use Sicere\Models\LibFormulario;
 use Illuminate\Support\Facades\DB;
 use Session;
@@ -22,11 +23,22 @@ class LibCuadernoController extends Controller
      */
     public function index()
     {
+
         $url_cuaderno = asset('cuaderno/peticion/');
+        $inst_id=session('institucion')->inst_id;
+        $listInstitucion = DB::table('institucion')
+            ->join('institucion_convenio', 'institucion.inst_id', '=', 'institucion_convenio.inst_id')
+            ->join('convenio','convenio.conv_id','=','institucion_convenio.conv_id')
+            ->where('institucion.inst_id','=',$inst_id)
+            ->pluck('convenio.conv_nombre','convenio.conv_id');
+        //$listCuadernos = LibCuaderno::all()->pluck('cua_nombre','cua_id');
+        $listInstitucionAll=Institucion::all()->pluck('inst_nombre','inst_id');
         $listCuadernos = LibCuaderno::all();
         $listPacientes = Paciente::all();
-        $listRrhh=  Rrhh::all();
-        return view('cuadernos.show',[ 'listCuadernos' => $listCuadernos,'listPacientes' => $listPacientes,'listRrhh' => $listRrhh ])->with('url_cuaderno', $url_cuaderno);
+        $listRrhh=  Rrhh::all()->where('inst_id','=',$inst_id)->pluck('rrhh_nombre','rrhh_id');
+
+        return view('cuadernos.show',[ 'listCuadernos' => $listCuadernos,'listPacientes' => $listPacientes,'listRrhh' => $listRrhh,'listInstitucion'=>$listInstitucion,'listInstitucionAll'=>$listInstitucionAll ])->with('url_cuaderno', $url_cuaderno);
+
     }
     public function peticion($id)
     {
@@ -42,7 +54,7 @@ class LibCuadernoController extends Controller
         //print_r($users);
 
         //$listFormularios = LibFormulario::all();
-        return view('formulario.show',['listFormularios' => $listFormularios,'cua_id'=> $id])->with('url_cuaderno', $url_cuaderno);;
+        return view('formulario.show',['listFormularios' => $listFormularios,'cua_id'=> $id])->with('url_cuaderno', $url_cuaderno);
     }
     public function detalle($hc_id,$cua_id)
     {
@@ -55,21 +67,15 @@ class LibCuadernoController extends Controller
             ->get();
         //return view('formulario.show',['listFormularios' => $listFormularios,'cua_id'=> $id]);
     }
-    public function peticionListas($intIDColumna)
+    public function peticionListas($intIDColumna,$for_id)
     {
-
         $listFormularios = DB::table('lib_columnas')
             ->join('lib_relaciona_tablas', 'lib_columnas.rel_id', '=', 'lib_relaciona_tablas.rel_id')
             ->join('lib_lista_generica', 'lib_lista_generica.lis_tabla', '=', 'lib_relaciona_tablas.lis_tabla')
             ->where('lib_columnas.col_id', '=', $intIDColumna)
             ->select('lib_lista_generica.lis_codigo','lib_lista_generica.lis_descripcion','lib_columnas.col_combre')
             ->get();
-
-        //echo $users[0]->cua_id;
-        //print_r($listFormularios);
-        //$listFormularios = LibFormulario::all();
-
-        return view('lista_generica.show',['listFormularios' => $listFormularios ]);
+        return view('lista_generica.show',['listFormularios' => $listFormularios])->with('for_id',$for_id);
     }
 
     /**
