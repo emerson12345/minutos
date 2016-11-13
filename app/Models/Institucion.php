@@ -36,9 +36,8 @@ class Institucion extends Model
 
     protected $guarded = [];
 
-   // {{getters}}
-
-    //{{setters}}
-
-
+    public function usuarios(){
+        return $this->belongsToMany('Sicere\User','usuario_institucion','inst_id','user_id');
+    }
+    
 }

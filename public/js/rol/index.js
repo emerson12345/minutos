@@ -47,6 +47,15 @@ function handleEvent(){
         },
         complete:function () {
             $("#myModal").find(".overlay").remove();
+            /*
+            $("#app_list").bootstrapDualListbox({
+                filterPlaceHolder:'filtrar',
+                selectedListLabel:'Seleccionados',
+                nonSelectedListLabel:'Disponibles',
+                infoText:'',
+                infoTextEmpty:'',
+                filterTextClear:'Todos'
+            });*/
         }
     });
     $("#myModal").modal("show");

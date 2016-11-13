@@ -4,10 +4,12 @@ namespace Sicere;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
+use Sicere\Models\Rol;
+use Symfony\Component\Routing\Annotation\Route;
 
 class User extends Authenticatable
 {
-
     const CREATED_AT = 'user_fec_alta';
     const UPDATED_AT = 'user_fec_mod';
     protected $table = 'usuario';
@@ -43,5 +45,9 @@ class User extends Authenticatable
 
     public function roles(){
         return $this->belongsToMany('Sicere\Models\Rol','usuario_rol','user_id','rol_id');
+    }
+
+    public function instituciones(){
+        return $this->belongsToMany('Sicere\Models\Institucion','usuario_institucion','user_id','inst_id');
     }
 }

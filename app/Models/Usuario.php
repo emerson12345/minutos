@@ -26,6 +26,5 @@ class Usuario extends Model
     ];
 
     protected $guarded = [];
-
         
 }
