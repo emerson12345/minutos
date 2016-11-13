@@ -4,7 +4,7 @@
 @stop
 @section('user')
     @if(Auth::check())
-        {{Auth::user()->nombre}}
+        {{Auth::user()->user_nombre}}
     @endif
 @stop
 @section('title_page')
@@ -24,7 +24,6 @@
 @section('content')
     <section class="content">
         <div class="box box-primary box-solid">
-
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
@@ -80,5 +79,7 @@
 @stop
 
 @section('script')
+<link rel="stylesheet" href="{{asset('template/plugins/bootstrap-duallist/bootstrap-duallistbox.css')}}">
+<script src="{{asset('template/plugins/bootstrap-duallist/jquery.bootstrap-duallistbox.js')}}"></script>
 <script src="{{asset('js/rol/index.js')}}"></script>
 @stop

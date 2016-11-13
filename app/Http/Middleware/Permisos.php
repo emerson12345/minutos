@@ -4,6 +4,7 @@ namespace Sicere\Http\Middleware;
 use Sicere\Models\Aplicacion;
 use Illuminate\Support\Facades\DB;
 use Closure;
+use Sicere\User;
 
 class Permisos
 {
@@ -16,17 +17,29 @@ class Permisos
      */
     public function handle($request, Closure $next)
     {
-        if(!session()->has('institucion')){
-            return redirect()->route('account.init');
-        }
-        /*
-        $appName = $request->route()->getName();
-        $app = Aplicacion::where('app_enlace_menu',$appName)->where('app_seleccionable',1)->first();
-        if(!$app || !$app->app_padre)
-            return redirect()->route('error401');
-
-        $app = $app->app_padre;
         $user = $request->user();
+        if(!session()->has('institucion')){
+            if($user->instituciones()->count()==1)
+                session(['institucion'=>$user->instituciones()->first()]);
+            else
+                return redirect()->route('account.init');
+        }
+        if(!session()->has('menu')){
+            session(['menu'=>$this->getMenu()]);
+        }
+        $appName = $request->route()->getName();
+
+        if(!$appName)
+            return $next($request);
+
+        $app = Aplicacion::where('app_enlace_menu',$appName)->where('app_seleccionable',1)->first();
+        if(!$app)
+            return redirect()->route('error401');
+        if($app->app_renderiza == 0){
+            if(!$app->app_padre)
+                return redirect()->route('error401');
+            $app = $app->app_padre;
+        }
 
         $results = DB::table('usuario_rol')
             ->join('aplicacion_rol','usuario_rol.rol_id','aplicacion_rol.rol_id')
@@ -37,7 +50,25 @@ class Permisos
             ->count();
         if($results < 1)
             return redirect()->route('error401');
-*/
+
         return $next($request);
+    }
+
+    private function getMenu(){
+        $menu = [];
+        if(\Auth::check()){
+            $usuario = User::with('roles.aplicaciones')->find(\Auth::user()->user_id);
+            foreach ($usuario->roles as $rol){
+                foreach ($rol->aplicaciones as $app){
+                    $app_parent = $app->app_padre;
+                    if($app_parent){
+                        $menu[$app_parent->app_id]['label']= $app_parent->app_nombre;
+                        $temp = ['label'=>$app->app_nombre, 'url' => $app->app_enlace_menu];
+                        $menu[$app_parent->app_id]['items'][$app->app_id] = $temp;
+                    }
+                }
+            }
+        }
+        return $menu;
     }
 }

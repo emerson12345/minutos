@@ -170,14 +170,14 @@
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="{{asset('template/dist/img/user2-160x160.jpg')}}" class="user-image"
+                            <img src="{{asset('template/dist/img/user2-160x160.png')}}" class="user-image"
                                  alt="User Image">
                             <span class="hidden-xs"> @yield('user') </span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="{{asset('template/dist/img/user2-160x160.jpg')}}" class="img-circle"
+                                <img src="{{asset('template/dist/img/user2-160x160.png')}}" class="img-circle"
                                      alt="User Image">
 
 
@@ -230,12 +230,18 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="{{asset('template/dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
+                    <img src="{{asset('template/dist/img/user2-160x160.png')}}" class="img-circle" alt="User Image">
 
                 </div>
                 <div class="pull-left info">
                     <p>@yield('user')</p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    <a href="#">
+                        @if(session()->has('institucion'))
+                            {{session('institucion')->inst_nombre}}
+                        @else
+                            sin institucion
+                        @endif
+                    </a>
                 </div>
             </div>
             <!-- search form -->
@@ -253,117 +259,23 @@
             <?php $menu = \Sicere\Models\Aplicacion::where('app_renderiza',1)->where('app_nivel_menu',1)->get();?>
             <ul class="sidebar-menu">
                 <li class="header">Menu Principal</li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-dashboard"></i> <span>Paciente</span>
-                        <span class="pull-right-container">
-                             <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="active"><a href="referencia.html">
-                                <i class="fa fa-circle-o"></i>Pacientes Registrados</a>
-                        </li>
-                        <li class="active"><a href="nuevo.html">
-                                <i class="fa fa-circle-o"></i>Reportes</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-pie-chart"></i>
-                        <span>Medicina General</span>
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> Registrar Diagnostico</a>
-                        </li>
-                        <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i> Tratamiento</a></li>
-                        <li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Reportes</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-pie-chart"></i>
-                        <span>Psicopedagogia</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> Registrar Diagnostico</a>
-                        </li>
-                        <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i> Tratamiento</a></li>
-                        <li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Reportes</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-pie-chart"></i>
-                        <span>fisioterapeuta</span>
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> Registrar Diagnostico</a>
-                        </li>
-                        <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i> Tratamiento</a></li>
-                        <li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Reportes</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-laptop"></i>
-                        <span>Kinesiologia</span>
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> Registrar Diagnostico</a>
-                        </li>
-                        <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i> Tratamiento</a></li>
-                        <li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Reportes</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-laptop"></i>
-                        <span>Reportes Generales</span>
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> Reporte 1</a></li>
-                        <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i> Reporte 2</a></li>
-                        <li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Reporte 3</a></li>
-                    </ul>
-                </li>
-                @foreach($menu as $itemMenu)
-                    @if($itemMenu->app_hijos()->count()>0)
+                @if(Auth::check()&&session()->has('menu'))
+                @foreach(session('menu') as $itemMenu)
                     <li class="treeview">
                         <a href="#">
-                        <span>{{$itemMenu->app_nombre}}</span>
+                        <span>{{$itemMenu['label']}}</span>
                         <span class="pull-right-container">
                           <i class="fa fa-angle-left pull-right"></i>
                         </span>
                         </a>
                         <ul class="treeview-menu">
-                            @foreach($itemMenu->app_hijos as $app_hijo)
-                                <li><a href="#">{{$app_hijo->app_nombre}}</a></li>
+                            @foreach($itemMenu['items'] as $app_hijo)
+                                <li><a href="{{Route::has($app_hijo['url'])?route($app_hijo['url']):'#'}}">{{$app_hijo['label']}}</a></li>
                             @endforeach
                         </ul>
                     </li>
-                    @else
-                        <li>
-                            <a href="#">{{$itemMenu->app_nombre}}</a>
-                        </li>
-                    @endif
                 @endforeach
+                @endif
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -397,10 +309,9 @@
 
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            <b>Version</b> 0.0.1
+            <b>Version</b> 1.0.0
         </div>
-        <strong>Copyright &copy; 2016-2016 <a href="http://almsaeedstudio.com"></a>.</strong> All rights
-        reserved.
+        <strong>Copyright &copy; 2016 <a href="http://almsaeedstudio.com"></a>.</strong> Todos los derechos reservados.
     </footer>
 
     <!-- Control Sidebar -->
