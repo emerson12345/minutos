@@ -28,12 +28,25 @@
     </div>
 </div>
 <script>
+    var fila_seleccinable_hc;
     $("#t_Hc").on('click', 'td', function(e) {
         var n=e.toElement.id.split("_");
         var cua_id=n[0];
         var Hc_id=n[1];
         var fecha=n[2];
         var url_hc='{{$url_hc}}';
+
+        if (typeof fila_seleccinable_hc == 'undefined') {
+            $(this).parent().addClass("tr-seleccionable-hc");
+            fila_seleccinable_hc=$(this);
+        }
+        else
+        {
+            fila_seleccinable_hc.parent().removeClass("tr-seleccionable-hc");
+            $(this).parent().addClass("tr-seleccionable-hc");
+            fila_seleccinable_hc=$(this);
+        }
+
         $.ajax({
             beforeSend: function()
             {

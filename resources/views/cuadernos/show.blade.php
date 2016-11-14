@@ -116,16 +116,16 @@
                                             <table id="t_pacientes" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
                                                 <thead>
                                                     <tr role="row">
-                                                        <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 181px;">
+                                                        <th>
                                                             Nro HC
                                                         </th>
-                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 224px;">
+                                                        <th>
                                                             NOMBRE
                                                         </th>
-                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 197px;">
+                                                        <th>
                                                             CI
                                                         </th>
-                                                        <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 154px;">
+                                                        <th>
                                                             Fecha Nacimiento
                                                         </th>
                                                     </tr>
@@ -135,7 +135,9 @@
                                                 foreach ($listPacientes as $value) {
                                                 ?>
                                                 <tr role="row">
-                                                    <td class="tr-cuadernos"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
+                                                    <td class="tr-cuadernos"
+                                                        id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>"
+                                                            >
                                                         <?= $value->pac_id; ?>
                                                     </td>
                                                     <td class="tr-cuadernos"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
@@ -145,7 +147,6 @@
                                                     <td class="tr-cuadernos"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
                                                         <?= $value->pac_nro_ci ?>
                                                     </td>
-
                                                     <td class="tr-cuadernos"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
                                                         <?= $value->pac_fecha_nac; ?>
                                                     </td>

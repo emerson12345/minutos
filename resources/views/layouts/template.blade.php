@@ -29,12 +29,26 @@
     <![endif]-->
 
 
-</head>
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 
-    <header class="main-header">
-        <!-- Logo -->
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+    <![endif]-->
+
+  </head>
+  <body class="hold-transition skin-blue sidebar-mini">
+  <div class="wrapper">
+
+      <header class="main-header">
+          <!-- Logo -->
         <a href="index2.html" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>H</b>N</span>
@@ -519,6 +533,7 @@
 <script src="{{asset('template/dist/js/demo.js')}}"></script>
 <!-- Cuaderno -->
 <script src="{{asset('js/cuaderno.js')}}"></script>
+
 @yield('script')
 </body>
 </html>

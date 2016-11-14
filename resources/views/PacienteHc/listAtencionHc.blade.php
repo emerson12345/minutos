@@ -38,16 +38,26 @@
                     switch ($flight->col_tipo)
                     {
                         case 1:
-                            echo " <input readonly type='number' name='".$flight->for_id."' value=".$flight->red_descripcion.">";
+                            echo " <input readonly type='number' name='".$flight->for_id."' value=".$flight->red_descripcion." >";
                             break;
                         case 4:
-                            echo "<textarea readonly rows='4' cols='50' name='".$flight->for_id."'>".$flight->red_descripcion."</textarea>";
+                            echo "<textarea readonly rows='4' cols='50' name='".$flight->for_id."' >".$flight->red_descripcion."</textarea>";
                             break;
                         case 15:
-                            echo " <input readonly type='text' name='".$flight->for_id."' value=".$flight->red_descripcion.">";
+                            echo " <input readonly type='text' name='".$flight->for_id."' value=".$flight->red_descripcion." >";
                             break;
+                        case 0:
+                            if($flight->red_descripcion==1)
+                            {
+                                echo '<input name="cbilibros" type="checkbox" checked="checked" />';
+                            }
+                            else
+                            {
+                                echo '<input name="cbilibros" type="checkbox" readonly />';
+                            }
+                        break;
                         default:
-                            echo " <input readonly type='text' name='".$flight->for_id."' value=".$flight->red_descripcion.">";
+                            echo "<input type='text' name='".$flight->for_id."' value='".$flight->red_descripcion."' >";
                     }
                     ?>
                 </td>

@@ -31,23 +31,53 @@
             background-color: #1abc9c;
             cursor: pointer;
         }
+        .tr-dimencion{
+            width: 200px;
+        }
+        .td-dimencion{
+            width: 200px;
+        }
+        .tr-seleccionable{
+            background-color: #e74c3c;
+        }
+        .tr-seleccionable-hc{
+            background-color: #e67e22;
+        }
     </style>
-    <div class="col-md-4">
+    <!------------------------------------------------>
+
+    <!------------------------------------------------>
+
+
+
+
+    <div class="col-xs-5">
         <?= $listPacientes ?>
         <div id="PacienteHc">
 
         </div>
     </div>
-    <div id="datos-paciente" class="col-md-8"></div>
-    <div id="AtenccionHc" class="col-md-8">
+    <div id="datos-paciente" class="col-md-5"></div>
+    <div id="AtenccionHc" class="col-md-7">
 
     </div>
 @stop
 @section('script')
     <script>
         var url_data='{{$url_paciente}}';
+        var fila_seleccinable_pacientes;
         $("#t_pacientes").on('click', 'td', function(e) {
             $("#AtenccionHc").html("");
+                if (typeof fila_seleccinable_pacientes == 'undefined') {
+                    $(this).parent().addClass("tr-seleccionable");
+                    fila_seleccinable_pacientes=$(this);
+                }
+                else
+                {
+                    fila_seleccinable_pacientes.parent().removeClass("tr-seleccionable");
+                    $(this).parent().addClass("tr-seleccionable");
+                    fila_seleccinable_pacientes=$(this);
+                }
             $.ajax({
                 beforeSend: function()
                 {
@@ -67,6 +97,18 @@
 
                 }
             });
+        });
+        $(function () {
+            //alert("adfa");
+            $("#t_pacientes").DataTable();
+            /*$('#t_pacientes').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true
+            });*/
         });
     </script>
 @stop
