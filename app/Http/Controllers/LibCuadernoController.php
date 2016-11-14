@@ -33,7 +33,12 @@ class LibCuadernoController extends Controller
             ->pluck('convenio.conv_nombre','convenio.conv_id');
         //$listCuadernos = LibCuaderno::all()->pluck('cua_nombre','cua_id');
         $listInstitucionAll=Institucion::all()->pluck('inst_nombre','inst_id');
-        $listCuadernos = LibCuaderno::all();
+
+        //$listCuadernos = LibCuaderno::all();
+        $listCuadernos = DB::table('lib_cuadernos')
+            ->where('lib_cuadernos.cua_seleccionable','=','1')
+            ->select('*')
+            ->get();
         $listPacientes = Paciente::all();
         $listRrhh=  Rrhh::all()->where('inst_id','=',$inst_id)->pluck('rrhh_nombre','rrhh_id');
 
@@ -46,7 +51,10 @@ class LibCuadernoController extends Controller
         $listFormularios = DB::table('lib_cuadernos')
             ->join('lib_formulario', 'lib_cuadernos.cua_id', '=', 'lib_formulario.cua_id')
             ->join('lib_columnas', 'lib_columnas.col_id', '=', 'lib_formulario.col_id')
-            ->where('lib_cuadernos.cua_id', '=', $id)
+            ->where([
+                ['lib_cuadernos.cua_id', '=', $id],
+                ['lib_formulario.for_seleccionable', '=', '1'],
+            ])
             ->select('lib_cuadernos.cua_id','lib_cuadernos.cua_nombre' ,'lib_formulario.for_id'
                 ,'lib_columnas.col_id','lib_columnas.col_combre','lib_columnas.col_tipo')
             ->get();

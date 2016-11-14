@@ -52,6 +52,12 @@
                                     </div>';
                                     echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."'>";
                                     break;
+                                case 0:
+                                    echo "<input type='hidden' name='".$flight->for_id."' value='0'>";
+                                ?>
+                                    {!! Form::checkbox($flight->for_id, '1',false) !!}
+                            <?php
+                                    break;
                                 default:
                                     echo " <input type='text' name='".$flight->for_id."'>";
                             }
@@ -79,15 +85,14 @@
             $.ajax({
                 beforeSend: function()
                 {
-                    console.log($("#listas").html("cargando..."));
+                    $("#listas").html("cargando...");
                 },
                 url:url_data+"/"+col_id+"/"+for_id,
                 type:"GET",
                 data:{nom:"xc"},
                 success: function(info){
-                    console.log(info);
-
-                    console.log($("#listas").html(info));
+                    //console.log(info);
+                    $("#listas").html(info);
                 },
                 error:function(jqXHR,estado,error){
                     console.log("errorrr");

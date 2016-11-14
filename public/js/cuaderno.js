@@ -25,17 +25,19 @@
 function ajax_cuaderno(url_data,elemento,contenedor,evento,metodo)
 {
     $(elemento).on(evento, 'td', function(e) {
+        //$(this).addClass("tr-seleccionable");
+        console.log("fadsfa");
         $.ajax({
             beforeSend: function()
             {
-                console.log($(contenedor).html("cargando..."));
+                $(contenedor).html("cargando...");
             },
             url:url_data+"/"+e.toElement.id,
             type:metodo,
             data:{nom:"xc"},
             success: function(info){
-                console.log(info);
-                console.log($(contenedor).html(info));
+                //console.log(info);
+                $(contenedor).html(info);
             },
             error:function(jqXHR,estado,error){
                 console.log("errorrr");

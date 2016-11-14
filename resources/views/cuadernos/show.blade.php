@@ -32,19 +32,31 @@
                 background-color: #1abc9c;
                 cursor: pointer;
             }
+            .tr-seleccionable{
+                background-color: #e74c3c;
+            }
 
         </style>
 
         {!! Form::open(['route' => 'libregistro.store' ,'class'=>'form-horizontal']) !!}
 
-            <div class="col-md-4">
+
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="box-body">
+                            <input type="submit" class="btn btn-success">
+                        </div>
+                    </div>
+
                 <div class="box">
                     <div class="box-body">
-                        <input type="submit" class="btn btn-success">
+                        <label for="">
+                            <?php echo "Fecha: "; echo date("d/m/Y"); ?>
+                        </label>
                     </div>
                 </div>
 
-                <div class="box">
+            <div class="box">
                     <div class="box-body">
                         <label for="">Paciente:</label><br>
                         <input type="hidden" name="pac_id" id="tb_id_paciente" size="5" readonly>
@@ -87,9 +99,6 @@
                 </div>
 
                 <!-------------------------------------------------------------------------------------------->
-
-
-
                 <div id="myModal_pacientes" class="modal fade" role="dialog">
                     <div class="modal-dialog">
 
@@ -154,11 +163,8 @@
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
-
             </div>
 
             <div class="col-md-4">
@@ -211,6 +217,7 @@
 @section('script')
     <script>
         var url_data='{{$url_cuaderno}}';
+        var fila_seleccinable;
         $("#t_pacientes").on('click', 'td', function(e) {
             arr=e.toElement.id.split("-");
             intIdPac=arr[0];
@@ -241,6 +248,19 @@
         $("#institucion").hide();
 
         ajax_cuaderno(url_data,"#t_cuadernos","#cuaderno",'click',"GET");
+        $("#t_cuadernos").on('click','td',function(e){
+            if (typeof fila_seleccinable == 'undefined') {
+                $(this).addClass("tr-seleccionable");
+                fila_seleccinable=$(this);
+            }
+            else
+            {
+                fila_seleccinable.removeClass("tr-seleccionable");
+                $(this).addClass("tr-seleccionable");
+                fila_seleccinable=$(this);
+
+            }
+        });
 
         $("#t_Rrhh").on('click', 'td', function(e) {
             $("#datos-rhh").html("<b>Rhh: </b> "+$(this).html());
