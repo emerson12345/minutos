@@ -26,6 +26,7 @@
                     <?= $flight->pac_fecha_nac ?>
                 </td>
                 <td id="<?= $flight->pac_id ?>" class="td-dimencion">
+
                     <?= $flight->pac_nro_ci ?>
                 </td>
             </tr>

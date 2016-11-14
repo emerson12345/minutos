@@ -55,6 +55,7 @@
         <?= $listPacientes ?>
         <div id="PacienteHc">
 
+
         </div>
     </div>
     <div id="datos-paciente" class="col-md-5"></div>

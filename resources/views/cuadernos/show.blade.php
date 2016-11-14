@@ -34,6 +34,7 @@
             }
             .tr-seleccionable{
                 background-color: #e74c3c;
+
             }
 
         </style>

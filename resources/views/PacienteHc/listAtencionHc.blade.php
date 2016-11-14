@@ -50,6 +50,7 @@
                             if($flight->red_descripcion==1)
                             {
                                 echo '<input name="cbilibros" type="checkbox" checked="checked" />';
+
                             }
                             else
                             {

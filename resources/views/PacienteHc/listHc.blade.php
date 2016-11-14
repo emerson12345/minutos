@@ -45,6 +45,7 @@
             fila_seleccinable_hc.parent().removeClass("tr-seleccionable-hc");
             $(this).parent().addClass("tr-seleccionable-hc");
             fila_seleccinable_hc=$(this);
+
         }
 
         $.ajax({
