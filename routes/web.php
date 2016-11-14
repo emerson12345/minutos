@@ -26,6 +26,7 @@ Route::get('pagina2', 'PruebaController@show2');
 Route::resource('photos', 'PhotoController');
 Route::resource('estado_civil', 'EstadoCivilController');
 */
+/***Rutas de pedro ***/
 Route::group(['prefix'=>'usuario','middleware'=>['auth','access']],function(){
     Route::get('index','UsuarioController@index')->name('adm.usuario.index');
     Route::get('usuarios','UsuarioController@usuarios')->name('adm.usuario.list');
@@ -62,19 +63,29 @@ Route::group(['prefix'=>'cuaderno'],function(){
     Route::get('peticion_listas/{intIDColumna}','LibCuadernoController@peticionListas')->name('cuaderno.peticionListas');
 });
 
-Route::group(['prefix'=>'institucion','middleware'=>'log'],function(){
+/***Rutas de emerson ***/
+Route::group(['prefix'=>'institucion','middleware'=>['auth','log']],function(){
     Route::get('index','InstitucionController@index')->name('institucion.index');
+    Route::get('institucion','InstitucionController@institucion')->name('institucion.list');
     Route::get('create','InstitucionController@create')->name('institucion.create');
-    Route::post('store','InstitucionController@store')->name('institucion.store');
+    Route::post('create','InstitucionController@store')->name('institucion.create.store');
     Route::get('edit/{idInst}','InstitucionController@edit')->name('institucion.edit');
-    Route::post('update/{idInst}','InstitucionController@update')->name('institucion.update');
+    Route::post('edit/{idInst}','InstitucionController@store')->name('institucion.edit.store');
+});
+Route::group(['prefix'=>'rrhh','middleware'=>['auth','log']],function(){
+    Route::get('index','RrhhController@index')->name('rrhh.index');
+    Route::get('rrhh','RrhhController@rrhh')->name('rrhh.list');
+    Route::get('create','RrhhController@create')->name('rrhh.create');
+    Route::post('create','RrhhController@store')->name('rrhh.create.store');
+    Route::get('edit/{idRrhh}','RrhhController@edit')->name('rrhh.edit');
+    Route::post('edit/{idRrhh}','RrhhController@store')->name('rrhh.edit.store');
 });
 
-//Route::get('provincia/{id}','LugarProvinciaController@getprovincia');
 Route::get('/provincia/getprovincia', ['uses' => 'LugarProvinciaController@getprovincia','as' => 'provincia.getprovincia']);
 Route::get('/municipio/getmunicipio', ['uses' => 'LugarMunicipioController@getmunicipio','as' => 'municipio.getmunicipio']);
 
-Route::group(['prefix'=>'adm_cuaderno','middleware'=>['auth','access']],function(){
+/***Rutas de percy***/
+Route::group(['prefix'=>'adm_cuaderno','middleware'=>['auth','log']],function(){
     Route::get('index','CuadernoController@index')->name('adm.cuaderno.index');
     Route::get('cuadernos','CuadernoController@cuadernos')->name('adm.cuaderno.list');
     Route::get('create','CuadernoController@create')->name('adm.cuaderno.create');
@@ -100,7 +111,7 @@ Route::group(['prefix'=>'libregistro'],function(){
     Route::post('store','LibRegistroController@store')->name('libregistro.store');
 });
 
-Route::group(['prefix'=>'paciente','middleware'=>['auth','access']],function(){
+Route::group(['prefix'=>'paciente','middleware'=>['auth']],function(){
     Route::get('index','PacienteController@index')->name('adm.paciente.index');
     Route::get('pacientes','PacienteController@pacientes')->name('adm.paciente.list');
     Route::get('create','PacienteController@create')->name('adm.paciente.create');
