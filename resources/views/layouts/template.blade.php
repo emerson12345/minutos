@@ -29,29 +29,15 @@
     <![endif]-->
 
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
 
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-
-    <![endif]-->
-
-  </head>
-  <body class="hold-transition skin-blue sidebar-mini">
-  <div class="wrapper">
-
-      <header class="main-header">
-          <!-- Logo -->
-        <a href="index2.html" class="logo">
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="{{route('adm.rol.index')}}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>H</b>N</span>
+            <span class="logo-mini"><b>C</b>R</span>
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg"><H6> <b>SICERE</b><br> Sistemas de Centros de rehabilitacion</H6> </span>
         </a>
@@ -196,21 +182,21 @@
 
 
                                 <p>
-                                    Administrador Pedro - Web Developer
-                                    <small>Member since Nov. 2012</small>
+                                    {{Auth::user()->user_nombre}}
+                                    <small>Noviembre. 2016</small>
                                 </p>
                             </li>
                             <!-- Menu Body -->
                             <li class="user-body">
                                 <div class="row">
                                     <div class="col-xs-4 text-center">
-                                        <a href="#">Followers</a>
+                                        <a href="#">Seguidores</a>
                                     </div>
                                     <div class="col-xs-4 text-center">
-                                        <a href="#">Sales</a>
+                                        <a href="#">Ministerio</a>
                                     </div>
                                     <div class="col-xs-4 text-center">
-                                        <a href="#">Friends</a>
+                                        <a href="#">Amigos</a>
                                     </div>
                                 </div>
                                 <!-- /.row -->
@@ -218,7 +204,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    <a href="#" class="btn btn-default btn-flat">Agenda</a>
                                 </div>
                                 <div class="pull-right">
                                     <form id="logout-form" action="{{ url('/logout') }}" method="POST" >
@@ -533,7 +519,6 @@
 <script src="{{asset('template/dist/js/demo.js')}}"></script>
 <!-- Cuaderno -->
 <script src="{{asset('js/cuaderno.js')}}"></script>
-
 @yield('script')
 </body>
 </html>

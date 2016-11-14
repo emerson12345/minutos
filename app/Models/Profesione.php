@@ -25,5 +25,8 @@ class Profesione extends Model
 
     protected $guarded = [];
 
-        
+    public static function Lista(){
+        return Profesione::where('prof_seleccionable','=',1)->pluck('prof_nombre', 'prof_id');
+    }
+
 }

@@ -11,12 +11,11 @@
     Roles
 @stop
 @section('menu_page')
-    <h1>Roles <small>lista</small></h1>
+    <h1> <small></small></h1>
 @stop
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li>
-            <a href="{{route('adm.rol.index')}}">Roles</a>
         </li>
     </ol>
 @stop

@@ -24,5 +24,7 @@ class RrhhTipo extends Model
 
     protected $guarded = [];
 
-        
+    public static function Lista(){
+        return RrhhTipo::where('rrhh_tipo_seleccionable','=',1)->pluck('rrhh_tipo_nombre', 'rrhh_tipo_id');
+    }
 }
