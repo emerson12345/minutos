@@ -37,8 +37,7 @@ class PacienteController extends Controller
             $paciente = Paciente::find($pac_id);
         $this->validate($request,[
             'pac_nro_hc' => ['required',Rule::unique('paciente')->ignore($pac_id,'pac_id')],
-            'pac_nro_ci' => 'required',
-            'pac_ap_prim' => 'required',
+            'pac_nro_ci' => [Rule::unique('paciente')->ignore($pac_id,'pac_id')],
             'pac_nombre' => 'required'
         ],[
             'required' => 'Este campo es requerido.',

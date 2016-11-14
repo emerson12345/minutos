@@ -6,9 +6,9 @@ var pacientesTable = $("#pacientes-table").DataTable({
     "columns":[
         {data:'pac_nro_hc',searchable:true},
         {data:'pac_nro_ci',searchable:true},
-        {data:'pac_ap_prim'},
-        {data:'pac_ap_seg'},
-        {data:'pac_nombre',searchable:false},
+        {data:'pac_ap_prim',searchable:true},
+        {data:'pac_ap_seg',searchable:true},
+        {data:'pac_nombre',searchable:true},
         {data:'pac_sexo',orderable:false,searchable:false},
         {data:'pac_fecha_nac',orderable:false,searchable:false},
         {
