@@ -21,13 +21,10 @@ class Paciente extends Model
         'pac_ap_seg',
         'pac_nombre',
         'pac_sexo',
-        'pac_fecha_nac',
         'pac_edad_anio',
         'pac_nro_ci',
         'pac_con_discapaci',
         'pac_seleccionable',
-        'pac_fec_alta',
-        'pac_fec_mod',
         'user_id',
         'inst_id'
     ];

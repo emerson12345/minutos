@@ -118,7 +118,7 @@
                                 <th>Nombre</th>
                                 </thead>
                                 <tbody>
-                                @foreach(\Sicere\Models\LibColumna::all() as $column)
+                                @foreach(\Sicere\Models\LibColumna::where('col_seleccionable',1)->get() as $column)
                                     <tr data-id="{{$column->col_id}}">
                                         <td>{{$column->col_combre}}</td>
                                     </tr>

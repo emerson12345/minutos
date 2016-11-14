@@ -99,3 +99,12 @@ Route::group(['prefix'=>'libregistro'],function(){
     Route::get('index','LibRegistroController@index')->name('libregistro.index');
     Route::post('store','LibRegistroController@store')->name('libregistro.store');
 });
+
+Route::group(['prefix'=>'paciente','middleware'=>['auth','access']],function(){
+    Route::get('index','PacienteController@index')->name('adm.paciente.index');
+    Route::get('pacientes','PacienteController@pacientes')->name('adm.paciente.list');
+    Route::get('create','PacienteController@create')->name('adm.paciente.create');
+    Route::post('create','PacienteController@store')->name('adm.paciente.store');
+    Route::get('update/{pac_id}','PacienteController@update')->name('adm.paciente.update');
+    Route::post('update/{pac_id}','PacienteController@store')->name('adm.paciente.edit');
+});
