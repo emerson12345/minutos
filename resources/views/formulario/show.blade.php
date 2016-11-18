@@ -42,13 +42,23 @@
                                 case 1:
                                     echo " <input type='number' name='".$flight->for_id."'>";
                                     break;
+                                case 3:
+
+                                    echo '
+                                            <div class="list-data">
+                                            <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
+                                            ';
+                                    echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."'>
+                                    </div>";
+
+                                    break;
                                 case 4:
                                     echo "<textarea rows='4' cols='50' name='".$flight->for_id."'></textarea>";
                                     break;
                                 case 15:
                                     echo '
                                     <div class="list-data">
-                                    <a id="'.$flight->col_id.'-'.$flight->for_id.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
+                                    <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
                                     </div>';
                                     echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."'>";
                                     break;
@@ -56,10 +66,10 @@
                                     echo "<input type='hidden' name='".$flight->for_id."' value='0'>";
                                 ?>
                                     {!! Form::checkbox($flight->for_id, '1',false) !!}
-                            <?php
+                                    <?php
                                     break;
-                                default:
-                                    echo " <input type='text' name='".$flight->for_id."'>";
+                                    default:
+                                        echo " <input type='text' name='".$flight->for_id."'>";
                             }
                         ?>
                     </td>
@@ -76,18 +86,21 @@
 
 </div>
     <script>
+        //URL=cuaderno/peticion_listas/
         var url_data='{{$url_cuaderno}}';
         $("a").on('click',function(e) {
 
             data=e.toElement.id.split("-");
             var col_id=data[0];
             var for_id=data[1];
+            var col_tipo=data[2];
+            console.log(for_id);
             $.ajax({
                 beforeSend: function()
                 {
                     $("#listas").html("cargando...");
                 },
-                url:url_data+"/"+col_id+"/"+for_id,
+                url:url_data+"/"+col_id+"/"+for_id+"/"+col_tipo,
                 type:"GET",
                 data:{nom:"xc"},
                 success: function(info){

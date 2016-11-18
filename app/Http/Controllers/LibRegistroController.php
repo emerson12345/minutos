@@ -70,26 +70,27 @@ class LibRegistroController extends Controller
                 ['pac_id' => $paciente_id, 'for_id' => $f->for_id,'red_descripcion'=>$request->input($f->for_id)]
             );
         }
-        /*
-        $hc_con_seguro="'".$request->input('hc_con_seguro')."'";
-        if(is_null($request->input('hc_con_seguro')))
+        $referido_de_inst_id=$request->input('referido_de_inst_id');
+        $referido_a_inst_id=$request->input('referido_a_inst_id');
+        if(!(isset($_GET['referido_de_inst_id'])))
         {
-            $hc_con_seguro='0';
+            $referido_de_inst_id="0";
         }
-        echo "dfadfdfa";
-*/
+        if(!(isset($_GET['referido_a_inst_id'])))
+        {
+            $referido_a_inst_id="0";
+        }
         DB::table('paciente_hc')->insert(
             [
                 'pac_id' => $paciente_id,
                 'rrhh_id' => $request->input('rrhh_id'),
+                'rrhh_id2' => $request->input('rrhh_id'),
                 'pact_id'=>$request->input('pact_id'),
                 'hc_consulta_nueva'=>$request->input('hc_consulta_nueva'),
                 'hc_consulta_dentro'=>$request->input('hc_consulta_dentro'),
-                'hc_con_seguro'=>$request->input('hc_con_seguro'),
                 'inst_id'=>$request->input('inst_id'),
-                'referido_de_inst_id'=>$request->input('referido_de_inst_id'),
-                'referido_a_inst_id'=>$request->input('referido_a_inst_id'),
-                'hc_con_seguro'=>$request->input('hc_con_seguro'),
+                'referido_de_inst_id'=>$referido_de_inst_id,
+                'referido_a_inst_id'=>$referido_a_inst_id,
                 'user_id'=>Auth::user()->user_id//$request->input('user_id')
             ]
         );

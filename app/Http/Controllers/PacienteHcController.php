@@ -41,13 +41,15 @@ class PacienteHcController extends Controller
             ->join('lib_formulario','lib_formulario.for_id','=','lib_registro.for_id')
             ->join('lib_cuadernos','lib_cuadernos.cua_id','lib_formulario.cua_id')
             ->where('paciente.pac_id', '=', $id)
-            ->select('lib_cuadernos.cua_nombre','lib_registro.lib_fecha','paciente.pac_id','paciente_hc.pac_id','lib_cuadernos.cua_id')
+            ->select('lib_cuadernos.cua_nombre','lib_registro.lib_fecha','paciente_hc.hc_id','paciente_hc.pac_id','lib_cuadernos.cua_id')
             ->distinct()
             ->get();
         return view('PacienteHc.listHc',['listPacienteHc' => $listPacienteHc])->with('url_hc', $url_hc);
     }
-    public function atencionHc($cua_id,$pac_id,$fecha)
+    public function atencionHc($cua_id,$pac_id,$hc_id,$fecha)
     {
+        //echo $hc_id;
+
         $listAtencionHc = DB::table('lib_registro')
             ->join('lib_formulario', 'lib_registro.for_id', '=', 'lib_formulario.for_id')
             ->join('lib_cuadernos','lib_cuadernos.cua_id','=','lib_formulario.cua_id')
@@ -65,6 +67,7 @@ class PacienteHcController extends Controller
                 )
             ->get();
         return view('PacienteHc.listAtencionHc',['listAtencionHc' => $listAtencionHc]);
+
     }
 
     /**

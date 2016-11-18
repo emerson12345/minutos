@@ -34,7 +34,12 @@
             }
             .tr-seleccionable{
                 background-color: #e74c3c;
-
+            }
+            .tr-dimencion{
+                width: 200px;
+            }
+            .td-dimencion{
+                width: 200px;
             }
 
         </style>
@@ -57,7 +62,7 @@
                     </div>
                 </div>
 
-            <div class="box">
+                <div class="box">
                     <div class="box-body">
                         <label for="">Paciente:</label><br>
                         <input type="hidden" name="pac_id" id="tb_id_paciente" size="5" readonly>
@@ -65,41 +70,38 @@
                         <input type="button" id="btn-paciente" class="btn-success" value="Buscar">
                     </div>
                 </div>
-                <div class="box">
-                    <div class="box-body">
-                        <label for="">Referido de Establecimiento: </label>
-                        <?php echo Form::select('referido_de_inst_id', $listInstitucionAll, array('required'=> true)); ?>
-                        <br>
-                        <label for="">Referido a Establecimiento: </label>
-                        {!! Form::select('referido_a_inst_id', $listInstitucionAll, array('id' => 'pact_id2','required'=>true)) !!}
+                    <div class="box">
+                        <div class="box-body" >
+                            <label for="">CUADERNOS</label>
+                            <input type="button" value="..." id="btn-cuadernos" name="btn-cuadernos">
+                            <br>
+                            <input type="text" id="tb-cuadernos" name="tb-cuadernos" size="45" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="box">
-                    <div class="box-body" >
-                        <label for="">CUADERNOS</label>
-                        <table class="table table-bordered" id="t_cuadernos">
-                            <tbody>
-                            <tr>
-                                <th></th>
-                            </tr>
-                            <?php
-                            foreach ($listCuadernos as $flight) {
-                            ?>
-                            <tr class="tr-cuadernos">
-                                <td id="<?= $flight->cua_id ?>">
-                                    <?= $flight->cua_nombre ?>
-                                </td>
-                            </tr>
-                            <?php
-                            }
-                            ?>
-                            </tbody>
-                        </table>
+
+
+                    <div class="box">
+                        <div class="box-body" >
+                            <label for="">Referido de Establecimeinto</label>
+                            <input type="button" value="..." id="btn_referido_de_establecimeinto" name="btn_referido_de_establecimeinto">
+                            <br>
+                            <input type="text" id="referido_de_inst_id" name="referido_de_inst_id" size="5">
+                            <input type="text" id="tb_referido_de_establecimeinto" name="tb_referido_de_establecimeinto" size="45">
+                        </div>
                     </div>
-                </div>
+                    <div class="box">
+                        <div class="box-body" >
+                            <label for="">Referido a Establecimeinto</label>
+                            <input type="button" value="..." id="btn_referido_a_establecimeinto" name="btn_referido_a_establecimeinto">
+                            <br>
+                            <input type="text" id="referido_a_inst_id" name="referido_a_inst_id" size="5">
+                            <input type="text" id="tb_referido_a_establecimeinto" name="tb_referido_a_establecimeinto" size="45">
+                        </div>
+                    </div>
 
-                <!-------------------------------------------------------------------------------------------->
+
+                <!-- PACIENTES------------------------------------------------------------------------------------------>
                 <div id="myModal_pacientes" class="modal fade" role="dialog">
                     <div class="modal-dialog modal-lg">
 
@@ -117,16 +119,16 @@
                                             <table id="t_pacientes" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
                                                 <thead>
                                                     <tr role="row">
-                                                        <th>
+                                                        <th class="tr-dimencion">
                                                             Nro HC
                                                         </th>
-                                                        <th>
+                                                        <th class="tr-dimencion">
                                                             NOMBRE
                                                         </th>
-                                                        <th>
+                                                        <th class="tr-dimencion">
                                                             CI
                                                         </th>
-                                                        <th>
+                                                        <th class="tr-dimencion">
                                                             Fecha Nacimiento
                                                         </th>
                                                     </tr>
@@ -136,19 +138,19 @@
                                                 foreach ($listPacientes as $value) {
                                                 ?>
                                                 <tr role="row">
-                                                    <td class="tr-cuadernos"
+                                                    <td class="tr-cuadernos tr-dimencion"
                                                         id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>"
                                                             >
                                                         <?= $value->pac_id; ?>
                                                     </td>
-                                                    <td class="tr-cuadernos"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
+                                                    <td class="tr-cuadernos tr-dimencion"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
                                                         <?= $value->pac_nombre." ".$value->pac_ap_prim." ".$value->pac_ap_seg; ?>
                                                     </td>
 
-                                                    <td class="tr-cuadernos"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
+                                                    <td class="tr-cuadernos tr-dimencion"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
                                                         <?= $value->pac_nro_ci ?>
                                                     </td>
-                                                    <td class="tr-cuadernos"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
+                                                    <td class="tr-cuadernos tr-dimencion"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
                                                         <?= $value->pac_fecha_nac; ?>
                                                     </td>
                                                 </tr>
@@ -167,6 +169,175 @@
                         </div>
                     </div>
                 </div>
+                    <!-- CUADERNOS------------------------------------------------------------------------------------------>
+                    <div id="myModal_cuadernos" class="modal fade" role="dialog">
+                        <div class="modal-dialog modal-lg">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Cuadernos</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-md-10">
+                                        <div class="box">
+                                            <div class="box-body" >
+
+                                                <table id="table_cuadernos" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                                    <thead>
+                                                    <tr role="row">
+                                                        <th class="tr-dimencion">
+                                                            CODIGO
+                                                        </th>
+                                                        <th class="tr-dimencion">
+                                                            NOMBRE
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <?php
+                                                    foreach ($listCuadernos as $value) {
+                                                    ?>
+                                                    <tr role="row">
+                                                        <td class="tr-cuadernos tr-dimencion"
+                                                            id="<?= $value->cua_id; ?>-<?= $value->cua_nombre; ?>"
+                                                                >
+                                                            <?= $value->cua_id; ?>
+                                                        </td>
+                                                        <td class="tr-cuadernos tr-dimencion"   id="<?= $value->cua_id; ?>-<?= $value->cua_nombre; ?>">
+                                                            <?= $value->cua_nombre; ?>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--- END CUADERNOS -->
+                    <!----- INSTITUCIONES -->
+                    <div id="myModal_instituciones_r" class="modal fade" role="dialog">
+                        <div class="modal-dialog modal-lg">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Cuadernos</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-md-10">
+                                        <div class="box">
+                                            <div class="box-body" >
+
+                                                <table id="table_instituciones_r" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                                    <thead>
+                                                    <tr role="row">
+                                                        <th class="tr-dimencion">
+                                                            CODIGO
+                                                        </th>
+                                                        <th class="tr-dimencion">
+                                                            NOMBRE
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <?php
+                                                    foreach ($listInstitucionAll2 as $value) {
+                                                    ?>
+                                                    <tr role="row">
+                                                        <td class="tr-cuadernos tr-dimencion"
+                                                            id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>"
+                                                                >
+                                                            <?= $value->inst_id; ?>
+                                                        </td>
+                                                        <td class="tr-cuadernos tr-dimencion"   id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>">
+                                                            <?= $value->inst_nombre; ?>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--- END INSTITUCIONES -->
+                    <!----- INSTITUCIONES REFERIDO A-->
+                    <div id="myModal_instituciones_ra" class="modal fade" role="dialog">
+                        <div class="modal-dialog modal-lg">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Cuadernos</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-md-10">
+                                        <div class="box">
+                                            <div class="box-body" >
+
+                                                <table id="table_instituciones_ra" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                                    <thead>
+                                                    <tr role="row">
+                                                        <th class="tr-dimencion">
+                                                            CODIGO
+                                                        </th>
+                                                        <th class="tr-dimencion">
+                                                            NOMBRE
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <?php
+                                                    foreach ($listInstitucionAll2 as $value) {
+                                                    ?>
+                                                    <tr role="row">
+                                                        <td class="tr-cuadernos tr-dimencion"
+                                                            id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>"
+                                                                >
+                                                            <?= $value->inst_id; ?>
+                                                        </td>
+                                                        <td class="tr-cuadernos tr-dimencion"   id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>">
+                                                            <?= $value->inst_nombre; ?>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--- END INSTITUCIONES -->
+
             </div>
 
             <div class="col-md-4">
@@ -174,6 +345,9 @@
                     <div class="box-body">
                         <label for="">Personal de Salud: </label>
                         <?php echo Form::select('rrhh_id', $listRrhh, array('required'=> true)); ?>
+                        <br>
+                        <label for="">Personal de Salud2: </label>
+                        <?php echo Form::select('rrhh_id2', $listRrhh, array('required'=> true)); ?>
                         <br>
                         <label for="">Tipo de Paciente: </label>
                         {!! Form::select('pact_id', array('1' => 'INSTITUCIONAL','2' => 'CONVENIO'),'default', array('id' => 'pact_id','required'=>true)) !!}
@@ -198,9 +372,6 @@
                         <input type="hidden" name='hc_consulta_dentro' value="0">
                         {!! Form::checkbox('hc_consulta_dentro', '1',true) !!}<br>
 
-                        <label for="">Paciente con seguro: </label>
-                        <input type="hidden" name='hc_con_seguro' value="0">
-                        {!! Form::checkbox('hc_con_seguro', '1',false) !!}<br>
                     </div>
                 </div>
             </div>
@@ -219,7 +390,8 @@
 @section('script')
     <script>
         var url_data='{{$url_cuaderno}}';
-        var fila_seleccinable;
+        var url_cuaderno_peticion='{{$url_cuaderno_peticion}}';
+        var fila_seleccinable,fila_seleccinable_cuadernos,fila_seleccinable_instituciones_r;
         $("#t_pacientes").on('click', 'td', function(e) {
             arr=e.toElement.id.split("-");
             intIdPac=arr[0];
@@ -263,7 +435,83 @@
 
             }
         });
+        /////////////////////////cuadernos///////////////////////////////////////////
+        $("#btn-cuadernos").on('click',function(e){
+            $("#table_cuadernos").DataTable();
+            $('#myModal_cuadernos').modal('show');
+        });
+        $("#table_cuadernos").on('click','td',function(e){
+            if (typeof fila_seleccinable_cuadernos == 'undefined') {
+                $(this).addClass("tr-seleccionable");
+                fila_seleccinable_cuadernos=$(this);
+            }
+            else
+            {
+                fila_seleccinable_cuadernos.removeClass("tr-seleccionable");
+                $(this).addClass("tr-seleccionable");
+                fila_seleccinable_cuadernos=$(this);
 
+            }
+            arr=e.toElement.id.split("-");
+            intIdPac=arr[0];
+            strNombrePac=arr[1];
+            $('#tb-cuadernos').val(strNombrePac);
+            $('#myModal_cuadernos').modal('hide');
+            ajax_cuaderno2(url_cuaderno_peticion,"#t_cuadernos","#cuaderno",'click',"GET",intIdPac);
+        });
+        //////////////////////end cuadernos////////////////////////////////////
+        /////////////////////////instituciones///////////////////////////////////////////
+        $("#btn_referido_de_establecimeinto").on('click',function(e){
+            $("#table_instituciones_r").DataTable();
+            $('#myModal_instituciones_r').modal('show');
+        });
+        $("#table_instituciones_r").on('click','td',function(e){
+            if (typeof fila_seleccinable_instituciones_r == 'undefined') {
+                $(this).addClass("tr-seleccionable");
+                fila_seleccinable_instituciones_r=$(this);
+            }
+            else
+            {
+                fila_seleccinable_instituciones_r.removeClass("tr-seleccionable");
+                $(this).addClass("tr-seleccionable");
+                fila_seleccinable_instituciones_r=$(this);
+
+            }
+            arr=e.toElement.id.split("-");
+            intIdPac=arr[0];
+            strNombrePac=arr[1];
+            $('#tb_referido_de_establecimeinto').val(strNombrePac);
+            $('#referido_de_inst_id').val(intIdPac);
+            $('#myModal_instituciones_r').modal('hide');
+            //ajax_cuaderno2(url_cuaderno_peticion,"#t_cuadernos","#cuaderno",'click',"GET",intIdPac);
+        });
+        //////////////////////end instituciones////////////////////////////////////
+        /////////////////////////instituciones referido A///////////////////////////////////////////
+        $("#btn_referido_a_establecimeinto").on('click',function(e){
+            $("#table_instituciones_ra").DataTable();
+            $('#myModal_instituciones_ra').modal('show');
+        });
+        $("#table_instituciones_ra").on('click','td',function(e){
+            if (typeof fila_seleccinable_instituciones_r == 'undefined') {
+                $(this).addClass("tr-seleccionable");
+                fila_seleccinable_instituciones_r=$(this);
+            }
+            else
+            {
+                fila_seleccinable_instituciones_r.removeClass("tr-seleccionable");
+                $(this).addClass("tr-seleccionable");
+                fila_seleccinable_instituciones_r=$(this);
+
+            }
+            arr=e.toElement.id.split("-");
+            intIdPac=arr[0];
+            strNombrePac=arr[1];
+            $('#tb_referido_a_establecimeinto').val(strNombrePac);
+            $('#referido_a_inst_id').val(intIdPac);
+            $('#myModal_instituciones_ra').modal('hide');
+            //ajax_cuaderno2(url_cuaderno_peticion,"#t_cuadernos","#cuaderno",'click',"GET",intIdPac);
+        });
+        //////////////////////end instituciones////////////////////////////////////
         $("#t_Rrhh").on('click', 'td', function(e) {
             $("#datos-rhh").html("<b>Rhh: </b> "+$(this).html());
             $("#rrhh_id").val(e.toElement.id);

@@ -6,7 +6,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><?= $listFormularios[0]->col_combre; ?></h4>
+                <h4 class="modal-title">
+                    <?php
+                        if($col_tipo==3){
+                            echo "CIE10";
+                        }
+                        else
+                        echo $listFormularios[0]->col_combre;
+                    ?>
+                </h4>
             </div>
             <div class="modal-body">
                 <div class="col-md-10">
@@ -53,6 +61,10 @@
     $('#myModal').modal('show');
     $("#t_cuadernos-list-generica").on('click','td',function(e){
         form_id='{{$for_id}}';
+        console.log("lista generia show");
+        console.log("id form "+form_id);
+        console.log("lista generia show");
+        console.log("valor "+e.toElement.id.split("-")[1]);
         $("#"+form_id).val(e.toElement.id.split("-")[1]);
         $('#myModal').modal('hide');
     });
