@@ -63,13 +63,6 @@ class LibRegistroController extends Controller
             ->select('lib_formulario.for_id')
             ->get();
 
-        foreach($listFormularios as $f){
-            //echo $f->for_id." VALOR ".$request->input($f->for_id);
-            //echo "<br>";
-            DB::table('lib_registro')->insert(
-                ['pac_id' => $paciente_id, 'for_id' => $f->for_id,'red_descripcion'=>$request->input($f->for_id)]
-            );
-        }
         $referido_de_inst_id=$request->input('referido_de_inst_id');
         $referido_a_inst_id=$request->input('referido_a_inst_id');
         if(!(isset($_GET['referido_de_inst_id'])))
@@ -80,7 +73,7 @@ class LibRegistroController extends Controller
         {
             $referido_a_inst_id="0";
         }
-        DB::table('paciente_hc')->insert(
+        $hc_id=DB::table('paciente_hc')->insertGetId(
             [
                 'pac_id' => $paciente_id,
                 'rrhh_id' => $request->input('rrhh_id'),
@@ -92,8 +85,16 @@ class LibRegistroController extends Controller
                 'referido_de_inst_id'=>$referido_de_inst_id,
                 'referido_a_inst_id'=>$referido_a_inst_id,
                 'user_id'=>Auth::user()->user_id//$request->input('user_id')
-            ]
+            ],'hc_id'
         );
+
+        foreach($listFormularios as $f){
+            //echo $f->for_id." VALOR ".$request->input($f->for_id);
+            //echo "<br>";
+            DB::table('lib_registro')->insert(
+                ['hc_id'=>$hc_id,'pac_id' => $paciente_id, 'for_id' => $f->for_id,'red_descripcion'=>$request->input($f->for_id)]
+            );
+        }
         return view('genericas.mensaje',['url_data'=>$url_data]);
     }
     /**
