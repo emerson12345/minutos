@@ -43,7 +43,7 @@ $("#convenios-table").on('draw.dt',function () {
 });
 
 $(".btn-add").on('click',handleEvent);
-
+//handle
 function handleEvent(){
     var url = $(this).data("url");
     $.ajax({
