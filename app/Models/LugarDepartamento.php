@@ -29,4 +29,8 @@ class LugarDepartamento extends Model
         $lista = LugarDepartamento::pluck('dep_nombre', 'dep_id');
         return $lista;
     }
+
+    public function instituciones(){
+        return $this->hasMany('Sicere\Models\Institucion','dep_id','dep_id');
+    }
 }

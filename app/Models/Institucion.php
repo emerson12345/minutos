@@ -39,5 +39,16 @@ class Institucion extends Model
     public function usuarios(){
         return $this->belongsToMany('Sicere\User','usuario_institucion','inst_id','user_id');
     }
-    
+
+    public function departamento(){
+        return $this->belongsTo('Sicere\Models\LugarDepartamento','dep_id','dep_id');
+    }
+
+    public function area(){
+        return $this->belongsTo('Sicere\Models\LugarArea','area_id','area_id');
+    }
+
+    public function municipio(){
+        return $this->belongsTo('Sicere\Models\LugarMunicipio','mun_id','mun_id');
+    }
 }

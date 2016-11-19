@@ -72,4 +72,31 @@ class CuadernoController extends Controller
         });
         return route('adm.cuaderno.index');
     }
+
+    public function estado(){
+        return view('cuaderno.estado');
+    }
+
+    public function getData(Request $request){
+        $fec_ini = $request->fec_ini;
+        $fec_fin = $request->fec_fin;
+        $cuaderno = LibCuaderno::find($request->cua_id);
+        return view('cuaderno._items',['fec_ini'=>$fec_ini,'fec_fin'=>$fec_fin,'cuaderno'=>$cuaderno]);
+    }
+
+    public function setData(Request $request){
+        $cuaderno = LibCuaderno::find($request->cua_id);
+        if($cuaderno){
+            $fec_ini = $request->fec_ini;
+            $fec_fin = $request->fec_fin;
+            $fec_list = $request->fecha;
+            DB::transaction(function() use($cuaderno,$fec_ini,$fec_fin,$fec_list){
+                DB::table('cuaderno_estado')->where('cua_id',$cuaderno->cua_id)->whereBetween('fecha',[$fec_ini,$fec_fin])->delete();
+                foreach ($fec_list as $fec){
+                    DB::table('cuaderno_estado')->insert(['cua_id'=>$cuaderno->cua_id, 'fecha'=>$fec]);
+                }
+            });
+        }
+        return redirect()->route('cuaderno.estado');
+    }
 }

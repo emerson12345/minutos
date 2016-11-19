@@ -17,12 +17,15 @@ class Convenio extends Model
 
     protected $fillable = [
         'conv_nombre',
+        'conv_codigo',
         'conv_seleccionable',
-        'conv_fec_alta',
-        'conv_fec_mod'
+        'conv_niv_nacional',
     ];
 
     protected $guarded = [];
 
+    public function municipios(){
+        return $this->belongsToMany('Sicere\Models\LugarMunicipio','municipio_convenio','conv_id','mun_id');
+    }
         
 }

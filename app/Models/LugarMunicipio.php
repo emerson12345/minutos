@@ -32,4 +32,12 @@ class LugarMunicipio extends Model
     public static function Municipios($id){
         return LugarMunicipio::where('prov_id','=',$id)->pluck('mun_nombre', 'mun_id');
     }
+
+    public function instituciones(){
+        return $this->hasMany('Sicere\Models\Institucion','mun_id','mun_id');
+    }
+
+    public function convenios(){
+        return $this->belongsToMany('Sicere\Models\Convenio','municipio_convenio','mun_id','conv_id');
+    }
 }

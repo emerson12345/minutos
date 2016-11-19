@@ -35,6 +35,5 @@ class LibFormulario extends Model
     public function columna(){
         return $this->belongsTo('Sicere\Models\LibColumna','col_id','col_id');
     }
-
-
+    
 }
