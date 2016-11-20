@@ -7,18 +7,21 @@
         <table class="table table-bordered" id="t_Hc">
             <tbody>
             <tr>
-                <th>Registro</th><th>Fecha</th>
+                <th>Registro</th><th>Fecha</th><th>Institución</th>
             </tr>
                 <?php
                 foreach ($listPacienteHc as $flight) {
                 ?>
                 <tr class="tr-cuadernos">
-                    <td id="<?= $flight->cua_id ?>_<?= $flight->pac_id ?>_<?= $flight->hc_id ?>_<?= $flight->lib_fecha ?>">
+                    <td id="<?= $flight->cua_id ?>_<?= $flight->pac_id ?>_<?= $flight->hc_id ?>_<?= $flight->hc_fecha ?>">
                         <?= $flight->cua_nombre ?>
                         <input type="hidden" name="hc_id" value="<?= $flight->hc_id ?>">
                     </td>
-                    <td id="<?= $flight->cua_id ?>_<?= $flight->pac_id ?>_<?= $flight->lib_fecha ?>">
-                        <?= $flight->lib_fecha ?>
+                    <td id="<?= $flight->cua_id ?>_<?= $flight->pac_id ?>_<?= $flight->hc_fecha ?>">
+                        <?= $flight->hc_fecha ?>
+                    </td>
+                    <td id="<?= $flight->cua_id ?>_<?= $flight->pac_id ?>_<?= $flight->hc_fecha ?>">
+                        <?= $flight->inst_nombre ?>
                     </td>
 
                 </tr>

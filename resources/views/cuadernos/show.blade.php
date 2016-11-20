@@ -225,6 +225,7 @@
                         </div>
                     </div>
                     <!--- END CUADERNOS -->
+
                     <!----- INSTITUCIONES -->
                     <div id="myModal_instituciones_r" class="modal fade" role="dialog">
                         <div class="modal-dialog modal-lg">
@@ -258,8 +259,9 @@
                                                     <tr role="row">
                                                         <td class="tr-cuadernos tr-dimencion"
                                                             id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>"
-                                                                >
-                                                            <?= $value->inst_id; ?>
+                                                           y>     >e
+
+            >                                                <?= $value->inst_id; ?>
                                                         </td>
                                                         <td class="tr-cuadernos tr-dimencion"   id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>">
                                                             <?= $value->inst_nombre; ?>
@@ -325,8 +327,7 @@
                                                     }
                                                     ?>
                                                     </tbody>
-                                                </table>
-                                            </div>
+                                                </table></div>
                                         </div>
                                     </div>
                                 </div>
@@ -341,6 +342,7 @@
             </div>
 
             <div class="col-md-4">
+
                 <div class="box">
                     <div class="box-body">
                         <label for="">Personal de Salud: </label>
@@ -359,6 +361,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <div class="col-md-4">
@@ -390,7 +393,7 @@
 @section('script')
     <script>
         var url_data='{{$url_cuaderno}}';
-        var url_cuaderno_peticion='{{$url_cuaderno_peticion}}';
+        var url_cuaderno_peticion_hc ='{{$url_cuaderno_peticion_hc}}';
         var fila_seleccinable,fila_seleccinable_cuadernos,fila_seleccinable_instituciones_r;
         $("#t_pacientes").on('click', 'td', function(e) {
             arr=e.toElement.id.split("-");
@@ -457,7 +460,7 @@
             strNombrePac=arr[1];
             $('#tb-cuadernos').val(strNombrePac);
             $('#myModal_cuadernos').modal('hide');
-            ajax_cuaderno2(url_cuaderno_peticion,"#t_cuadernos","#cuaderno",'click',"GET",intIdPac);
+            ajax_cuaderno2(url_cuaderno_peticion_hc,"#t_cuadernos","#cuaderno",'click',"GET",intIdPac);
         });
         //////////////////////end cuadernos////////////////////////////////////
         /////////////////////////instituciones///////////////////////////////////////////

@@ -1,5 +1,5 @@
 
-<div id="myModal" class="modal fade" role="dialog">
+<div id="myModal-peticion-listas" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
@@ -58,7 +58,7 @@
 </div>
 
 <script>
-    $('#myModal').modal('show');
+    $('#myModal-peticion-listas').modal('show');
     $("#t_cuadernos-list-generica").on('click','td',function(e){
         form_id='{{$for_id}}';
         console.log("lista generia show");
@@ -66,6 +66,6 @@
         console.log("lista generia show");
         console.log("valor "+e.toElement.id.split("-")[1]);
         $("#"+form_id).val(e.toElement.id.split("-")[1]);
-        $('#myModal').modal('hide');
+        $('#myModal-peticion-listas').modal('hide');
     });
 </script>

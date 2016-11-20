@@ -24,7 +24,7 @@ class LibCuadernoController extends Controller
     public function index()
     {
         $url_cuaderno = asset('cuaderno/peticion/');
-        $url_cuaderno_peticion = asset('cuaderno/peticion/');
+        $url_cuaderno_peticion_hc = asset('cuaderno/peticion/');
         $inst_id=session('institucion')->inst_id;
         $listInstitucion = DB::table('institucion')
             ->join('institucion_convenio', 'institucion.inst_id', '=', 'institucion_convenio.inst_id')
@@ -43,7 +43,7 @@ class LibCuadernoController extends Controller
         $listPacientes = Paciente::all();
         $listRrhh=  Rrhh::all()->where('inst_id','=',$inst_id)->pluck('rrhh_nombre','rrhh_id');
 
-        return view('cuadernos.show',[ 'listCuadernos' => $listCuadernos,'listPacientes' => $listPacientes,'listRrhh' => $listRrhh,'listInstitucion'=>$listInstitucion,'listInstitucionAll2'=>$listInstitucionAll2 ])->with('url_cuaderno', $url_cuaderno)->with('url_cuaderno_peticion', $url_cuaderno_peticion);
+        return view('cuadernos.show',[ 'listCuadernos' => $listCuadernos,'listPacientes' => $listPacientes,'listRrhh' => $listRrhh,'listInstitucion'=>$listInstitucion,'listInstitucionAll2'=>$listInstitucionAll2 ])->with('url_cuaderno', $url_cuaderno)->with('url_cuaderno_peticion_hc', $url_cuaderno_peticion_hc);
     }
     public function peticion($id)
     {

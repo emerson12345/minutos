@@ -41,13 +41,11 @@ class LibRegistroController extends Controller
      */
     public function store(Request $request)
     {
-
         $url_data = asset('cuaderno/index/');
 
         $cua_id=$request->input('cua_id');
         $paciente_id=$request->input('pac_id');
         $paciente_hc="";
-
         $listPacienteHC = DB::table('paciente')
             ->join('paciente_hc', 'paciente.pac_id', '=', 'paciente_hc.pac_id')
             ->where('paciente.pac_id', '=', $paciente_id)
@@ -65,37 +63,48 @@ class LibRegistroController extends Controller
 
         $referido_de_inst_id=$request->input('referido_de_inst_id');
         $referido_a_inst_id=$request->input('referido_a_inst_id');
+        /*
+
         if(!(isset($_GET['referido_de_inst_id'])))
         {
             $referido_de_inst_id="0";
+        }else
+        {
+            $referido_de_inst_id=$request->input('referido_de_inst_id');
+            $referido_a_inst_id=$request->input('referido_a_inst_id');
         }
         if(!(isset($_GET['referido_a_inst_id'])))
         {
             $referido_a_inst_id="0";
-        }
+        }else
+        {
+            $referido_de_inst_id=$request->input('referido_de_inst_id');
+            $referido_a_inst_id=$request->input('referido_a_inst_id');
+        }*/
         $hc_id=DB::table('paciente_hc')->insertGetId(
             [
                 'pac_id' => $paciente_id,
                 'rrhh_id' => $request->input('rrhh_id'),
-                'rrhh_id2' => $request->input('rrhh_id'),
+                'rrhh_id2' => $request->input('rrhh_id2'),
                 'pact_id'=>$request->input('pact_id'),
                 'hc_consulta_nueva'=>$request->input('hc_consulta_nueva'),
                 'hc_consulta_dentro'=>$request->input('hc_consulta_dentro'),
                 'inst_id'=>$request->input('inst_id'),
                 'referido_de_inst_id'=>$referido_de_inst_id,
                 'referido_a_inst_id'=>$referido_a_inst_id,
+                'cua_id'=>$cua_id,
                 'user_id'=>Auth::user()->user_id//$request->input('user_id')
             ],'hc_id'
         );
 
         foreach($listFormularios as $f){
-            //echo $f->for_id." VALOR ".$request->input($f->for_id);
-            //echo "<br>";
+
             DB::table('lib_registro')->insert(
-                ['hc_id'=>$hc_id,'pac_id' => $paciente_id, 'for_id' => $f->for_id,'red_descripcion'=>$request->input($f->for_id)]
+                ['hc_id'=>$hc_id,'pac_id' => $paciente_id, 'for_id' => $f->for_id,'red_descripcion'=>trim($request->input($f->for_id))]
             );
         }
-        return view('genericas.mensaje',['url_data'=>$url_data]);
+        $mensaje="Datos insertados correctamente";
+        return view('genericas.mensaje',['url_data'=>$url_data,'mensaje'=>$mensaje]);
     }
     /**
      * Display the specified resource.
@@ -114,11 +123,76 @@ class LibRegistroController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    /*
     public function edit($id)
     {
         //
     }
+    */
+    public function edit(Request $request)
+    {
+        $hc_id=$request->input('hc_id');
+        $cua_id=$request->input('cua_id');
+        $fecha=$request->input('fecha');
 
+        echo $request->input('hc_consulta_nueva');
+
+
+
+        $listFormularios=DB::table('lib_formulario')
+            ->where('lib_formulario.cua_id','=',$cua_id)
+            ->select('lib_formulario.for_id')
+            ->get();
+
+        $referido_de_inst_id=$request->input('referido_de_inst_id');
+        $referido_a_inst_id=$request->input('referido_a_inst_id');
+        $hc_consulta_nueva=$request->input('hc_consulta_nueva');
+        $hc_consulta_dentro=$request->input('hc_consulta_dentro');
+
+        if(is_null($hc_consulta_nueva))
+            $hc_consulta_nueva=0;
+        else
+            $hc_consulta_nueva=1;
+
+        if(is_null($hc_consulta_dentro))
+            $hc_consulta_dentro=0;
+        else
+            $hc_consulta_dentro=1;
+
+        DB::table('paciente_hc')
+            ->where('hc_id', $hc_id)
+            ->update(
+            [
+                'rrhh_id' => $request->input('rrhh_id'),
+                'rrhh_id2' => $request->input('rrhh_id2'),
+                'pact_id'=>$request->input('pact_id'),
+                'hc_consulta_nueva'=>$hc_consulta_nueva,
+                'hc_consulta_dentro'=>$hc_consulta_dentro,
+                //'inst_id'=>$request->input('inst_id'),
+                'referido_de_inst_id'=>$referido_de_inst_id,
+                'referido_a_inst_id'=>$referido_a_inst_id,
+                'cua_id'=>$cua_id,
+                'user_id'=>Auth::user()->user_id//$request->input('user_id')
+            ]
+        );
+        foreach($listFormularios as $f){
+            $data=$request->input($f->for_id);
+            if(isset($data)==false)
+                $data=0;
+            DB::table('lib_registro')
+                ->where('for_id', $f->for_id)
+                ->where('hc_id', $hc_id)
+                ->where('lib_fecha', $fecha)
+                ->update(
+                    ['red_descripcion'=>$data]
+                );
+
+        }
+        $url_data=asset('PacienteHc/index');
+        $mensaje="Datos actualizados correctamente";
+        return view('genericas.mensaje',['url_data'=>$url_data,'mensaje'=>$mensaje]);
+
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -139,6 +213,6 @@ class LibRegistroController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }
