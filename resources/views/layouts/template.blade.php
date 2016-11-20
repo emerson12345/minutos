@@ -182,7 +182,9 @@
 
 
                                 <p>
+                                    @if(Auth::check())
                                     {{Auth::user()->user_nombre}}
+                                    @endif
                                     <small>Noviembre. 2016</small>
                                 </p>
                             </li>
