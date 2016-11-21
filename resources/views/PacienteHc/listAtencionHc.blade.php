@@ -17,7 +17,14 @@
     <div class="box-body">
         <div class="row">
             <div class="col-md-8">
-            <input type="submit" value="Modificar"><br>
+                <?php
+                    if($EstadoModificar==true)
+                    {
+                    ?>
+                        <input type="submit" value="Modificar"><br>
+                    <?php
+                    }
+                    ?>
             </div>
         </div>
         <div class="row">
@@ -209,7 +216,13 @@
                     <td><?= $flight->for_id ?></td>
                     <td><?= $flight->col_id ?></td>
                     -->
+                <?php
+                if($flight->for_id!=6 && $flight->for_id!=7)
+                {?>
                 <td><?= $flight->col_combre ?></td>
+                <?php
+                }
+                ?>
                 <td>
                     <?php
                         switch ($flight->col_tipo)
@@ -218,23 +231,27 @@
                             echo " <input type='number' name='".$flight->for_id."' value=".$flight->red_descripcion.">";
                             break;
                         case 3:
+                            if($flight->for_id!=6 && $flight->for_id!=7)
+                                {
                             echo '<div class="list-data">
                                   <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
                                   ';
                             echo "
-                                    <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' value=".$flight->red_descripcion.">";
+                                    <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' value='".$flight->red_descripcion."' readonly>";
+                                }
                             break;
                         case 4:
-                            echo "<textarea rows='4' cols='30' name='".$flight->for_id."'>
-                                ".trim($flight->red_descripcion)."
-                            </textarea>";
+                            echo "<textarea rows='4' cols='30' name='".$flight->for_id."'>".trim($flight->red_descripcion)."</textarea>";
                             break;
                         case 15:
-                            echo '
-                                        <div class="list-data">
-                                        <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
-                                        </div>';
-                            echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' value=".$flight->red_descripcion.">";
+                            if($flight->for_id!=6 && $flight->for_id!=7)
+                            {
+                                echo '
+                                            <div class="list-data">
+                                            <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
+                                            </div>';
+                                echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' value='".$flight->red_descripcion."' readonly>";
+                            }
                             break;
                         case 0:
                             if($flight->red_descripcion==1)
@@ -315,7 +332,8 @@
     });
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //URL=cuaderno/peticion_listas/
-    var url_data='http://127.0.0.1/SICEREP2/public/cuaderno/peticion_listas';
+    var url_peticion_listas='{{$url_peticion_listas}}';
+    //var url_data='http://127.0.0.1/SICEREP2/public/cuaderno/peticion_listas';
     $("a").on('click',function(e) {
         data=e.toElement.id.split("-");
         var col_id=data[0];
@@ -326,7 +344,7 @@
             {
                 $("#listas").html("cargando...");
             },
-            url:url_data+"/"+col_id+"/"+for_id+"/"+col_tipo,
+            url:url_peticion_listas+"/"+col_id+"/"+for_id+"/"+col_tipo,
             type:"GET",
             data:{nom:"xc"},
             success: function(info){
@@ -337,6 +355,6 @@
                 console.log("errorrr");
             }
         });
-        console.log(url_data+"/"+col_id+"/"+for_id+"/"+col_tipo);
+        //console.log(url_data+"/"+col_id+"/"+for_id+"/"+col_tipo);
     });
 </script>

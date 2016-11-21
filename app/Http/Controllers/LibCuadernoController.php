@@ -85,6 +85,7 @@ class LibCuadernoController extends Controller
             $listFormularios = DB::table('cie10')
                 ->where('cie10.cie_seleccionable', '=', '1')
                 ->select('cie10.cie_cod as lis_codigo','cie10.cie_nombre as lis_descripcion')
+                ->take(2000)
                 ->get();
         }
         else

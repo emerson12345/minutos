@@ -7,7 +7,7 @@
         <table class="table table-bordered" id="t_Hc">
             <tbody>
             <tr>
-                <th>Registro</th><th>Fecha</th><th>Institución</th>
+                <th>Registro</th><th>Fecha</th><th>InstituciÃ³n</th>
             </tr>
                 <?php
                 foreach ($listPacienteHc as $flight) {

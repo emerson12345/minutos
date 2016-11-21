@@ -41,10 +41,39 @@ class LibRegistroController extends Controller
      */
     public function store(Request $request)
     {
+
+
         $url_data = asset('cuaderno/index/');
 
         $cua_id=$request->input('cua_id');
         $paciente_id=$request->input('pac_id');
+
+        $fecha_actual=date("Y-m-d");
+
+        //$fecha_actual=date("2020-10-10");
+        $estadoCuadernoFecha=DB::table('cuaderno_estado')
+            ->where('cuaderno_estado.fecha','=',$fecha_actual)
+            ->where('cuaderno_estado.cua_id','=',$cua_id)
+            ->count();
+        $estadoCuadernoHC=DB::table('paciente_hc')
+            ->where('paciente_hc.hc_fecha','=',$fecha_actual)
+            ->where('paciente_hc.cua_id','=',$cua_id)
+            ->where('paciente_hc.pac_id','=',$paciente_id)
+            ->count();
+
+        if($estadoCuadernoFecha==0)
+        {
+            $mensaje="El cuaderno no esta habilitado para esta fecha";
+            return view('genericas.mensaje',['url_data'=>$url_data,'mensaje'=>$mensaje]);
+        }
+        //echo $estadoCuadernoHC;
+        if($estadoCuadernoHC>=1)
+        {
+            $mensaje="El historial Clinico de este paciente para este cuaderno y esta fecha ya fue registrado anteriormente";
+            return view('genericas.mensaje',['url_data'=>$url_data,'mensaje'=>$mensaje]);
+        }
+
+
         $paciente_hc="";
         $listPacienteHC = DB::table('paciente')
             ->join('paciente_hc', 'paciente.pac_id', '=', 'paciente_hc.pac_id')
@@ -63,24 +92,7 @@ class LibRegistroController extends Controller
 
         $referido_de_inst_id=$request->input('referido_de_inst_id');
         $referido_a_inst_id=$request->input('referido_a_inst_id');
-        /*
 
-        if(!(isset($_GET['referido_de_inst_id'])))
-        {
-            $referido_de_inst_id="0";
-        }else
-        {
-            $referido_de_inst_id=$request->input('referido_de_inst_id');
-            $referido_a_inst_id=$request->input('referido_a_inst_id');
-        }
-        if(!(isset($_GET['referido_a_inst_id'])))
-        {
-            $referido_a_inst_id="0";
-        }else
-        {
-            $referido_de_inst_id=$request->input('referido_de_inst_id');
-            $referido_a_inst_id=$request->input('referido_a_inst_id');
-        }*/
         $hc_id=DB::table('paciente_hc')->insertGetId(
             [
                 'pac_id' => $paciente_id,
@@ -134,8 +146,12 @@ class LibRegistroController extends Controller
         $hc_id=$request->input('hc_id');
         $cua_id=$request->input('cua_id');
         $fecha=$request->input('fecha');
+        $url_data=asset('PacienteHc/index');
 
-        echo $request->input('hc_consulta_nueva');
+
+
+
+        //echo $request->input('hc_consulta_nueva');
 
 
 
@@ -188,7 +204,6 @@ class LibRegistroController extends Controller
                 );
 
         }
-        $url_data=asset('PacienteHc/index');
         $mensaje="Datos actualizados correctamente";
         return view('genericas.mensaje',['url_data'=>$url_data,'mensaje'=>$mensaje]);
 

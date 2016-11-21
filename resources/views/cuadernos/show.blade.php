@@ -86,7 +86,7 @@
                             <label for="">Referido de Establecimeinto</label>
                             <input type="button" value="..." id="btn_referido_de_establecimeinto" name="btn_referido_de_establecimeinto">
                             <br>
-                            <input type="text" id="referido_de_inst_id" name="referido_de_inst_id" size="5">
+                            <input type="text" id="referido_de_inst_id" name="referido_de_inst_id" size="5" value="-1"  style="visibility:hidden">
                             <input type="text" id="tb_referido_de_establecimeinto" name="tb_referido_de_establecimeinto" size="45">
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                             <label for="">Referido a Establecimeinto</label>
                             <input type="button" value="..." id="btn_referido_a_establecimeinto" name="btn_referido_a_establecimeinto">
                             <br>
-                            <input type="text" id="referido_a_inst_id" name="referido_a_inst_id" size="5">
+                            <input type="text" id="referido_a_inst_id" name="referido_a_inst_id" size="5" value="-1"  style="visibility:hidden">
                             <input type="text" id="tb_referido_a_establecimeinto" name="tb_referido_a_establecimeinto" size="45">
                         </div>
                     </div>
@@ -520,6 +520,15 @@
             $("#rrhh_id").val(e.toElement.id);
         });
         $("#tb_nombre_paciente").on('keypress', function(e){
+            e.preventDefault();
+        });
+        $("#tb-cuadernos").on('keypress', function(e){
+            e.preventDefault();
+        });
+        $("#tb_referido_de_establecimeinto").on('keypress', function(e){
+            e.preventDefault();
+        });
+        $("#tb_referido_a_establecimeinto").on('keypress', function(e){
             e.preventDefault();
         });
     </script>

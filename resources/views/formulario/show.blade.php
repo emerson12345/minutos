@@ -34,7 +34,13 @@
                     <td><?= $flight->for_id ?></td>
                     <td><?= $flight->col_id ?></td>
                     -->
+                    <?php
+                    if($flight->for_id!=6 && $flight->for_id!=7)
+                    {?>
                     <td><?= $flight->col_combre ?></td>
+                    <?php
+                    }
+                    ?>
                     <td>
                         <?php
                             switch ($flight->col_tipo)
@@ -43,24 +49,28 @@
                                     echo " <input type='number' name='".$flight->for_id."'>";
                                     break;
                                 case 3:
-
-                                    echo '
-                                            <div class="list-data">
-                                            <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
-                                            ';
-                                    echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."'>
-                                    </div>";
-
+                                    if($flight->for_id!=6 && $flight->for_id!=7)
+                                    {
+                                        echo '
+                                                <div class="list-data">
+                                                <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
+                                                ';
+                                        echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."'>
+                                        </div>";
+                                    }
                                     break;
                                 case 4:
                                     echo "<textarea rows='4' cols='50' name='".$flight->for_id."'></textarea>";
                                     break;
                                 case 15:
-                                    echo '
-                                    <div class="list-data">
-                                    <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
-                                    </div>';
-                                    echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."'>";
+                                    if($flight->for_id!=6 && $flight->for_id!=7)
+                                    {
+                                        echo '
+                                        <div class="list-data">
+                                        <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
+                                        </div>';
+                                        echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."'>";
+                                    }
                                     break;
                                 case 0:
                                     echo "<input type='hidden' name='".$flight->for_id."' value='0'>";

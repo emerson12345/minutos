@@ -12,6 +12,7 @@ use Sicere\Models\LibCuaderno;
 use Sicere\Models\Rrhh;
 use Sicere\Models\institucion;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PacienteHcController extends Controller
 {
@@ -67,6 +68,33 @@ class PacienteHcController extends Controller
     }
     public function atencionHc($cua_id,$pac_id,$hc_id,$fecha)
     {
+
+
+        $fecha_actual=date("Y-m-d");
+
+        //$fecha_actual=date("2020-10-10");
+        $estadoCuadernoFecha=DB::table('cuaderno_estado')
+            ->where('cuaderno_estado.fecha','=',$fecha_actual)
+            ->where('cuaderno_estado.cua_id','=',$cua_id)
+            ->count();
+        $estadoCuadernoHC=DB::table('paciente_hc')
+            ->where('paciente_hc.user_id','=',Auth::user()->user_id)
+            ->where('paciente_hc.hc_id','=',$hc_id)
+            ->count();
+        $EstadoModificar=true;
+        //echo "Valores ".Auth::user()->user_id." ".$hc_id;
+
+        if($estadoCuadernoFecha==0)
+        {
+            $EstadoModificar=false;
+        }
+        //echo $estadoCuadernoHC;
+        if($estadoCuadernoHC==0)
+        {
+            $EstadoModificar=false;
+        }
+
+        $url_peticion_listas=asset('cuaderno/peticion_listas/');
         $listDatosHc = DB::select(
             "select
                 paciente.pac_id,
@@ -151,7 +179,8 @@ class PacienteHcController extends Controller
                 'hc_id'=>$hc_id,
                 'cua_id'=>$cua_id,
                 'fecha'=>$fecha,
-            ]);
+                'EstadoModificar'=>$EstadoModificar,
+            ])->with('url_peticion_listas', $url_peticion_listas);
     }
     public function searchHc($fecha_inicio,$fecha_fin,$cua_id,$rrhh_id,$pac_id)
     {
@@ -172,7 +201,7 @@ class PacienteHcController extends Controller
                 where paciente.pac_id=".$pac_id."
                     and
                     (paciente_hc.hc_fecha>='".$fecha_inicio."' and paciente_hc.hc_fecha<='".$fecha_fin."')
-                    and CAST(lib_cuadernos.cua_id AS VARCHAR(20)) like '%".$cua_id."%'
+                    and CAST(lib_cuadernos.cua_id AS VARCHAR(20)) like '".$cua_id."'
                     and CAST(paciente_hc.rrhh_id AS VARCHAR(20)) like '%".$rrhh_id."%'
             ");
         /*
@@ -185,6 +214,10 @@ class PacienteHcController extends Controller
             ->distinct()
             ->get();*/
         return view('PacienteHc.listHc',['listPacienteHc' => $listPacienteHc,'pac_id'=>$pac_id])->with('url_hc', $url_hc);
+    }
+    public  function agenda()
+    {
+        return view('PacienteHc.agenda');
     }
 
     /**
