@@ -71,6 +71,7 @@ Route::group(['prefix'=>'institucion','middleware'=>['auth','log']],function(){
     Route::post('create','InstitucionController@store')->name('institucion.create.store');
     Route::get('edit/{idInst}','InstitucionController@edit')->name('institucion.edit');
     Route::post('edit/{idInst}','InstitucionController@store')->name('institucion.edit.store');
+    Route::get('report','InstitucionController@report')->name('institucion.report');
 });
 Route::group(['prefix'=>'rrhh','middleware'=>['auth','log']],function(){
     Route::get('index','RrhhController@index')->name('rrhh.index');
@@ -83,6 +84,7 @@ Route::group(['prefix'=>'rrhh','middleware'=>['auth','log']],function(){
 
 Route::get('/provincia/getprovincia', ['uses' => 'LugarProvinciaController@getprovincia','as' => 'provincia.getprovincia']);
 Route::get('/municipio/getmunicipio', ['uses' => 'LugarMunicipioController@getmunicipio','as' => 'municipio.getmunicipio']);
+Route::get('/area/getarea', ['uses' => 'LugarAreaController@getarea','as' => 'area.getarea']);
 
 /***Rutas de percy***/
 Route::group(['prefix'=>'adm_cuaderno','middleware'=>['auth','log']],function(){
