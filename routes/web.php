@@ -11,21 +11,7 @@
 |
 */
 Route::get('/', 'HomeController@index')->middleware(['auth','access']);
-/*
-Route::get('prueba',function(){
-    return "Hola desde laravel";
-});
-Route::get('persona/{nombre}',function($nombre){
-    return "Buenos dias ".$nombre;
-});
-Route::get('persona/{nombre}',function($nombre){
-    return "Buenos dias ".$nombre;
-});*/
-/*
-Route::get('pagina2', 'PruebaController@show2');
-Route::resource('photos', 'PhotoController');
-Route::resource('estado_civil', 'EstadoCivilController');
-*/
+
 /***Rutas de pedro ***/
 Route::group(['prefix'=>'usuario','middleware'=>['auth','access']],function(){
     Route::get('index','UsuarioController@index')->name('adm.usuario.index');
@@ -56,6 +42,7 @@ $this->post('logout', 'Auth\LoginController@logout')->name('logout');
 $this->get('account_init','Auth\InitController@accountInit')->name('account.init');
 $this->post('account_init','Auth\InitController@accountInitPost')->name('account.init.post');
 
+
 Route::group(['prefix'=>'cuaderno'],function(){
     Route::get('index','LibCuadernoController@index')->name('cuaderno.index');
     Route::get('peticion/{id}','LibCuadernoController@peticion')->name('cuaderno.peticion');
@@ -71,6 +58,7 @@ Route::group(['prefix'=>'institucion','middleware'=>['auth','log']],function(){
     Route::post('create','InstitucionController@store')->name('institucion.create.store');
     Route::get('edit/{idInst}','InstitucionController@edit')->name('institucion.edit');
     Route::post('edit/{idInst}','InstitucionController@store')->name('institucion.edit.store');
+    Route::get('report','InstitucionController@report')->name('institucion.report');
 });
 Route::group(['prefix'=>'rrhh','middleware'=>['auth','log']],function(){
     Route::get('index','RrhhController@index')->name('rrhh.index');
@@ -83,6 +71,7 @@ Route::group(['prefix'=>'rrhh','middleware'=>['auth','log']],function(){
 
 Route::get('/provincia/getprovincia', ['uses' => 'LugarProvinciaController@getprovincia','as' => 'provincia.getprovincia']);
 Route::get('/municipio/getmunicipio', ['uses' => 'LugarMunicipioController@getmunicipio','as' => 'municipio.getmunicipio']);
+Route::get('/area/getarea', ['uses' => 'LugarAreaController@getarea','as' => 'area.getarea']);
 
 /***Rutas de percy***/
 Route::group(['prefix'=>'adm_cuaderno','middleware'=>['auth','log']],function(){
@@ -103,14 +92,18 @@ Route::group(['prefix'=>'cuaderno'],function(){
 Route::group(['prefix'=>'PacienteHc'],function(){
     Route::get('index','PacienteHcController@index')->name('PacienteHc.index');
     Route::get('historial_clinico/{id}','PacienteHcController@registroHistoricoPaciente')->name('PacienteHc.registroHistoricoPaciente');
+    Route::get('buscar_historial_clinico/{fecha_inicio}/{fecha_fin}/{cua_id}/{rrhh_id}/{pac_id}','PacienteHcController@searchHc')->name('PacienteHc.searchHc');
     Route::get('atencion/{cua_id}/{pac_id}/{hc_id}/{fecha}','PacienteHcController@atencionHc')->name('PacienteHc.atencion');
+});
+
+Route::group(['prefix'=>'Agenda'],function(){
+    Route::get('index','AgendaController@index')->name('Agenda.index');
 });
 
 Route::group(['prefix'=>'libregistro'],function(){
     Route::get('index','LibRegistroController@index')->name('libregistro.index');
     Route::post('store','LibRegistroController@store')->name('libregistro.store');
     Route::post('edit','LibRegistroController@edit')->name('libregistro.edit');
-
 });
 
 Route::group(['prefix'=>'paciente','middleware'=>['auth']],function(){
@@ -120,6 +113,12 @@ Route::group(['prefix'=>'paciente','middleware'=>['auth']],function(){
     Route::post('create','PacienteController@store')->name('adm.paciente.store');
     Route::get('update/{pac_id}','PacienteController@update')->name('adm.paciente.update');
     Route::post('update/{pac_id}','PacienteController@store')->name('adm.paciente.edit');
+    Route::get('detail/{pac_id}','PacienteController@detail')->name('adm.paciente.detail');
+    Route::get('group/{pac_id}','PacienteController@group')->name('adm.paciente.group');
+    Route::get('group/{pac_id}/create','PacienteController@formGroup')->name('adm.paciente.group.create');
+    Route::get('group/{pac_id}/update/{group_id}','PacienteController@formGroup')->name('adm.paciente.group.update');
+    Route::post('group/{pac_id}/create','PacienteController@storeGroup')->name('adm.paciente.group.store');
+    Route::post('group/{pac_id}/update/{group_id}','PacienteController@storeGroup')->name('adm.paciente.group.edit');
 });
 
 Route::get('cuaderno/estado','CuadernoController@estado')->name('cuaderno.estado');
@@ -138,3 +137,5 @@ Route::group(['prefix'=>'convenio'],function(){
     Route::post('create','ConvenioController@store')->name('adm.convenio.store');
     Route::post('update/{conv_id}','ConvenioController@store')->name('adm.convenio.edit');
 });
+
+Route::post('municipios','PacienteController@getMunicipios')->name('get.municipios');
