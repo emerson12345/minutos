@@ -140,7 +140,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             {!! Form::label('tb_libro_atencion', 'LIBRO DE ATENCIÓN') !!}
-                            {!! Form::select('tb_listCuadernos_search', $listCuadernosSearch,array('id'=>'tb_listCuadernos_search')) !!}
+                            {!! Form::select('tb_listCuadernos_search', $listCuadernosSearch,null,array('id'=>'tb_listCuadernos_search')) !!}
                         </div>
                     </div>
                     <div class="row">
@@ -206,8 +206,9 @@
             }, cb);
             cb(start, end);
         });
-
+        var t_pacientes_id_search=false;
         $("#t_pacientes").on('click', 'td', function(e) {
+            t_pacientes_id_search=e.toElement.id;
             $("#AtenccionHc").html("");
                 if (typeof fila_seleccinable_pacientes == 'undefined') {
                     $(this).parent().addClass("tr-seleccionable");
@@ -234,8 +235,6 @@
                 },
                 error:function(jqXHR,estado,error){
                     console.log("errorrr2");
-                    
-
                 }
             });
         });
@@ -262,12 +261,47 @@
             $('#tb_personal_atencion_id').val(intIdPer);
             $('#myModal_personal_search').modal('hide');
         });
+        tb_listCuadernos_search="";
+        tb_personal_atencion_id="";
         $("#btn-paciente-search-general").on('click',function(e){
+
             rep_fec_ini=$("#fec_ini").val();
+            rep_fec_ini=rep_fec_ini.split("/").join("-");
             rep_fec_fin=$("#fec_fin").val();
+            rep_fec_fin=rep_fec_fin.split("/").join("-");
+
             tb_listCuadernos_search=$("#tb_listCuadernos_search").val();
-            tb_personal_atencion_id=$("#tb_personal_atencion_id").val();
-            alert(rep_fec_ini+" "+rep_fec_fin+" "+tb_listCuadernos_search+" "+tb_personal_atencion_id);
+            if($("#tb_personal_atencion_id").val()=="")
+                tb_personal_atencion_id=false;
+            else
+                tb_personal_atencion_id=$("#tb_personal_atencion_id").val();
+            if(t_pacientes_id_search==false)
+            {
+                alert("Registre una persona");
+            }
+            else{
+                //$fecha_inicio,$fecha_fin,$cua_id,$rrhh_id,$pac_id
+                //alert(rep_fec_ini+" "+rep_fec_fin+" "+tb_listCuadernos_search+" "+t_pacientes_id_search);
+                url_buscar_Hc='{{$url_buscar_Hc}}';
+                $.ajax({
+                    beforeSend: function()
+                    {
+                        console.log($("#PacienteHc").html("cargando..."));
+                    },
+                    url:url_buscar_Hc+"/"+rep_fec_ini+"/"+rep_fec_fin+"/"+tb_listCuadernos_search+"/"+tb_personal_atencion_id+"/"+t_pacientes_id_search,
+                    type:"GET",
+                    data:{nom:"xc"},
+                    success: function(info){
+                        //console.log(info);
+                        $("#PacienteHc").html(info);
+                        //console.log($("#PacienteHc").html(info));
+                    },
+                    error:function(jqXHR,estado,error){
+                        console.log("errorrr2");
+                    }
+                });
+            }
+
         });
     </script>
 @stop

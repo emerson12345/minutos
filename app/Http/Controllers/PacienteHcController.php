@@ -23,6 +23,7 @@ class PacienteHcController extends Controller
     public function index()
     {
         $url_paciente = asset('PacienteHc/historial_clinico/');
+        $url_buscar_Hc = asset('PacienteHc/buscar_historial_clinico//');
         $listPacientes = Paciente::all();
         $listCuadernos = LibCuaderno::all();
         $listCuadernosSearch=LibCuaderno::all()
@@ -36,7 +37,7 @@ class PacienteHcController extends Controller
             ->nest('listPacientes', 'PacienteHc.listPacientes',array('listPacientes'=>$listPacientes))
             ->nest('listCuadernos','cuadernos.listCuadernos',array('listCuadernos'=>$listCuadernos))
             ->nest('listRrhh','Rrhh.listRrhh',array('listRrhh'=>$listRrhh))
-            ->with('url_paciente', $url_paciente);
+            ->with(array('url_paciente'=>$url_paciente,'url_buscar_Hc'=>$url_buscar_Hc));
         return $view;
     }
     public function registroHistoricoPaciente($id)
@@ -151,6 +152,39 @@ class PacienteHcController extends Controller
                 'cua_id'=>$cua_id,
                 'fecha'=>$fecha,
             ]);
+    }
+    public function searchHc($fecha_inicio,$fecha_fin,$cua_id,$rrhh_id,$pac_id)
+    {
+        if($rrhh_id=='false')
+            $rrhh_id="%";
+        $url_hc = asset('PacienteHc/atencion/');
+        $listPacienteHc = DB::select(
+            "
+                select lib_cuadernos.cua_nombre,paciente_hc.hc_fecha,paciente_hc.hc_id,lib_cuadernos.cua_id,
+                institucion.inst_nombre,paciente_hc.rrhh_id,paciente_hc.rrhh_id2,paciente_hc.pac_id
+                from paciente
+                join paciente_hc
+                on paciente.pac_id=paciente_hc.pac_id
+                join lib_cuadernos
+                on lib_cuadernos.cua_id=paciente_hc.cua_id
+                join institucion
+                on institucion.inst_id=paciente_hc.inst_id
+                where paciente.pac_id=".$pac_id."
+                    and
+                    (paciente_hc.hc_fecha>='".$fecha_inicio."' and paciente_hc.hc_fecha<='".$fecha_fin."')
+                    and CAST(lib_cuadernos.cua_id AS VARCHAR(20)) like '%".$cua_id."%'
+                    and CAST(paciente_hc.rrhh_id AS VARCHAR(20)) like '%".$rrhh_id."%'
+            ");
+        /*
+        $listPacienteHc = DB::table('paciente')
+            ->join('paciente_hc', 'paciente.pac_id', '=', 'paciente_hc.pac_id')
+            ->join('lib_cuadernos','lib_cuadernos.cua_id','paciente_hc.cua_id')
+            ->join('institucion','institucion.inst_id','paciente_hc.inst_id')
+            ->where('paciente.pac_id', '=', $pac_id)
+            ->select('lib_cuadernos.cua_nombre','paciente_hc.hc_fecha','paciente_hc.hc_id','paciente_hc.pac_id','lib_cuadernos.cua_id','institucion.inst_nombre')
+            ->distinct()
+            ->get();*/
+        return view('PacienteHc.listHc',['listPacienteHc' => $listPacienteHc,'pac_id'=>$pac_id])->with('url_hc', $url_hc);
     }
 
     /**
