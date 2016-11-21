@@ -92,16 +92,21 @@ class LibRegistroController extends Controller
         $referido_a_inst_id=$request->input('referido_a_inst_id');
 
         $edadPacienteHc=DB::select("
-                    SELECT date_part('year',age(paciente.pac_fecha_nac)) as edad
-                    from paciente_hc
-                    join paciente
-                    on paciente_hc.pac_id=paciente.pac_id
-                    where paciente_hc.pac_id=1;
-        ");
+                    SELECT date_part('year',age(paciente.pac_fecha_nac)) as edad,paciente.pac_edad_anio
+                    from paciente
+                    where paciente.pac_id='".$paciente_id."'");
+        $edadPacienteHc=$edadPacienteHc[0]->edad;
+
         if(is_null($edadPacienteHc))
         {
-
+            $edadPacienteHc=DB::select("
+                    SELECT paciente.pac_edad_anio
+                    from paciente
+                    where paciente.pac_id='".$paciente_id."'");
+            $edadPacienteHc=$edadPacienteHc[0]->pac_edad_anio;
         }
+
+
         $hc_id=DB::table('paciente_hc')->insertGetId(
             [
                 'pac_id' => $paciente_id,
