@@ -22,22 +22,22 @@
 @stop
 
 @section('content')
-        <style>
-            #calendar {
-                max-width: 900px;
-                margin: 0 auto;
-            }
+    <style>
+        #calendar {
+            max-width: 900px;
+            margin: 0 auto;
+        }
 
-        </style>
+    </style>
 
-        <section class="content">
-            <div class="box box-primary box-solid">
-                <div class="box-body">
-                    <div id='calendar'></div>
-                </div>
+    <section class="content">
+        <div class="box box-primary box-solid">
+            <div class="box-body">
+                <div id='calendar'></div>
             </div>
-        </section>
-    @stop
+        </div>
+    </section>
+@stop
 
 @section('script')
     <link rel='stylesheet' href="{{asset('template/plugins/fullcalendar/fullcalendar.css')}}"/>
