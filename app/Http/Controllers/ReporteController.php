@@ -33,7 +33,7 @@ class ReporteController extends Controller
         });
 
 
-        PDF::SetTitle('My Report');
+        PDF::SetTitle('Reporte de producción');
         PDF::SetSubject('Reporte de sistema');
         PDF::SetMargins(25, 30, 25);
         PDF::SetFontSubsetting(false);
