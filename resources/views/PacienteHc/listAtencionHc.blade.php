@@ -10,8 +10,11 @@
         background-color: #1abc9c;
         cursor: pointer;
     }
+    SELECT {
+        font-size: 7pt;
+        font-family : verdana,arial,helvetica;
+    }
 </style>
-
 
 <div class="box">
     <div class="box-body">

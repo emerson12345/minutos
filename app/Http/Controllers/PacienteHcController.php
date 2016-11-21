@@ -150,11 +150,25 @@ class PacienteHcController extends Controller
                 )
             ->get();
         $inst_id=session('institucion')->inst_id;
+        /*
         $listInstitucion = DB::table('institucion')
             ->join('institucion_convenio', 'institucion.inst_id', '=', 'institucion_convenio.inst_id')
             ->join('convenio','convenio.conv_id','=','institucion_convenio.conv_id')
             ->where('institucion.inst_id','=',$inst_id)
-            ->pluck('convenio.conv_nombre','convenio.conv_id');
+            ->pluck('convenio.conv_nombre','convenio.conv_id');*/
+
+
+        $listConvenio1 = DB::table('convenio')
+            ->where('convenio.conv_niv_nacional','=',1)
+            ->select('convenio.conv_nombre','convenio.conv_id');
+        $listConvenio2 = DB::table('institucion')
+            ->join('lugar_municipio','lugar_municipio.mun_id','=','institucion.mun_id')
+            ->join('municipio_convenio','municipio_convenio.mun_id','=','lugar_municipio.mun_id')
+            ->join('convenio','convenio.conv_id','=','municipio_convenio.conv_id')
+            ->where('institucion.inst_id','=',$inst_id)
+            ->select('convenio.conv_nombre','convenio.conv_id');
+        $listInstitucion=$listConvenio1->union($listConvenio2)->pluck('convenio.conv_nombre','convenio.conv_id');
+
         //$listCuadernos = LibCuaderno::all()->pluck('cua_nombre','cua_id');
         $listInstitucionAll=Institucion::all()->pluck('inst_nombre','inst_id');
         $listInstitucionAll2=Institucion::all();
