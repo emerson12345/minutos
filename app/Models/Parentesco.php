@@ -25,6 +25,5 @@ class Parentesco extends Model
     ];
 
     protected $guarded = [];
-
-        
+    
 }

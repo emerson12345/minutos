@@ -25,12 +25,13 @@ class PacienteGrupoFamilium extends Model
         'gru_fam_telf',
         'gru_fam_direccion',
         'gru_fam_seleccionable',
-        'gru_fam_fec_alta',
-        'gru_fam_fec_mod',
-        'user_id'
+        'user_id',
+        'parent_id'
     ];
 
     protected $guarded = [];
 
-        
+    public function parentesco(){
+        return $this->belongsTo('Sicere\Models\Parentesco','parent_id','parent_id');
+    }
 }

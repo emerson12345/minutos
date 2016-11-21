@@ -43,10 +43,7 @@
                                 <th>2do. Apellido</th>
                                 <th>Nombres</th>
                                 <th>Sexo</th>
-                                <th>Fec. Nac.</th>
                                 <th>Disc.</th>
-                                <th>Alta</th>
-                                <th>Mod</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -64,7 +61,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Nuevo paciente</h4>
+                    <h4 class="modal-title">Paciente</h4>
                 </div>
                 <div class="modal-body">
                     <div class="box box-primary box-solid">
@@ -81,8 +78,34 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+    <div id="modal-group" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Grupo familiar</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="box box-primary box-solid">
+                        <div class="box-body">
+                            Cargando...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Cerrar</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 @stop
 
 @section('script')
+    <link rel="stylesheet" href="{{asset('template/plugins/datepicker/datepicker3.css')}}">
+    <script src="{{asset('template/plugins/bootstrap-daterangepicker/js/moment.min.js')}}"></script>
+    <script src="{{asset('template/plugins/datepicker/bootstrap-datepicker.js')}}"></script>
+    <script src="{{asset('template/plugins/datepicker/locales/bootstrap-datepicker.es.js')}}"></script>
     <script src="{{asset('js/paciente/index.js')}}"></script>
 @stop

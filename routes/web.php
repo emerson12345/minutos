@@ -120,6 +120,12 @@ Route::group(['prefix'=>'paciente','middleware'=>['auth']],function(){
     Route::post('create','PacienteController@store')->name('adm.paciente.store');
     Route::get('update/{pac_id}','PacienteController@update')->name('adm.paciente.update');
     Route::post('update/{pac_id}','PacienteController@store')->name('adm.paciente.edit');
+    Route::get('detail/{pac_id}','PacienteController@detail')->name('adm.paciente.detail');
+    Route::get('group/{pac_id}','PacienteController@group')->name('adm.paciente.group');
+    Route::get('group/{pac_id}/create','PacienteController@formGroup')->name('adm.paciente.group.create');
+    Route::get('group/{pac_id}/update/{group_id}','PacienteController@formGroup')->name('adm.paciente.group.update');
+    Route::post('group/{pac_id}/create','PacienteController@storeGroup')->name('adm.paciente.group.store');
+    Route::post('group/{pac_id}/update/{group_id}','PacienteController@storeGroup')->name('adm.paciente.group.edit');
 });
 
 Route::get('cuaderno/estado','CuadernoController@estado')->name('cuaderno.estado');
@@ -138,3 +144,5 @@ Route::group(['prefix'=>'convenio'],function(){
     Route::post('create','ConvenioController@store')->name('adm.convenio.store');
     Route::post('update/{conv_id}','ConvenioController@store')->name('adm.convenio.edit');
 });
+
+Route::post('municipios','PacienteController@getMunicipios')->name('get.municipios');

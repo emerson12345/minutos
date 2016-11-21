@@ -33,4 +33,12 @@ class LugarDepartamento extends Model
     public function instituciones(){
         return $this->hasMany('Sicere\Models\Institucion','dep_id','dep_id');
     }
+    
+    public function provincias(){
+        return $this->hasMany('Sicere\Models\LugarProvincia','dep_id','dep_id');
+    }
+
+    public function municipios(){
+        return $this->hasManyThrough('Sicere\Models\LugarMunicipio','Sicere\Models\LugarProvincia','dep_id','prov_id','dep_id');
+    }
 }

@@ -40,4 +40,8 @@ class LugarMunicipio extends Model
     public function convenios(){
         return $this->belongsToMany('Sicere\Models\Convenio','municipio_convenio','mun_id','conv_id');
     }
+
+    public function provincia(){
+        return $this->belongsTo('Sicere\Models\LugarProvincia','prov_id','prov_id');
+    }
 }
