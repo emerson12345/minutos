@@ -25,7 +25,7 @@
             margin: 0;
             color: #fff;
             font-size: 3.5em;
-            font-family: "Arial Black";
+            font-family: "Arial";
             text-shadow: -2px -2px 0px #00f, 2px -2px 0px #00f, -2px 2px 0px #00f, 2px 2px 0px #00f,3px 3px 2px #00f;
         }
     </style>
@@ -34,11 +34,12 @@
 <div class="container-fluid">
     <div class="row well">
         <div class="col-md-2">
-            <img src="{{asset('template/dist/img/bolivia.gif')}}" height="60px">
+            <img src="{{asset('template/dist/img/bolivia.gif')}}" height="80px">
         </div>
         <div class="col-md-8 text-center">
             <h1>
-                Ministerio de salud
+                <img src="{{asset('template/dist/img/encabezado.jpg')}}" height="60px">
+                <!-- Ministerio -->
             </h1>
         </div>
         <div class="col-md-2">
@@ -46,13 +47,23 @@
         </div>
     </div>
 </div>
+
+
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            </br></br></br></br></br></br>
+            <div style= "float: right;">
+
+
+                <img src="{{asset('template/dist/img/slogan1.gif')}}" height="100px" width="300px" class="pull-right">
+
+            </div>
+        </div>
         <div class="col-md-6">
             <div class="login-box">
                 <div class="login-box-body">
-                    <div class="login-box-msg">Ingrese sus datos para iniciar sesion</div>
+                    <div class="login-box-msg">Ingrese sus datos para iniciar sesión</div>
                     <form role="form" method="POST" action="{{ url('/login') }}">
                         {{csrf_field()}}
                         <div class="form-group has-feedback{{ $errors->has('user_codigo') ? ' has-error' : '' }}">
@@ -66,7 +77,7 @@
                         </div>
 
                         <div class="form-group has-feedback{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <input id="password" type="password" class="form-control" name="password" placeholder="Password" required>
+                            <input id="password" type="password" class="form-control" name="password" placeholder="Contraseña" required>
                             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                             @if ($errors->has('password'))
                                 <span class="help-block">
@@ -83,11 +94,25 @@
 
                         <div class="clearfix"></div>
                     </form>
+
+
+                </div>
+
+                </br></br></br></br></br></br>
+
+                <div style="width:500px; height:100px;">
+                    <img src="{{asset('template/dist/img/aicslogo.jpg')}}" height="60px" class="pull-right">
+
                 </div>
             </div>
         </div>
+
     </div>
 </div>
+
+
+
+
 <div class="container-fluid well" style="bottom: 0; position: absolute; margin: 0;padding: 10px; width: 100%;text-align: center">
     <strong>Copyright ©</a>.</strong> Todos los derechos reservados
 </div>
