@@ -82,7 +82,7 @@
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label('rrhh_tipo_id', 'TIPO DE PERSONAL', ['class' => 'col-sm-2 control-label']) !!}
+                    {!! Form::label('rrhh_tipo_id', 'FUENTE DE FINANCIAMIENTO', ['class' => 'col-sm-2 control-label']) !!}
                     <div class="col-sm-10">
                         {!! Form::select('rrhh_tipo_id',$tipo_rrhh_list,null,['placeholder'=>'Selecciona','class'=>'form-control','require']) !!}
                             <span class="label label-warning"></span>
