@@ -41,8 +41,6 @@ class LibRegistroController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $url_data = asset('cuaderno/index/');
 
         $cua_id=$request->input('cua_id');
@@ -93,6 +91,17 @@ class LibRegistroController extends Controller
         $referido_de_inst_id=$request->input('referido_de_inst_id');
         $referido_a_inst_id=$request->input('referido_a_inst_id');
 
+        $edadPacienteHc=DB::select("
+                    SELECT date_part('year',age(paciente.pac_fecha_nac)) as edad
+                    from paciente_hc
+                    join paciente
+                    on paciente_hc.pac_id=paciente.pac_id
+                    where paciente_hc.pac_id=1;
+        ");
+
+
+
+
         $hc_id=DB::table('paciente_hc')->insertGetId(
             [
                 'pac_id' => $paciente_id,
@@ -105,6 +114,7 @@ class LibRegistroController extends Controller
                 'referido_de_inst_id'=>$referido_de_inst_id,
                 'referido_a_inst_id'=>$referido_a_inst_id,
                 'cua_id'=>$cua_id,
+                'pac_edad'=>$edadPacienteHc,
                 'user_id'=>Auth::user()->user_id//$request->input('user_id')
             ],'hc_id'
         );

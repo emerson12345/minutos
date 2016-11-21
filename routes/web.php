@@ -56,11 +56,11 @@ $this->post('logout', 'Auth\LoginController@logout')->name('logout');
 $this->get('account_init','Auth\InitController@accountInit')->name('account.init');
 $this->post('account_init','Auth\InitController@accountInitPost')->name('account.init.post');
 
-
 Route::group(['prefix'=>'cuaderno'],function(){
     Route::get('index','LibCuadernoController@index')->name('cuaderno.index');
     Route::get('peticion/{id}','LibCuadernoController@peticion')->name('cuaderno.peticion');
-    Route::get('peticion_listas/{intIDColumna}','LibCuadernoController@peticionListas')->name('cuaderno.peticionListas');
+    Route::get('peticion_listas/{intIDColumna}/{for_id}/{col_tipo}','LibCuadernoController@peticionListas')->name('cuaderno.peticionListas');
+    Route::get('detalle/{hc_id}/{cua_id}','LibCuadernoController@detalle')->name('cuaderno.detalle');
 });
 
 /***Rutas de emerson ***/
@@ -103,14 +103,14 @@ Route::group(['prefix'=>'cuaderno'],function(){
 Route::group(['prefix'=>'PacienteHc'],function(){
     Route::get('index','PacienteHcController@index')->name('PacienteHc.index');
     Route::get('historial_clinico/{id}','PacienteHcController@registroHistoricoPaciente')->name('PacienteHc.registroHistoricoPaciente');
-    Route::get('atencion/{cua_id}/{hc_id}/{fecha}','PacienteHcController@atencionHc')->name('PacienteHc.atencion');
+    Route::get('atencion/{cua_id}/{pac_id}/{hc_id}/{fecha}','PacienteHcController@atencionHc')->name('PacienteHc.atencion');
 });
 
 Route::group(['prefix'=>'libregistro'],function(){
     Route::get('index','LibRegistroController@index')->name('libregistro.index');
     Route::post('store','LibRegistroController@store')->name('libregistro.store');
     Route::post('edit','LibRegistroController@edit')->name('libregistro.edit');
-    
+
 });
 
 Route::group(['prefix'=>'paciente','middleware'=>['auth']],function(){
