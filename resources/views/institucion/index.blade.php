@@ -27,6 +27,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
+                        <a href="{{route('institucion.report')}}" class="btn btn-default"><i class="fa fa-file-pdf-o"></i> PDF</a>
                         <button type="button" class="btn btn-add btn-primary pull-right margin-bottom" data-url="{{route('institucion.create')}}">
                             <i class="fa fa-plus"></i> Agregar intitución
                         </button>
