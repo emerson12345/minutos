@@ -204,7 +204,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="{{ url('/PacienteHc/agenda') }}" class="btn btn-default btn-flat">Agenda</a>
+                                    <a href="{{ url('/Agenda/index') }}" class="btn btn-default btn-flat">Agenda</a>
                                 </div>
                                 <div class="pull-right">
                                     <form id="logout-form" action="{{ url('/logout') }}" method="POST" >
