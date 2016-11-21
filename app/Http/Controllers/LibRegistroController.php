@@ -98,10 +98,10 @@ class LibRegistroController extends Controller
                     on paciente_hc.pac_id=paciente.pac_id
                     where paciente_hc.pac_id=1;
         ");
+        if(is_null($edadPacienteHc))
+        {
 
-
-
-
+        }
         $hc_id=DB::table('paciente_hc')->insertGetId(
             [
                 'pac_id' => $paciente_id,

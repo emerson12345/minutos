@@ -56,6 +56,7 @@ $this->post('logout', 'Auth\LoginController@logout')->name('logout');
 $this->get('account_init','Auth\InitController@accountInit')->name('account.init');
 $this->post('account_init','Auth\InitController@accountInitPost')->name('account.init.post');
 
+
 Route::group(['prefix'=>'cuaderno'],function(){
     Route::get('index','LibCuadernoController@index')->name('cuaderno.index');
     Route::get('peticion/{id}','LibCuadernoController@peticion')->name('cuaderno.peticion');
