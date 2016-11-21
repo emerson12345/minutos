@@ -30,5 +30,8 @@ class LugarArea extends Model
         return $this->hasMany('Sicere\Models\Institucion','area_id','area_id');
     }
 
+    public static function Areas($id){
+        return LugarArea::where('dep_id','=',$id)->pluck('area_nombre', 'area_id');
+    }
 
 }
