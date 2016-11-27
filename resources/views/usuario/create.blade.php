@@ -52,7 +52,7 @@
 <div class="form-group">
     {!! Form::label('role_list','ROLES',['class'=>'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::select('role_list[]',\Sicere\Models\Rol::where('rol_seleccionable',1)->pluck('rol_nombre','rol_id'),null,['class'=>'form-control', 'multiple'=>true,'id'=>'role_list','style'=>'width:100%']) !!}
+        {!! Form::select('role_list[]',\Sicere\Models\Rol::where('rol_seleccionable',1)->pluck('rol_nombre','rol_id'),null,['class'=>'form-control roles', 'multiple'=>true,'id'=>'role_list','style'=>'width:100%']) !!}
     </div>
 </div>
 {!! Form::close() !!}

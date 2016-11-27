@@ -139,3 +139,11 @@ Route::group(['prefix'=>'convenio'],function(){
 });
 
 Route::post('municipios','PacienteController@getMunicipios')->name('get.municipios');
+
+Route::group(['prefix'=>'agenda','midleware'=>['auth','access']],function(){
+    Route::get('index','AgendaController@index')->name('agenda.index');
+    Route::get('create','AgendaController@create')->name('agenda.create');
+    Route::post('create','AgendaController@store')->name('agenda.store');
+    Route::get('getPaciente','AgendaController@pacientes')->name('agenda.pacientes');
+    Route::get('getMedico','AgendaController@medicos')->name('agenda.medicos');
+});

@@ -44,6 +44,15 @@ function handleEvent(){
         },
         success:function (data) {
             $("#myModal").find(".box .box-body").html(data);
+            $(".roles").bootstrapDualListbox({
+                filterPlaceHolder:'filtrar',
+                selectedListLabel:'Seleccionados',
+                nonSelectedListLabel:'Disponibles',
+                infoText:'Total ({0})',
+                infoTextEmpty:'Lista vacia',
+                filterTextClear:'Todos',
+                infoTextFiltered: '<span class="label label-warning">Filtrados</span> {0} de {1}'
+            });
         },
         complete:function () {
             $("#myModal").find(".overlay").remove();

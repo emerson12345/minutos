@@ -92,8 +92,10 @@ class CuadernoController extends Controller
             $fec_list = $request->fecha;
             DB::transaction(function() use($cuaderno,$fec_ini,$fec_fin,$fec_list){
                 DB::table('cuaderno_estado')->where('cua_id',$cuaderno->cua_id)->whereBetween('fecha',[$fec_ini,$fec_fin])->delete();
-                foreach ($fec_list as $fec){
-                    DB::table('cuaderno_estado')->insert(['cua_id'=>$cuaderno->cua_id, 'fecha'=>$fec]);
+                if($fec_list){
+                    foreach ($fec_list as $fec){
+                        DB::table('cuaderno_estado')->insert(['cua_id'=>$cuaderno->cua_id, 'fecha'=>$fec]);
+                    }
                 }
             });
         }
