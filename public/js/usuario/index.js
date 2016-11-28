@@ -13,16 +13,16 @@ var usersTable = $("#users-table").DataTable({
             data:function (row,type,val,meta) {
                 var valReturn = "";
                 if(row.user_seleccionable == 1)
-                    valReturn = "<span class='label label-primary'>SI</span>";
+                    valReturn = "<span>SI</span>";
                 else
-                    valReturn = "<span class='label label-danger'>NO</span>"
+                    valReturn = "<span>NO</span>"
                 return valReturn;
             },
             orderable:false
         },
         {
             data:function (row,type,val,meta) {
-                return '<button type="button" class="btn btn-edit btn-xs btn-primary" data-url="update/'+row.user_id+'"><i class="fa fa-edit"></i> Editar</button>'
+                return '<button type="button" class="btn btn-edit btn-xs btn-primary" data-url="update/'+row.user_id+'" title="Editar"><i class="fa fa-edit"></i></button>'
             },
             orderable:false
         }
