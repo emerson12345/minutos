@@ -1,8 +1,8 @@
 {!! Form::open(['route' => 'adm.usuario.store' ,'class'=>'form-horizontal']) !!}
 <div class="form-group">
-    {!! Form::label('user_nombre', 'Nombre completo', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('user_nombre', 'Nombre', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('user_nombre',null,['class'=>'form-control']) !!}
+        {!! Form::text('user_nombre',null,['class'=>'form-control']) !!}...(Buscar personal)
         <span class="label label-warning"></span>
     </div>
 </div>
