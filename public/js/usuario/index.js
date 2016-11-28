@@ -13,9 +13,9 @@ var usersTable = $("#users-table").DataTable({
             data:function (row,type,val,meta) {
                 var valReturn = "";
                 if(row.user_seleccionable == 1)
-                    valReturn = "<span>SI</span>";
+                    valReturn = "<span class='text-green'>SI</span>";
                 else
-                    valReturn = "<span>NO</span>"
+                    valReturn = "<span class='text-red'>NO</span>"
                 return valReturn;
             },
             orderable:false
