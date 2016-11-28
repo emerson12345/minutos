@@ -38,7 +38,8 @@ class UsuarioController extends Controller
             'user_password2.same' => 'Las contraseñas no coinciden.',
             'email' => 'Debe introducir un correo valido.',
             'boolean' => 'Seleccione una opcion valida.',
-            'unique' => 'Este valor ya ha sido registrado'
+            'usuario.user_codigo'=> 'Usuario ya fue regitrado',
+            'user_email.unique' => 'Este valor ya ha sido registrado'
         ]);
 
         $usuario = User::create($request->all());
@@ -106,7 +107,8 @@ class UsuarioController extends Controller
             $pdf->SetFont('helvetica', 'I', 8);
             $pdf->Cell(0, 10, 'Pagina '.$pdf->getAliasNumPage().'/'.$pdf->getAliasNbPages(), 'T', false, 'R', 0, '', 0, false, 'T', 'M');
             //$pdf->write2DBarcode(bcrypt('Mi super codigo'), 'PDF417', 25, 275, 150, 6, null, 'N',true);
-            $pdf->write2DBarcode($strCodSeguridad, 'PDF417', 25, 275, 150, 6, null, 'N',true);
+            $pdf->write2DBarcode($strCodSeguridad, 'PDF417', 15, 283, 100, 6, null, 'N',true);
+            //$pdf->writeQR($strCodSeguridad, 'PDF417', 25, 275, 150, 6, null, 'N',true);
         });
         PDF::SetTitle('My Report');
         PDF::SetSubject('Reporte de sistema');
