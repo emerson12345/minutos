@@ -116,7 +116,7 @@ abstract class BaseEngine implements DataTableEngineContract
     /**
      * Callback to override global search.
      *
-     * @var \Closure
+     * @var callable
      */
     protected $filterCallback;
 
@@ -177,7 +177,7 @@ abstract class BaseEngine implements DataTableEngineContract
     /**
      * Custom ordering callback.
      *
-     * @var \Closure
+     * @var callable
      */
     protected $orderCallback;
 
@@ -525,7 +525,7 @@ abstract class BaseEngine implements DataTableEngineContract
      * Override default column filter search.
      *
      * @param string $column
-     * @param string|Closure $method
+     * @param string|callable $method
      * @return $this
      * @internal param $mixed ...,... All the individual parameters required for specified $method
      * @internal string $1 Special variable that returns the requested search keyword.
@@ -680,7 +680,7 @@ abstract class BaseEngine implements DataTableEngineContract
             $fractal = app('datatables.fractal');
 
             if ($this->serializer) {
-                $fractal->setSerializer(new $this->serializer);
+                $fractal->setSerializer($this->createSerializer());
             }
 
             //Get transformer reflection
@@ -710,6 +710,20 @@ abstract class BaseEngine implements DataTableEngineContract
         }
 
         return new JsonResponse($output);
+    }
+
+    /**
+     * Get or create transformer serializer instance.
+     *
+     * @return \League\Fractal\Serializer\SerializerAbstract
+     */
+    protected function createSerializer()
+    {
+        if ($this->serializer instanceof \League\Fractal\Serializer\SerializerAbstract) {
+            return $this->serializer;
+        }
+
+        return new $this->serializer();
     }
 
     /**
@@ -771,11 +785,11 @@ abstract class BaseEngine implements DataTableEngineContract
     /**
      * Update flags to disable global search
      *
-     * @param  \Closure $callback
+     * @param  callable $callback
      * @param  mixed $parameters
      * @param  bool $autoFilter
      */
-    public function overrideGlobalSearch(\Closure $callback, $parameters, $autoFilter = false)
+    public function overrideGlobalSearch(callable $callback, $parameters, $autoFilter = false)
     {
         $this->autoFilter               = $autoFilter;
         $this->isFilterApplied          = true;
@@ -816,10 +830,10 @@ abstract class BaseEngine implements DataTableEngineContract
     /**
      * Override default ordering method with a closure callback.
      *
-     * @param \Closure $closure
+     * @param callable $closure
      * @return $this
      */
-    public function order(\Closure $closure)
+    public function order(callable $closure)
     {
         $this->orderCallback = $closure;
 

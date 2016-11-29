@@ -50,4 +50,8 @@ class User extends Authenticatable
     public function instituciones(){
         return $this->belongsToMany('Sicere\Models\Institucion','usuario_institucion','user_id','inst_id');
     }
+
+    public function rrhh(){
+        return $this->belongsToMany('Sicere\Models\Rrhh','usuario_rrhh','user_id','rrhh_id');
+    }
 }

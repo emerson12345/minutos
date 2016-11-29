@@ -8,6 +8,15 @@
 
 ##Change Log
 
+### v6.22.0 - 2016-11-19
+- Add support for searching of nested relationships.
+- PR #841 & #844. Credits to @ethaizone
+- Fix #696, #789, #771, #509, #441.
+
+### v6.21.2 - 2016-11-16
+- Fix html builder instance, close #830. PR #833, credits to @ElfSundae.
+- Class name resolution updated. PR #812, credits to @shibby.
+
 ### v6.21.1 - 2016-10-25
 - Do not convert column to raw statement. Thanks to Nick Howell for pointing the issue.
 

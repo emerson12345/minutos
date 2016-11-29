@@ -49,10 +49,10 @@
                     <div class="form-group">
                         {!! Form::label('pac_sexo', 'SEXO') !!}<br>
                         <label for="s_masc">Hombre</label>
-                        {!! Form::radio('pac_sexo','M',true,['id'=>'s_masc']) !!}
+                        {!! Form::radio('pac_sexo','H',true,['id'=>'s_masc']) !!}
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         <label for="s_fem">Mujer</label>
-                        {!! Form::radio('pac_sexo','F',false,['id'=>'s_fem']) !!}
+                        {!! Form::radio('pac_sexo','M',false,['id'=>'s_fem']) !!}
                         <span class="label label-warning"></span>
                     </div>
                 </div>
@@ -105,9 +105,8 @@
 
             <div class="row">
                 <?php
-                $tipoList = \Sicere\Models\DiscapaciTipo::all()->pluck('tipo_disc_nombre','tipo_disc_id');
+                $tipoList = \Sicere\Models\DiscapaciTipo::all()->orderBy('tipo_disc_nombre DESC')->pluck('tipo_disc_nombre','tipo_disc_id');
                 $gradoList = \Sicere\Models\DiscapaciGrado::all()->pluck('grad_disc_nombre','grad_disc_id');
-                $tipoList->prepend('','0');
                 $gradoList->prepend('','0');
                 ?>
                 <div class="col-md-6">

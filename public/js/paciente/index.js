@@ -80,6 +80,7 @@ function handleEvent(){
                     $('#grad_disc_id').val(0);
                 }else{
                     $('#tipo_disc_id').removeAttr('disabled');
+                    $('#tipo_disc_id').val($('#tipo_disc_id').find("option").first().val());
                     $('#grad_disc_id').removeAttr('disabled');
                 }
             });
@@ -91,6 +92,7 @@ function handleEvent(){
                 $('#grad_disc_id').val(0);
             }else{
                 $('#tipo_disc_id').removeAttr('disabled');
+                $('#tipo_disc_id').val($('#tipo_disc_id').find("option").first().val());
                 $('#grad_disc_id').removeAttr('disabled');
             }
         },
