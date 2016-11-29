@@ -73,4 +73,9 @@ class Paciente extends Model
     public function municipio(){
         return $this->belongsTo('Sicere\Models\LugarMunicipio','mun_id','mun_id');
     }
+
+    public function getNextHC(){
+        $next_id = \DB::select("select nextval('agenda_agenda_id_seq')");
+        return $next_id[0]->nextval;
+    }
 }

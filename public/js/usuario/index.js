@@ -53,6 +53,26 @@ function handleEvent(){
                 filterTextClear:'Todos',
                 infoTextFiltered: '<span class="label label-warning">Filtrados</span> {0} de {1}'
             });
+            $("#rrhh_id").select2({
+                language:'es',
+                placeholder:'Buscar rrhh',
+                minimumInputLength:3,
+                ajax:{
+                    url:$("#rrhh_id").data('url'),
+                    dataType:'json',
+                    delay:250,
+                    data:function (params) {
+                        return {
+                            query: params.term,
+                        };
+                    },
+                    processResults: function (data, page) {
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            });
         },
         complete:function () {
             $("#myModal").find(".overlay").remove();
@@ -70,7 +90,7 @@ $("#btn-save").on("click",function(){
         beforeSend:function () {
             var $over = $("<div class='overlay'><i class='fa fa-refresh fa-spin'></i></div>");
             $("#myModal").find(".box").append($over);
-            $form.find("span").text("");
+            $form.find("span.label").text("");
         },
         success:function(data){
             usersTable.ajax.reload();
@@ -79,7 +99,7 @@ $("#btn-save").on("click",function(){
         error:function(data) {
             var errors = data.responseJSON;
             $.each(errors,function(i,o){
-                $form.find("[name = '"+i+"']").closest(".col-sm-10").find("span").text(o);
+                $form.find("[name ^= '"+i+"']").closest(".col-sm-10").find("span.label").text(o);
             });
         },
         complete:function () {

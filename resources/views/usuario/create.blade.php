@@ -1,8 +1,16 @@
 {!! Form::open(['route' => 'adm.usuario.store' ,'class'=>'form-horizontal']) !!}
 <div class="form-group">
+    {!! Form::label('rrhh_id', 'RRHH', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-10">
+        {!! Form::select('rrhh_id',[],null,['class'=>'form-control','data-url'=>route('adm.usuario.rrhh')]) !!}
+        <span class="label label-warning"></span>
+    </div>
+</div>
+
+<div class="form-group">
     {!! Form::label('user_nombre', 'Nombre', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('user_nombre',null,['class'=>'form-control']) !!}...(Buscar personal)
+        {!! Form::text('user_nombre',null,['class'=>'form-control']) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
@@ -40,18 +48,9 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('user_seleccionable', 'Estado', ['class' => 'col-sm-2 control-label']) !!}
-    <div class="col-sm-10">
-        Vigente
-        {!! Form::radio('user_seleccionable','1',true) !!}
-        No vigente
-        {!! Form::radio('user_seleccionable','0') !!}
-        <span class="label label-warning"></span>
-    </div>
-</div>
-<div class="form-group">
     {!! Form::label('role_list','Rol',['class'=>'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
+        <span class="label label-warning"></span>
         {!! Form::select('role_list[]',\Sicere\Models\Rol::where('rol_seleccionable',1)->pluck('rol_nombre','rol_id'),null,['class'=>'form-control roles', 'multiple'=>true,'id'=>'role_list','style'=>'width:100%']) !!}
     </div>
 </div>

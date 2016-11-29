@@ -22,6 +22,7 @@ Route::group(['prefix'=>'usuario','middleware'=>['auth','access']],function(){
     Route::post('edit/{user_id}','UsuarioController@edit')->name('adm.usuario.edit');
     Route::get('report','UsuarioController@report')->name('adm.usuario.report');
 });
+Route::get('usuario/rrhh','UsuarioController@rrhh')->name('adm.usuario.rrhh');
 
 Route::group(['prefix'=>'rol','middleware'=>['auth','access']],function(){
     Route::get('index','RolController@index')->name('adm.rol.index');
@@ -140,10 +141,13 @@ Route::group(['prefix'=>'convenio'],function(){
 
 Route::post('municipios','PacienteController@getMunicipios')->name('get.municipios');
 
-Route::group(['prefix'=>'agenda','midleware'=>['auth','access']],function(){
+Route::group(['prefix'=>'agenda','middleware'=>['auth','access']],function(){
     Route::get('index','AgendaController@index')->name('agenda.index');
     Route::get('create','AgendaController@create')->name('agenda.create');
     Route::post('create','AgendaController@store')->name('agenda.store');
     Route::get('getPaciente','AgendaController@pacientes')->name('agenda.pacientes');
     Route::get('getMedico','AgendaController@medicos')->name('agenda.medicos');
+
 });
+Route::get('agenda/view','AgendaController@view')->name('agenda.view');
+Route::post('agenda/events','AgendaController@getEvents')->name('agenda.events');

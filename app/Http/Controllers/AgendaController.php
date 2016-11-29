@@ -26,7 +26,6 @@ class AgendaController extends Controller
     public function store(Request $request){
         $this->validate($request,[
             'pac_id' => 'required | integer |exists:paciente',
-            'rrhh_id' => 'required | integer |exists:rrhh',
             'agenda_fec_ini' => 'required | date_format:d/m/Y H:i',
             'duracion' => 'required | integer |min:15',
             'sesiones'=>'required | integer | min:1',
@@ -54,6 +53,7 @@ class AgendaController extends Controller
             $agenda->agenda_fec_ini = $date->format('d/m/Y H:i');
             $agenda->agenda_fec_fin = $date->addMinutes($request->duracion)->format('d/m/Y H:i');
             $agenda->inst_id = $institucion->inst_id;
+            $agenda->user_id = \Auth::user()->user_id;
             $color = $agenda->randomColor();
             $agenda->agenda_color = $color;
             $agenda->save();
@@ -68,6 +68,7 @@ class AgendaController extends Controller
                 $agenda->agenda_fec_ini = $date->format('d/m/Y H:i');
                 $agenda->agenda_fec_fin = $date->addMinutes($request->duracion)->format('d/m/Y H:i');
                 $agenda->inst_id = $institucion->inst_id;
+                $agenda->user_id = \Auth::user()->user_id;
                 $agenda->agenda_color = $color;
                 $agenda->save();
                 $i++;
@@ -91,5 +92,26 @@ class AgendaController extends Controller
             ->whereRaw("upper(ltrim(concat_ws(' ',rrhh_ap_prim,rrhh_ap_seg,rrhh_nombre))) like upper(?)",$query)
             ->orWhere('rrhh_ci','like',$query)->get();
         return response()->json($lista);
+    }
+
+    public function view(){
+        return view('agenda.view');
+    }
+
+    public function getEvents(Request $request){
+        $fec_ini = $request->fec_ini?:date('d/m/Y');
+        $fec_fin = $request->fec_fin?:date('d/m/Y');
+        $user_id = $request->user_id?:0;
+        $eventos = DB::table('agenda')
+            ->join('paciente','paciente.pac_id','=','agenda.pac_id')
+            ->select('agenda.agenda_fec_ini as start'
+                ,'agenda.agenda_fec_fin as end'
+                ,'agenda.agenda_color as backgroundColor'
+                ,DB::raw("ltrim( concat_ws(' ',paciente.pac_ap_prim,paciente.pac_ap_seg,paciente.pac_nombre) ) as title"))
+            ->whereBetween(DB::raw('agenda_fec_ini::DATE'),[$fec_ini,$fec_fin])
+            ->where('agenda.user_id',$user_id)->get();
+
+        return response()->json($eventos);
+
     }
 }

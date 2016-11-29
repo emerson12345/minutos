@@ -52,28 +52,6 @@ function eventHandlers(){
         },
         templateResult: templatePaciente
     });
-
-    $("#rrhh_id").select2({
-        language:'es',
-        placeholder:'Buscar medico',
-        minimumInputLength:3,
-        ajax:{
-            url:$("#rrhh_id").data('url'),
-            dataType:'json',
-            delay:250,
-            data:function (params) {
-                return {
-                    query: params.term,
-                };
-            },
-            processResults: function (data, page) {
-                return {
-                    results: data
-                };
-            }
-        },
-        templateResult: templatePersona
-    });
 }
 
 $("#btn-save").on('click',function () {
@@ -107,15 +85,6 @@ function templatePaciente(persona){
     var $persona = $(
         '<strong>' + persona.text + ' <abbr title="edad"> ('+ persona.edad +')</abbr>'+'</strong><br/>'
         +'<b>HC:</b>'+persona.nro_hc + '  <b>CI:</b>'+persona.nro_ci+'<br/>'
-    );
-    return $persona;
-}
-
-function templatePersona(persona){
-    if (!persona.id) { return persona.text; }
-    var $persona = $(
-        '<strong>' + persona.text + '</strong><br/>'
-        +'<b>CI:</b>'+persona.nro_ci+'<br/>'
     );
     return $persona;
 }

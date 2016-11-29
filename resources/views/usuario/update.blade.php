@@ -41,7 +41,7 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('user_seleccionable', 'Estado', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('user_seleccionable', 'SEL', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
         Vigente
         {!! Form::radio('user_seleccionable','1',true) !!}

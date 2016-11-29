@@ -36,5 +36,8 @@ class Rrhh extends Model
 
     protected $guarded = [];
 
+    public function usuario(){
+        return $this->belongsToMany('Sicere\User','usuario_rrhh','rrhh_id','user_id');
+    }
         
 }
