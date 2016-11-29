@@ -95,11 +95,10 @@ class FullcalendareventoController extends Controller
             $evento->agenda_fec_fin=$end;
         }
         $evento->agenda_fec_ini=$start;
-        $evento->agenda_todo_dia=$allDay;
+        $evento->agenda_todoeldia=$allDay;
         $evento->agenda_color=$back;
         $evento->agenda_descripcion=$title;
         //$evento->fechaFin=$end;
-
         $evento->save();
     }
 

@@ -29,10 +29,10 @@
             echo "<td>";
             foreach($arr as $fila){
                 echo "<br>";
-                echo  substr($fila->fechaIni,11,5);
-                echo  " - ".substr($fila->fechaFin,11,5);
+                echo  substr($fila->agenda_fec_ini,11,5);
+                echo  " - ".substr($fila->agenda_fec_fin,11,5);
                 echo "<br>";
-                echo "<span style='background-color:powderblue;'>".$fila->titulo."</span>";
+                echo "<span style='background-color:powderblue;'>".$fila->agenda_descripcion."</span>";
                 echo "<br>";
             }
             echo "</td>";

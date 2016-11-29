@@ -54,8 +54,6 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-5">
-                    {!! Form::label('tb_libro_atencion', 'LIBRO DE ATENCIÓN') !!}
-                    {!! Form::select('tb_listCuadernos_search', $listCuadernosSearch,null,array('id'=>'tb_listCuadernos_search')) !!}
                 </div>
                 <div class="col-md-4">
                     <!--- Fecha -->
@@ -110,17 +108,6 @@
                         <!-- /.col -->
                     </div>
                     <!-- /.row -->
-
-
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div id="mensaje">
-                                FGHJKLLKJDFGHJLKJHG
-                            </div>
-                        </div>
-                    </div>
-
-
 
                 </section>
                 <!-- /.content -->
