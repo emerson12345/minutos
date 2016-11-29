@@ -88,6 +88,9 @@ $("#btn-save").on('click',function () {
             $form.find("span.label-warning").text("");
         },
         success:function(data){
+            //alert("succes btn.save");
+            window.location.reload();
+
             $("#modal-agenda").modal('hide');
         },
         error:function(data) {

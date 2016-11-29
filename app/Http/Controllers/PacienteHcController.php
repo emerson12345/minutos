@@ -24,12 +24,18 @@ class PacienteHcController extends Controller
     public function index()
     {
         $url_paciente = asset('PacienteHc/historial_clinico/');
-        $url_buscar_Hc = asset('PacienteHc/buscar_historial_clinico//');
+        $url_buscar_Hc = asset('PacienteHc/buscar_historial_clinico/');
         $listPacientes = Paciente::all();
         $listCuadernos = LibCuaderno::all();
         $listCuadernosSearch=LibCuaderno::all()
                             ->pluck('cua_nombre','cua_id');
-        $listRrhh = Rrhh::all();
+        //$listRrhh = Rrhh::all();
+        $listRrhh = DB::table('rrhh')
+            ->where('rrhh.inst_id','=',session('institucion')->inst_id)
+            ->join('institucion','institucion.inst_id','rrhh.inst_id')
+            ->select('*')
+            ->get();
+
         $listPersonalSearch = DB::table('rrhh')
             ->join('institucion','institucion.inst_id','rrhh.inst_id')
             ->select('rrhh.rrhh_id','rrhh.rrhh_nombre','rrhh.rrhh_ap_prim','rrhh.rrhh_ap_seg','institucion.inst_nombre','institucion.inst_localidad')
@@ -68,7 +74,6 @@ class PacienteHcController extends Controller
     }
     public function atencionHc($cua_id,$pac_id,$hc_id,$fecha)
     {
-
 
         $fecha_actual=date("Y-m-d");
 

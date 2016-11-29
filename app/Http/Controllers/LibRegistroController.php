@@ -123,6 +123,12 @@ class LibRegistroController extends Controller
                 'user_id'=>Auth::user()->user_id//$request->input('user_id')
             ],'hc_id'
         );
+        DB::table('evolucion')->insert(
+            [
+                'hc_id'=>$hc_id,
+                'evolucion_descripcion'=>$request->input('evolucion_descripcion')
+            ]
+        );
 
         foreach($listFormularios as $f){
 

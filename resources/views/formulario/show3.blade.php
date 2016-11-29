@@ -32,7 +32,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">
-                    Evolucion del Paciente
+                    Evolucion del Paciente2
                 </h4>
             </div>
             <div class="modal-body">
@@ -44,44 +44,17 @@
                                 <thead>
                                 <tr role="row">
                                     <th class="tr-dimencion">
-                                        HC_ID
-                                    </th>
-                                    <th class="tr-dimencion">
-                                        PERSONAL
+                                        HC_ID2
                                     </th>
                                     <th class="tr-dimencion">
                                         FECHA
                                     </th>
                                     <th class="tr-dimencion">
-                                        EVOLUCIÓN
+                                        DESCRIPCION
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <?php
-                                if(count($listEvolucion)>0)
-                                    foreach ($listEvolucion as $value) {
-                                    ?>
-                                    <tr role="row">
-                                        <td  class="tr-cuadernos tr-dimencion">
-                                            <?php echo $value->hc_id; ?>
-                                        </td>
-                                        <td class="tr-cuadernos tr-dimencion">
-                                            <?php echo $value->rrhh_nombre; ?>
-                                            <?php echo $value->rrhh_ap_prim; ?>
-                                            <?php echo $value->rrhh_ap_seg; ?>
-                                        </td>
-                                        <td class="tr-cuadernos tr-dimencion">
-                                            <?php echo $value->hc_fecha; ?>
-                                        </td>
-                                        <td class="tr-cuadernos tr-dimencion">
-                                            <?php echo $value->evolucion_descripcion; ?>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                    }
-                                    ?>
-
 
                                 </tbody>
                             </table>
@@ -119,7 +92,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <input type="button" name="btn-evolucion"  class="btn btn-success" value="Ver evolución" id="btn-evolucion">
+            <input type="button" name="btn-evolucion"  class="btn btn-success" value="Ver evolución2" id="btn-evolucion">
         </div>
         <table>
             <tbody id="tbody-formulario">
@@ -155,7 +128,7 @@
                     switch ($flight->col_tipo)
                     {
                     case 1:
-                        echo " <input type='number' name='".$flight->for_id."' class='tr-dimencion'>";
+                        echo " <input type='number' name='".$flight->for_id."'>";
                         break;
                     case 3:
                         if($flight->for_id!=6 && $flight->for_id!=7)
@@ -164,7 +137,7 @@
                                                 <div class="list-data">
                                                 <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
                                                 ';
-                            echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' class='tr-dimencion'>
+                            echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."'>
                                         </div>";
                         }
                         break;
@@ -189,7 +162,7 @@
                                         <div class="list-data">
                                         <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
                                         </div>';
-                            echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' class='tr-dimencion'>";
+                            echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."'>";
                         }
                         break;
                     case 0:
@@ -199,7 +172,7 @@
                     <?php
                     break;
                     default:
-                        echo " <input type='text' name='".$flight->for_id."' class='tr-dimencion'>";
+                        echo " <input type='text' name='".$flight->for_id."'>";
                     }
                     ?>
                 </td>
@@ -217,6 +190,7 @@
 </div>
 <script>
     //URL=cuaderno/peticion_listas/
+    alert("adsfasdfasfdda");
     var url_data='{{$url_cuaderno}}';
     $("a").on('click',function(e) {
 
@@ -244,7 +218,7 @@
     });
     $("#btn-evolucion").on('click',function(e) {
         //alert("adsfaf");
-        $('#t_evolucion').DataTable();
-        $('#myModal-evolucion').modal('show');
+        //alert($('#tb_nombre_paciente').val());
+        //$('#myModal-evolucion').modal('show');
     });
 </script>

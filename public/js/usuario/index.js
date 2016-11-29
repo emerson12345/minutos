@@ -26,6 +26,13 @@ var usersTable = $("#users-table").DataTable({
             },
             orderable:false
         }
+        /*
+        {
+            data:function (row,type,val,meta) {
+                return '<button type="button" class="btn btn-edit btn-xs btn-primary" data-url="update/'+row.user_id+'"><i class="fa fa-edit"></i> Editar</button>'
+            },
+            orderable:false
+        }*/
     ]
 });
 $("#users-table").on('draw.dt',function () {

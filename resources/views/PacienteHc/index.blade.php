@@ -31,17 +31,38 @@
             background-color: #1abc9c;
             cursor: pointer;
         }
+        .tr-seleccionable{
+            background-color: #e74c3c;
+        }
         .tr-dimencion{
-            width: 200px;
+             width: 250px;
+        }
+        .tr-dimencion-title{
+             width: 200px;
+        }
+        .tr-nro{
+             width: 60px;
+        }
+        .tr-nro-title{
+             width: 25px;
         }
         .td-dimencion{
             width: 200px;
         }
-        .tr-seleccionable{
-            background-color: #e74c3c;
+        *{
+            font-size: 11px;
         }
-        .tr-seleccionable-hc{
-            background-color: #e67e22;
+        H3{
+            font-size: 20px;
+        }
+        SELECT {
+            font-size: 10px;
+            font-family : verdana,arial,helvetica;
+        }
+        OPTION
+        {
+            font-size: 9px;
+            font-family : verdana,arial,helvetica;
         }
     </style>
     <!------------------------------------------------>

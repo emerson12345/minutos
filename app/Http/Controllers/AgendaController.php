@@ -14,13 +14,13 @@ use Sicere\Models\Rrhh;
 class AgendaController extends Controller
 {
     public function index(){
-        return view('agenda.index');
+        return view('agenda2.index');
     }
 
     public function create(){
         $agenda = new Agenda();
         $agenda->agenda_fec_ini = date('d/m/Y H:i');
-        return view('agenda.create',['agenda'=>$agenda]);
+        return view('agenda2.create',['agenda'=>$agenda]);
     }
 
     public function store(Request $request){

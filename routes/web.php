@@ -46,8 +46,7 @@ $this->post('account_init','Auth\InitController@accountInitPost')->name('account
 Route::group(['prefix'=>'cuaderno'],function(){
     Route::get('index','LibCuadernoController@index')->name('cuaderno.index');
     Route::get('peticion/{id}','LibCuadernoController@peticion')->name('cuaderno.peticion');
-    Route::get('peticion_listas/{intIDColumna}/{for_id}/{col_tipo}','LibCuadernoController@peticionListas')->name('cuaderno.peticionListas');
-    Route::get('detalle/{hc_id}/{cua_id}','LibCuadernoController@detalle')->name('cuaderno.detalle');
+    Route::get('peticion_listas/{intIDColumna}','LibCuadernoController@peticionListas')->name('cuaderno.peticionListas');
 });
 
 /***Rutas de emerson ***/
@@ -74,7 +73,7 @@ Route::get('/municipio/getmunicipio', ['uses' => 'LugarMunicipioController@getmu
 Route::get('/area/getarea', ['uses' => 'LugarAreaController@getarea','as' => 'area.getarea']);
 
 /***Rutas de percy***/
-Route::group(['prefix'=>'adm_cuaderno','middleware'=>['auth','log']],function(){
+Route::group(['prefix'=>'adm_cuaderno'],function(){
     Route::get('index','CuadernoController@index')->name('adm.cuaderno.index');
     Route::get('cuadernos','CuadernoController@cuadernos')->name('adm.cuaderno.list');
     Route::get('create','CuadernoController@create')->name('adm.cuaderno.create');
@@ -84,8 +83,8 @@ Route::group(['prefix'=>'adm_cuaderno','middleware'=>['auth','log']],function(){
 });
 Route::group(['prefix'=>'cuaderno'],function(){
     Route::get('index','LibCuadernoController@index')->name('cuaderno.index');
-    Route::get('peticion/{id}','LibCuadernoController@peticion')->name('cuaderno.peticion');
-    Route::get('peticion_listas/{intIDColumna}/{for_id}','LibCuadernoController@peticionListas')->name('cuaderno.peticionListas');
+    Route::get('peticion/{cua_id}/{pac_id}','LibCuadernoController@peticion')->name('cuaderno.peticion');
+    Route::get('peticion_listas/{intIDColumna}/{for_id}/{col_tipo}','LibCuadernoController@peticionListas')->name('cuaderno.peticionListas');
     Route::get('detalle/{hc_id}/{cua_id}','LibCuadernoController@detalle')->name('cuaderno.detalle');
 });
 
@@ -94,17 +93,33 @@ Route::group(['prefix'=>'PacienteHc'],function(){
     Route::get('historial_clinico/{id}','PacienteHcController@registroHistoricoPaciente')->name('PacienteHc.registroHistoricoPaciente');
     Route::get('buscar_historial_clinico/{fecha_inicio}/{fecha_fin}/{cua_id}/{rrhh_id}/{pac_id}','PacienteHcController@searchHc')->name('PacienteHc.searchHc');
     Route::get('atencion/{cua_id}/{pac_id}/{hc_id}/{fecha}','PacienteHcController@atencionHc')->name('PacienteHc.atencion');
+    Route::get('agenda','PacienteHcController@agenda')->name('PacienteHc.agenda');
 });
 
-Route::group(['prefix'=>'Agenda'],function(){
+//Controlador Agenda
+/*Route::group(['prefix'=>'Agenda'],function(){
     Route::get('index','AgendaController@index')->name('Agenda.index');
+});*/
+
+//Eventos Calendario
+Route::group(['prefix'=>'Agenda'],function(){
+    Route::get('home','FullcalendareventoController@home')->name('Agenda.home');
+    //Route::get('index','FullcalendareventoController@index')->name('Agenda.index');
+    Route::get('cargaEventos{id?}','FullcalendareventoController@index')->name('fullcalendar.index');
+    Route::post('guardaEventos', array('as' => 'guardaEventos','uses' => 'FullcalendareventoController@create'));
+    Route::post('actualizaEventos','FullcalendareventoController@update');
+    Route::post('eliminaEvento','FullcalendareventoController@delete');
+    Route::get('reporte/{fecha_inicio}','FullcalendareventoController@reporteSemanal')->name('Agenda.reporte');
 });
+
+
 
 Route::group(['prefix'=>'libregistro'],function(){
     Route::get('index','LibRegistroController@index')->name('libregistro.index');
     Route::post('store','LibRegistroController@store')->name('libregistro.store');
     Route::post('edit','LibRegistroController@edit')->name('libregistro.edit');
 });
+
 
 Route::group(['prefix'=>'paciente','middleware'=>['auth']],function(){
     Route::get('index','PacienteController@index')->name('adm.paciente.index');
@@ -119,6 +134,7 @@ Route::group(['prefix'=>'paciente','middleware'=>['auth']],function(){
     Route::get('group/{pac_id}/update/{group_id}','PacienteController@formGroup')->name('adm.paciente.group.update');
     Route::post('group/{pac_id}/create','PacienteController@storeGroup')->name('adm.paciente.group.store');
     Route::post('group/{pac_id}/update/{group_id}','PacienteController@storeGroup')->name('adm.paciente.group.edit');
+    Route::get('report/{pac_id}','PacienteController@report')->name('adm.paciente.report');
 });
 
 Route::get('cuaderno/estado','CuadernoController@estado')->name('cuaderno.estado');
@@ -140,8 +156,19 @@ Route::group(['prefix'=>'convenio'],function(){
 
 Route::post('municipios','PacienteController@getMunicipios')->name('get.municipios');
 
+/*
 Route::group(['prefix'=>'agenda','midleware'=>['auth','access']],function(){
     Route::get('index','AgendaController@index')->name('agenda.index');
+    Route::get('create','AgendaController@create')->name('agenda.create');
+    Route::post('create','AgendaController@store')->name('agenda.store');
+    Route::get('getPaciente','AgendaController@pacientes')->name('agenda.pacientes');
+    Route::get('getMedico','AgendaController@medicos')->name('agenda.medicos');
+});
+*/
+
+
+Route::group(['prefix'=>'agenda','midleware'=>['auth','access']],function(){
+    Route::get('temporal/index','AgendaController@index')->name('agenda.temporal.index');
     Route::get('create','AgendaController@create')->name('agenda.create');
     Route::post('create','AgendaController@store')->name('agenda.store');
     Route::get('getPaciente','AgendaController@pacientes')->name('agenda.pacientes');
