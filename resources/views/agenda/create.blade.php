@@ -10,15 +10,6 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('rrhh_id', 'MEDICO', ['class' => 'col-sm-2 control-label']) !!}
-    <div class="col-sm-10">
-        <select name="rrhh_id" id="rrhh_id" class="form-control"  data-url="{{route('agenda.medicos')}}">
-        </select>
-        <span class="label label-warning"></span>
-    </div>
-</div>
-
-<div class="form-group">
     {!! Form::label('agenda_fec_ini', 'FECHA Y HORA', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
         {!! Form::text('agenda_fec_ini',null,['class'=>'form-control']) !!}

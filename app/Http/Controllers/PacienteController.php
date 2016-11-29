@@ -43,12 +43,14 @@ class PacienteController extends Controller
             'pac_nro_ci' => [Rule::unique('paciente')->ignore($pac_id,'pac_id')],
             'pac_nombre' => 'required',
             'pac_fecha_nac'=>'date_format:d/m/Y',
-            'pac_edad_anio' => 'required|integer'
+            'pac_edad_anio' => 'required|integer',
+            'pac_nro_telf' => 'integer'
         ],[
             'required' => 'Este campo es requerido.',
             'unique'=> 'Este valor ya ha sido registrado',
             'date_format'=>'El formato de fecha debe ser dd/mm/aaaa',
-            'integer' => 'La edad debe ser un numero entero'
+            'pac_edad_anio.integer' => 'La edad debe ser un numero entero',
+            'pac_nro_telf.integer' => 'Telf. solo numerico'
         ]);
 
         $paciente->fill($request->all());

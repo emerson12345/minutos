@@ -5,11 +5,13 @@ namespace Sicere\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Sicere\Models\Rrhh;
 use Validator;
 use Sicere\Http\Requests;
 use Sicere\User;
 use Yajra\Datatables\Datatables;
 use PDF;
+use DB;
 class UsuarioController extends Controller
 {
     public function index(){
@@ -27,21 +29,27 @@ class UsuarioController extends Controller
 
     public function store(Request $request){
         $this->validate($request,[
+            'rrhh_id'=>'required',
             'user_nombre' => 'required',
             'user_codigo' => 'required| unique:usuario,user_codigo',
             'user_password' => 'required',
             'user_password2' => 'required| same:user_password',
             'user_email' => 'email| unique:usuario,user_email',
-            'user_seleccionable' => 'boolean'
+            'role_list' => 'required'
         ],[
             'required' => 'Este campo es requerido.',
             'user_password2.same' => 'Las contraseñas no coinciden.',
             'email' => 'Debe introducir un correo valido.',
             'boolean' => 'Seleccione una opcion valida.',
-            'unique' => 'Este valor ya ha sido registrado'
+            'user_codigo.unique' => 'Este usuario ya esta registrado en la base de datos',
+            'user_email.unique' => 'Este email ya esta registrado en la base de datos',
+            'role_list.required' => 'Debe seleccionar al menos un rol'
         ]);
 
-        $usuario = User::create($request->all());
+        $usuario = new User($request->all());
+        $usuario->user_seleccionable = 1;
+        $usuario->save();
+        $usuario->rrhh()->attach($request->rrhh_id);
         $this->setRoles($usuario,$request->role_list);
         return response()->json($usuario);
     }
@@ -71,12 +79,15 @@ class UsuarioController extends Controller
             'user_nombre' => 'required',
             'user_codigo' => ['required',Rule::unique('usuario')->ignore($usuario->user_id,'user_id')],
             'user_email' => ['email',Rule::unique('usuario')->ignore($usuario->user_id,'user_id')],
-            'user_seleccionable' => 'boolean'
+            'user_seleccionable' => 'boolean',
+            'role_list' => 'required'
         ],[
             'required' => 'Este campo es requerido.',
             'email' => 'Debe introducir un correo valido.',
             'boolean' => 'Seleccione una opcion valida.',
-            'unique' => 'Este valor ya ha sido registrado'
+            'user_codigo.unique' => 'Este usuario ya esta registrado en la base de datos',
+            'user_email.unique' => 'Este email ya esta registrado en la base de datos',
+            'role_list.required' => 'Debe seleccionar al menos un rol'
         ])->validate();
         $usuario->fill($listUsuarioData)->save();
         $this->setRoles($usuario,$request->role_list);
@@ -106,9 +117,10 @@ class UsuarioController extends Controller
             $pdf->SetFont('helvetica', 'I', 8);
             $pdf->Cell(0, 10, 'Pagina '.$pdf->getAliasNumPage().'/'.$pdf->getAliasNbPages(), 'T', false, 'R', 0, '', 0, false, 'T', 'M');
             //$pdf->write2DBarcode(bcrypt('Mi super codigo'), 'PDF417', 25, 275, 150, 6, null, 'N',true);
-            $pdf->write2DBarcode($strCodSeguridad, 'PDF417', 25, 275, 150, 6, null, 'N',true);
+            $pdf->write2DBarcode($strCodSeguridad, 'PDF417', 15, 283, 100, 6, null, 'N',true);
+            //$pdf->writeQR($strCodSeguridad, 'PDF417', 25, 275, 150, 6, null, 'N',true);
         });
-        PDF::SetTitle('My Report');
+        PDF::SetTitle('Usuarios');
         PDF::SetSubject('Reporte de sistema');
         PDF::SetMargins(15, 30, 15);
         PDF::SetFontSubsetting(false);
@@ -118,5 +130,13 @@ class UsuarioController extends Controller
         PDF::writeHTML(view('usuario.report')->render(), true, false, true, false, '');
         PDF::lastPage();
         PDF::Output('usuario.pdf');
+    }
+
+    public function rrhh(Request $request){
+        $query = $request->input('query')?$request->input('query').'%':'';
+        $lista = Rrhh::select('rrhh_id as id','rrhh_ci as nro_ci',DB::raw("ltrim(concat_ws(' ',rrhh_ap_prim,rrhh_ap_seg,rrhh_nombre)) as text"))
+            ->whereRaw("upper(ltrim(concat_ws(' ',rrhh_ap_prim,rrhh_ap_seg,rrhh_nombre))) like upper(?)",$query)
+            ->orWhere('rrhh_ci','like',$query)->get();
+        return response()->json($lista);
     }
 }

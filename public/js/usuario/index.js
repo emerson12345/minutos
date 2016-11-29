@@ -13,16 +13,16 @@ var usersTable = $("#users-table").DataTable({
             data:function (row,type,val,meta) {
                 var valReturn = "";
                 if(row.user_seleccionable == 1)
-                    valReturn = "<span class='label label-primary'>SI</span>";
+                    valReturn = "<span class='text-green'>SI</span>";
                 else
-                    valReturn = "<span class='label label-danger'>NO</span>"
+                    valReturn = "<span class='text-red'>NO</span>"
                 return valReturn;
             },
             orderable:false
         },
         {
             data:function (row,type,val,meta) {
-                return '<button type="button" class="btn btn-edit btn-xs btn-primary" data-url="update/'+row.user_id+'"><i class="fa fa-edit"></i> Editar</button>'
+                return '<button type="button" class="btn btn-edit btn-xs btn-primary" data-url="update/'+row.user_id+'" title="Editar"><i class="fa fa-edit"></i></button>'
             },
             orderable:false
         }
@@ -53,6 +53,26 @@ function handleEvent(){
                 filterTextClear:'Todos',
                 infoTextFiltered: '<span class="label label-warning">Filtrados</span> {0} de {1}'
             });
+            $("#rrhh_id").select2({
+                language:'es',
+                placeholder:'Buscar rrhh',
+                minimumInputLength:3,
+                ajax:{
+                    url:$("#rrhh_id").data('url'),
+                    dataType:'json',
+                    delay:250,
+                    data:function (params) {
+                        return {
+                            query: params.term,
+                        };
+                    },
+                    processResults: function (data, page) {
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            });
         },
         complete:function () {
             $("#myModal").find(".overlay").remove();
@@ -70,7 +90,7 @@ $("#btn-save").on("click",function(){
         beforeSend:function () {
             var $over = $("<div class='overlay'><i class='fa fa-refresh fa-spin'></i></div>");
             $("#myModal").find(".box").append($over);
-            $form.find("span").text("");
+            $form.find("span.label").text("");
         },
         success:function(data){
             usersTable.ajax.reload();
@@ -79,7 +99,7 @@ $("#btn-save").on("click",function(){
         error:function(data) {
             var errors = data.responseJSON;
             $.each(errors,function(i,o){
-                $form.find("[name = '"+i+"']").closest(".col-sm-10").find("span").text(o);
+                $form.find("[name ^= '"+i+"']").closest(".col-sm-10").find("span.label").text(o);
             });
         },
         complete:function () {
