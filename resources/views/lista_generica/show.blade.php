@@ -35,7 +35,13 @@
                         echo "CIE10";
                     }
                     else
-                        echo $listFormularios[0]->col_combre;
+                    {
+                        if($col_tipo==16){
+                            echo "CIF";
+                        }
+                        else
+                            echo $listFormularios[0]->col_combre;
+                        }
                     ?>
                 </h4>
             </div>

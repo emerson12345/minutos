@@ -23,7 +23,6 @@ class LibCuadernoController extends Controller
      */
     public function index()
     {
-
         $url_cuaderno = asset('cuaderno/peticion/');
         $url_cuaderno_peticion_hc = asset('cuaderno/peticion/');
         $inst_id=session('institucion')->inst_id;
@@ -62,14 +61,27 @@ class LibCuadernoController extends Controller
 
         return view('cuadernos.show',[ 'listCuadernos' => $listCuadernos,'listPacientes' => $listPacientes,'listRrhh' => $listRrhh,'listInstitucion'=>$listInstitucion,'listInstitucionAll2'=>$listInstitucionAll2 ])->with('url_cuaderno', $url_cuaderno)->with('url_cuaderno_peticion_hc', $url_cuaderno_peticion_hc);
     }
-    public function peticion($id)
+    public function peticion($cua_id,$pac_id)
     {
+        $listEvolucion = DB::table('evolucion')
+            ->join('paciente_hc', 'paciente_hc.hc_id', '=', 'evolucion.hc_id')
+            ->join('rrhh', 'rrhh.rrhh_id', '=', 'paciente_hc.rrhh_id')
+            ->join('paciente', 'paciente.pac_id', '=', 'paciente_hc.pac_id')
+            ->where([
+                ['paciente_hc.cua_id', '=', $cua_id],
+                ['paciente.pac_id', '=', $pac_id],
+            ])
+            ->orderBy('paciente_hc.hc_fecha')
+            ->select('paciente_hc.hc_id','paciente_hc.hc_fecha','paciente.pac_id' ,'paciente_hc.cua_id'
+                ,'rrhh.rrhh_nombre','rrhh.rrhh_ap_prim','rrhh_ap_seg','evolucion.evolucion_descripcion')
+            ->get();
+
         $url_cuaderno = asset('cuaderno/peticion_listas/');
         $listFormularios = DB::table('lib_cuadernos')
             ->join('lib_formulario', 'lib_cuadernos.cua_id', '=', 'lib_formulario.cua_id')
             ->join('lib_columnas', 'lib_columnas.col_id', '=', 'lib_formulario.col_id')
             ->where([
-                ['lib_cuadernos.cua_id', '=', $id],
+                ['lib_cuadernos.cua_id', '=', $cua_id],
                 ['lib_formulario.for_seleccionable', '=', '1'],
             ])
             ->select('lib_cuadernos.cua_id','lib_cuadernos.cua_nombre' ,'lib_formulario.for_id'
@@ -79,7 +91,12 @@ class LibCuadernoController extends Controller
         //print_r($users);
 
         //$listFormularios = LibFormulario::all();
-        return view('formulario.show',['listFormularios' => $listFormularios,'cua_id'=> $id])->with('url_cuaderno', $url_cuaderno);
+        return view('formulario.show',
+            [
+                'listFormularios' => $listFormularios,
+                'cua_id'=> $cua_id,
+                'listEvolucion'=> $listEvolucion
+            ])->with('url_cuaderno', $url_cuaderno);
     }
     public function detalle($hc_id,$cua_id)
     {
@@ -107,12 +124,26 @@ class LibCuadernoController extends Controller
         }
         else
         {
-            $listFormularios = DB::table('lib_columnas')
-                ->join('lib_relaciona_tablas', 'lib_columnas.rel_id', '=', 'lib_relaciona_tablas.rel_id')
-                ->join('lib_lista_generica', 'lib_lista_generica.lis_tabla', '=', 'lib_relaciona_tablas.lis_tabla')
-                ->where('lib_columnas.col_id', '=', $intIDColumna)
-                ->select('lib_lista_generica.lis_codigo','lib_lista_generica.lis_descripcion','lib_columnas.col_combre')
-                ->get();
+            if($col_tipo==16)
+            {
+                //select cif_id,cif_cod,cif_nombre from cif;
+                $strCie10='CIF';
+                $listFormularios = DB::table('cif')
+                    ->where('cif.cif_seleccionable', '=', '1')
+                    ->select('cif.cif_cod as lis_codigo','cif.cif_nombre as lis_descripcion')
+                    //->take(2000)
+                    ->get();
+            }
+            else
+            {
+                $listFormularios = DB::table('lib_columnas')
+                    ->join('lib_relaciona_tablas', 'lib_columnas.rel_id', '=', 'lib_relaciona_tablas.rel_id')
+                    ->join('lib_lista_generica', 'lib_lista_generica.lis_tabla', '=', 'lib_relaciona_tablas.lis_tabla')
+                    ->where('lib_columnas.col_id', '=', $intIDColumna)
+                    ->select('lib_lista_generica.lis_codigo','lib_lista_generica.lis_descripcion','lib_columnas.col_combre')
+                    ->get();
+            }
+
         }
         return view('lista_generica.show',['listFormularios' => $listFormularios,'col_tipo'=>$col_tipo])->with('for_id',$for_id);
     }

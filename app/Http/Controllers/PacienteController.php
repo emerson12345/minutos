@@ -12,6 +12,7 @@ use Sicere\Models\LugarDepartamento;
 use Sicere\Models\Paciente;
 use Sicere\Models\PacienteGrupoFamilium;
 use Yajra\Datatables\Datatables;
+use PDF;
 
 class PacienteController extends Controller
 {
@@ -114,5 +115,35 @@ class PacienteController extends Controller
             $lista = $departamento->municipios()->select('mun_nombre','mun_id')->get();
         }
         return response()->json($lista);
+    }
+    public function report($pac_id){
+        $paciente = Paciente::find($pac_id);
+        PDF::setHeaderCallback(function($pdf) {
+            $pdf->Cell(0, 27, '', 'B', false, 'R', 0, '', 0, false, 'T', 'M');
+            $pdf->Image(asset('template/dist/img/bolivia.gif'), 15, 10, 0, 15, 'GIF', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
+            $pdf->SetFont('helvetica', 'B', 11);
+            $pdf->Text(33,22,'Sistema de centros de rehabilitación','R');
+            $pdf->SetFont('helvetica', 'K', 10);
+            $pdf->Text(15,27,'Establecimiento: '.session('institucion')->inst_nombre);
+            $pdf->Image(asset('template/dist/img/minsalud-logo.jpg'), 25, 12, 0, 12, 'JPG', 'http://www.tcpdf.org', '', true, 150, 'R', false, false, 0, false, false, false);
+        });
+        PDF::setFooterCallback(function($pdf) {
+            $strCodSeguridad=session('institucion')->inst_codigo . '|' . session('institucion')->inst_nombre .'|' . Auth::user()->user_id;
+            $pdf->SetY(-15);
+            $pdf->SetFont('helvetica', 'I', 8);
+            $pdf->Cell(0, 10, 'Pagina '.$pdf->getAliasNumPage().'/'.$pdf->getAliasNbPages(), 'T', false, 'R', 0, '', 0, false, 'T', 'M');
+            //$pdf->write2DBarcode(bcrypt('Mi super codigo'), 'PDF417', 25, 275, 150, 6, null, 'N',true);
+            $pdf->write2DBarcode($strCodSeguridad, 'PDF417', 25, 275, 150, 6, null, 'N',true);
+        });
+        PDF::SetTitle('My Report');
+        PDF::SetSubject('Reporte de sistema');
+        PDF::SetMargins(15, 30, 15);
+        PDF::SetFontSubsetting(false);
+        PDF::SetFontSize('10px');
+        PDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        PDF::AddPage('P', 'Letter');
+        PDF::writeHTML(view('paciente.detail',['paciente'=>$paciente])->render(), true, false, true, false, '');
+        PDF::lastPage();
+        PDF::Output('usuario.pdf');
     }
 }

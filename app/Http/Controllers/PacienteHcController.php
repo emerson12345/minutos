@@ -24,7 +24,7 @@ class PacienteHcController extends Controller
     public function index()
     {
         $url_paciente = asset('PacienteHc/historial_clinico/');
-        $url_buscar_Hc = asset('PacienteHc/buscar_historial_clinico//');
+        $url_buscar_Hc = asset('PacienteHc/buscar_historial_clinico/');
         $listPacientes = Paciente::all();
         $listCuadernos = LibCuaderno::all();
         $listCuadernosSearch=LibCuaderno::all()
@@ -68,7 +68,6 @@ class PacienteHcController extends Controller
     }
     public function atencionHc($cua_id,$pac_id,$hc_id,$fecha)
     {
-
 
         $fecha_actual=date("Y-m-d");
 
