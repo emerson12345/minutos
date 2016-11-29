@@ -19,7 +19,10 @@ class UsuarioController extends Controller
     }
 
     public function usuarios(){
-        return Datatables::of(User::all())->make(true);
+
+       return Datatables::of(User::all())->make(true);
+        //$posts = User::select(array('user.user_codigo','user.user_nombre','user.user_email'));
+        //return Datatables::of($posts)->make();
     }
 
     public function create(){

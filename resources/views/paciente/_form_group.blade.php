@@ -51,10 +51,10 @@
 <div class="form-group">
     {!! Form::label('gru_fam_sexo', 'SEXO', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        <label for="s_masc">Masculino</label>
+        <label for="s_masc">Hombre</label>
         {!! Form::radio('gru_fam_sexo','M',true,['id'=>'s_masc']) !!}
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <label for="s_fem">Femenino</label>
+        <label for="s_fem">Mujer</label>
         {!! Form::radio('gru_fam_sexo','F',false,['id'=>'s_fem']) !!}
         <span class="label label-warning"></span>
     </div>

@@ -48,10 +48,10 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         {!! Form::label('pac_sexo', 'SEXO') !!}<br>
-                        <label for="s_masc">Masculino</label>
+                        <label for="s_masc">Hombre</label>
                         {!! Form::radio('pac_sexo','H',true,['id'=>'s_masc']) !!}
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <label for="s_fem">Femenino</label>
+                        <label for="s_fem">Mujer</label>
                         {!! Form::radio('pac_sexo','M',false,['id'=>'s_fem']) !!}
                         <span class="label label-warning"></span>
                     </div>

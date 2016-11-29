@@ -29,7 +29,13 @@ class PacienteHcController extends Controller
         $listCuadernos = LibCuaderno::all();
         $listCuadernosSearch=LibCuaderno::all()
                             ->pluck('cua_nombre','cua_id');
-        $listRrhh = Rrhh::all();
+        //$listRrhh = Rrhh::all();
+        $listRrhh = DB::table('rrhh')
+            ->where('rrhh.inst_id','=',session('institucion')->inst_id)
+            ->join('institucion','institucion.inst_id','rrhh.inst_id')
+            ->select('*')
+            ->get();
+
         $listPersonalSearch = DB::table('rrhh')
             ->join('institucion','institucion.inst_id','rrhh.inst_id')
             ->select('rrhh.rrhh_id','rrhh.rrhh_nombre','rrhh.rrhh_ap_prim','rrhh.rrhh_ap_seg','institucion.inst_nombre','institucion.inst_localidad')

@@ -4,7 +4,7 @@ var pacientesTable = $("#pacientes-table").DataTable({
     "serverSide":true,
     "ajax": $("#pacientes-table").data('url'),
     "columns":[
-        {data:'pac_nro_hc',searchable:true},
+        {data:'paciente_nombres',searchable:true},
         {data:'pac_nro_ci',searchable:true},
         {data:'pac_ap_prim',searchable:true},
         {data:'pac_ap_seg',searchable:true},

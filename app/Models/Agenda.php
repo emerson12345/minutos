@@ -13,7 +13,6 @@ class Agenda extends Model
 
     protected $primaryKey = 'agenda_id';
 
-<<<<<<< Updated upstream
 	public $timestamps = false;
 
     protected $fillable = [
@@ -38,21 +37,4 @@ class Agenda extends Model
     public function paciente(){
         return $this->belongsTo('Sicere\Models\Paciente','pac_id','pac_id');
     }
-=======
-    public $timestamps = false;
-
-    protected $fillable = [
-        'agenda_fec_ini',
-        'rrhh_id',
-        'pac_id',
-        'inst_id',
-        'agenda_estado',
-        'agenda_fec_fin',
-        'agenda_todo_dia',
-        'agenda_color',
-        'agenda_descripcion'
-    ];
-
-    protected $guarded = [];
->>>>>>> Stashed changes
 }

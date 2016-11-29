@@ -13,7 +13,8 @@ use Sicere\Models\Paciente;
 use Sicere\Models\PacienteGrupoFamilium;
 use Yajra\Datatables\Datatables;
 use PDF;
-
+use DB;
+use Sicere\Models\VistaPacienteNombres;
 class PacienteController extends Controller
 {
     public function index(){
@@ -21,7 +22,14 @@ class PacienteController extends Controller
     }
 
     public function pacientes(){
-        return Datatables::of(Paciente::all())->make(true);
+        //return Datatables::of(Paciente::all())->make(true);
+
+        $posts = VistaPacienteNombres::select
+        ('pac_nro_hc','pac_nro_ci','pac_ap_prim','pac_ap_seg','pac_nombre','pac_sexo',
+            'paciente_nombres'
+            )->get();
+        return Datatables::of($posts)->make(true);
+
     }
 
     public function create(){
