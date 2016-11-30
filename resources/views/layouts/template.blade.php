@@ -175,7 +175,6 @@
                                 @if(Auth::check())
                                     {{Auth::user()->user_nombre}}
                                 @endif
-
                             </span>
                         </a>
                         <ul class="dropdown-menu">
@@ -194,14 +193,11 @@
                             <!-- Menu Body -->
                             <li class="user-body">
                                 <div class="row">
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Seguidores</a>
-                                    </div>
-                                    <div class="col-xs-4 text-center">
+                                    <div class="pull-left text-center">
                                         <a href="#">Ministerio</a>
                                     </div>
-                                    <div class="col-xs-4 text-center">
-                                        <a href="#">Amigos</a>
+                                    <div class="pull-right text-center">
+                                        <a href="{{ url('/usuario/password') }}">Modificar contraseña</a>
                                     </div>
                                 </div>
                                 <!-- /.row -->
@@ -209,7 +205,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="{{ url('/Agenda/index') }}" class="btn btn-default btn-flat">Agenda</a>
+                                    <a href="{{ url('/Agenda/home') }}" class="btn btn-default btn-flat">Agenda</a>
                                 </div>
                                 <div class="pull-right">
                                     <form id="logout-form" action="{{ url('/logout') }}" method="POST" >
