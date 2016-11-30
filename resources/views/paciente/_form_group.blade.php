@@ -9,7 +9,7 @@
 {!! Form::model($gPersona,['class'=>'form-horizontal']) !!}
 
 <div class="form-group">
-    {!! Form::label('parent_id', 'PARENTESCO', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('parent_id', 'Parentesco', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
         {!! Form::select('parent_id',\Sicere\Models\Parentesco::all()->pluck('parent_nombre','parent_id'),$gPersona->parent_id,['class'=>'form-control']) !!}
         <span class="label label-warning"></span>
@@ -25,7 +25,7 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('gru_fam_ap_prim', 'PRIMER APELLIDO', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('gru_fam_ap_prim', 'Primer apellido', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
         {!! Form::text('gru_fam_ap_prim',null,['class'=>'form-control']) !!}
         <span class="label label-warning"></span>
@@ -33,7 +33,7 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('gru_fam_ap_seg', 'SEGUNDO APELLIDO', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('gru_fam_ap_seg', 'Segundo apellido', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
         {!! Form::text('gru_fam_ap_seg',null,['class'=>'form-control']) !!}
         <span class="label label-warning"></span>
@@ -41,7 +41,7 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('gru_fam_nombre', 'NOMBRES', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('gru_fam_nombre', 'Nombres', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
         {!! Form::text('gru_fam_nombre',null,['class'=>'form-control']) !!}
         <span class="label label-warning"></span>
@@ -49,19 +49,19 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('gru_fam_sexo', 'SEXO', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('gru_fam_sexo', 'Sexo', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
         <label for="s_masc">Hombre</label>
-        {!! Form::radio('gru_fam_sexo','M',true,['id'=>'s_masc']) !!}
+        {!! Form::radio('gru_fam_sexo','H',true,['id'=>'s_masc']) !!}
         &nbsp;&nbsp;&nbsp;&nbsp;
         <label for="s_fem">Mujer</label>
-        {!! Form::radio('gru_fam_sexo','F',false,['id'=>'s_fem']) !!}
+        {!! Form::radio('gru_fam_sexo','M',false,['id'=>'s_fem']) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
 
 <div class="form-group">
-    {!! Form::label('gru_fam_telf', 'TELEFONO', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('gru_fam_telf', 'Teléfono', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
         {!! Form::text('gru_fam_telf',null,['class'=>'form-control']) !!}
         <span class="label label-warning"></span>
@@ -69,7 +69,7 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('gru_fam_direccion', 'DIRECCION', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('gru_fam_direccion', 'Dirección', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
         {!! Form::text('gru_fam_direccion',null,['class'=>'form-control']) !!}
         <span class="label label-warning"></span>
@@ -77,13 +77,10 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('gru_fam_seleccionable', 'ESTADO', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('gru_fam_seleccionable', 'Fallecido', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        <label for="s_sel">Vigente</label>
-        {!! Form::radio('gru_fam_seleccionable','1',true,['id'=>'s_sel']) !!}
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <label for="s_nsel">No vigente</label>
-        {!! Form::radio('gru_fam_seleccionable','0',false,['id'=>'s_nsel']) !!}
+        {!! Form::hidden('gru_fam_seleccionable','1') !!}
+        {!! Form::checkbox('gru_fam_seleccionable','0',($gPersona->gru_fam_seleccionable||!$gPersona->exists)?false:true) !!}
         <span class="label label-warning"></span>
     </div>
 </div>

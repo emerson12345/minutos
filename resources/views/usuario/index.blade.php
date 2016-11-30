@@ -13,13 +13,6 @@
 @section('menu_page')
     <h1>Usuarios</h1>
 @stop
-@section('breadcrumb')
-    <ol class="breadcrumb">
-        <li>
-
-        </li>
-    </ol>
-@stop
 
 @section('content')
     <section class="content">
@@ -39,7 +32,7 @@
                             <thead>
                             <tr>
                                 <th>Nombre de usuario</th>
-                                <th>Nombre</th>
+                                <th>Apellidos y nombres</th>
                                 <th>Correo electrónico</th>
                                 <th>Fecha de alta</th>
                                 <th>Fecha de ult. modf.</th>
@@ -83,6 +76,7 @@
 @section('script')
     <link rel="stylesheet" href="{{asset('template/plugins/bootstrap-duallist/bootstrap-duallistbox.css')}}">
     <link rel="stylesheet" href="{{asset('template/plugins/select2/select2.min.css')}}">
+    <script src="{{asset('template/plugins/bootstrap-daterangepicker/js/moment.min.js')}}"></script>
     <script src="{{asset('template/plugins/bootstrap-duallist/jquery.bootstrap-duallistbox.js')}}"></script>
     <script src="{{asset('template/plugins/select2/select2.full.min.js')}}"></script>
     <script src="{{asset('template/plugins/select2/i18n/es.js')}}"></script>

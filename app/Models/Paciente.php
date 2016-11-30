@@ -16,7 +16,6 @@ class Paciente extends Model
 	public $timestamps = false;
 
     protected $fillable = [
-        'pac_nro_hc',
         'pac_ap_prim',
         'pac_ap_seg',
         'pac_nombre',
@@ -75,7 +74,6 @@ class Paciente extends Model
     }
 
     public function getNextHC(){
-        $next_id = \DB::select("select nextval('agenda_agenda_id_seq')");
-        return $next_id[0]->nextval;
+        return Paciente::max('pac_nro_hc')+1;
     }
 }

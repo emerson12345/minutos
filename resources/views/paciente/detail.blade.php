@@ -2,13 +2,13 @@
     <thead>
     <tr>
         <th colspan="2" style="text-align: center">
-            Detalle del paciente
+            DETALLE DEL PACIENTE
         </th>
     </tr>
     </thead>
     <tbody>
     <tr>
-        <th width="30%">Numero H.C.</th>
+        <th width="30%">Número H.C.</th>
         <td>{{$paciente->pac_nro_hc}}</td>
     </tr>
     <tr>
@@ -21,15 +21,20 @@
     </tr>
     <tr>
         <th>Sexo</th>
-        <td>{{$paciente->pac_sexo}}</td>
+        <td>{{$paciente->pac_sexo=='M'?'Mujer':'Hombre'}}</td>
     </tr>
     <tr>
-        <th>Fecha de nacimiento</th>
-        <td>{{$paciente->pac_fecha_nac}} ({{$paciente->pac_edad_anio}})</td>
+        <th>Fecha de nacimiento - Edad</th>
+        <td>{{date('d/m/Y',strtotime($paciente->pac_fecha_nac))}} - {{$paciente->pac_edad_anio}}</td>
     </tr>
     <tr>
         <th>Estado civil</th>
         <td>{{$paciente->estadoCivil? $paciente->estadoCivil->est_civ_nombre:''}}</td>
+    </tr>
+
+    <tr>
+        <th>Ocupación</th>
+        <td>{{$paciente->pac_ocupacion}}</td>
     </tr>
 
     <tr>
@@ -43,27 +48,22 @@
     </tr>
 
     <tr>
-        <th>Ocupacion</th>
-        <td>{{$paciente->pac_ocupacion}}</td>
-    </tr>
-
-    <tr>
         <th>Comunidad</th>
         <td>{{$paciente->pac_comunidad}}</td>
     </tr>
 
     <tr>
-        <th>Direccion</th>
+        <th>Dirección</th>
         <td>{{$paciente->pac_direccion}}</td>
     </tr>
 
     <tr>
-        <th>Telefono</th>
+        <th>Teléfono</th>
         <td>{{$paciente->pac_nro_telf}}</td>
     </tr>
 
     <tr>
-        <th>Con discapacidad</th>
+        <th>Con discapacidad permanente</th>
         <td>
             @if($paciente->pac_con_discapaci)
                 <span class="badge bg-blue">SI</span>
@@ -86,12 +86,12 @@
         </td>
     </tr>
     <tr>
-        <th>Fecha alta</th>
-        <td>{{$paciente->pac_fec_alta}}</td>
+        <th>Fecha de alta</th>
+        <td>{{date('d/m/Y H:i:s',strtotime($paciente->pac_fec_alta))}}</td>
     </tr>
     <tr>
-        <th>Fecha de modificacion</th>
-        <td>{{$paciente->pac_fec_mod}}</td>
+        <th>Fecha de última modificación</th>
+        <td>{{date('d/m/Y H:i:s',strtotime($paciente->pac_fec_mod))}}</td>
     </tr>
     </tbody>
 </table>
@@ -105,11 +105,10 @@
         <tr>
             <th>Parentestco</th>
             <th>CI</th>
-            <th>1er apellido</th>
-            <th>2do apellido</th>
-            <th>Nombre(s)</th>
-            <th>Telf.</th>
-            <th>Direccion</th>
+            <th>Apellidos y nombres</th>
+            <th>Sexo</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
         </tr>
         </thead>
         <tbody>
@@ -117,11 +116,15 @@
             <tr>
                 <td>{{$persona->parentesco->parent_nombre}}</td>
                 <td>{{$persona->gru_fam_nro_ci}}</td>
-                <td>{{$persona->gru_fam_ap_prim}}</td>
-                <td>{{$persona->gru_fam_ap_seg}}</td>
-                <td>{{$persona->gru_fam_nombre}}</td>
-                <td>{{$persona->gru_fam_telf}}</td>
+                <td>
+                    {{$persona->gru_fam_ap_prim}} {{$persona->gru_fam_ap_seg}} {{$persona->gru_fam_nombre}}
+                    @if(!$persona->gru_fam_seleccionable)
+                        (Fallecido)
+                    @endif
+                </td>
+                <td>{{$persona->gru_fam_sexo=='M'?'Mujer':'Hombre'}}</td>
                 <td>{{$persona->gru_fam_direccion}}</td>
+                <td>{{$persona->gru_fam_telf}}</td>
             </tr>
         @endforeach
         </tbody>

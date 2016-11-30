@@ -4,28 +4,29 @@ var pacientesTable = $("#pacientes-table").DataTable({
     "serverSide":true,
     "ajax": $("#pacientes-table").data('url'),
     "columns":[
-        {data:'paciente_nombres',searchable:true},
+        {data:'pac_nro_hc',searchable:true},
         {data:'pac_nro_ci',searchable:true},
-        {data:'pac_ap_prim',searchable:true},
-        {data:'pac_ap_seg',searchable:true},
-        {data:'pac_nombre',searchable:true},
-        {data:'pac_sexo',orderable:false,searchable:false},
+        {data:'paciente_nombres',searchable:true},
         {
-            data:function (row,type,val,meta) {
-                var valReturn = "";
-                if(row.pac_con_discapaci == 1)
-                    valReturn = "<span class='label label-primary'>SI</span>";
-                else
-                    valReturn = "<span class='label label-primary'>NO</span>"
-                return valReturn;
+            data:function(row, type, val, meta){
+                return (row.pac_sexo == 'M')?'Mujer':'Hombre';
             },
-            orderable:false,searchable:false
+            orderable:false
+        },
+        {
+            data:function(row, type, val, meta){
+                var fecha = row.pac_fecha_nac;
+                if(moment(row.pac_fecha_nac).isValid())
+                    fecha = moment(row.pac_fecha_nac).format('DD/MM/YYYY');
+                return fecha;
+            },
+            orderable:false
         },
         {
             data:function (row,type,val,meta) {
-                return '<button type="button" style="margin-right: 5px" class="btn btn-edit btn-xs btn-primary" data-url="update/'+row.pac_id+'" ><i class="fa fa-edit"></i></button>'
-                    +'<button type="button" style="margin-right: 5px" class="btn btn-detail btn-xs btn-primary"  data-url="detail/'+row.pac_id+'"><i class="fa fa-list-ul"></i></button>'
-                    +'<button type="button" class="btn btn-view-group btn-xs btn-primary"  data-url="group/'+row.pac_id+'"><i class="fa fa-group"></i></button>';
+                return '<button title="Editar" type="button" style="margin-right: 5px" class="btn btn-edit btn-xs btn-primary" data-url="update/'+row.pac_id+'" ><i class="fa fa-edit"></i></button>'
+                    +'<button title="Detalle" type="button" style="margin-right: 5px" class="btn btn-detail btn-xs btn-primary"  data-url="detail/'+row.pac_id+'"><i class="fa fa-list-ul"></i></button>'
+                    +'<button title="Grupo familiar" type="button" class="btn btn-view-group btn-xs btn-primary"  data-url="group/'+row.pac_id+'"><i class="fa fa-group"></i></button>';
             },
             orderable:false
         }

@@ -11,14 +11,7 @@
     Pacientes
 @stop
 @section('menu_page')
-    <h1>Pacientes <small>lista</small></h1>
-@stop
-@section('breadcrumb')
-    <ol class="breadcrumb">
-        <li>
-            <a href="{{route('adm.paciente.index')}}">Roles</a>
-        </li>
-    </ol>
+    <h1>Pacientes</h1>
 @stop
 
 @section('content')
@@ -39,11 +32,9 @@
                             <tr>
                                 <th>No. HC</th>
                                 <th>CI</th>
-                                <th>1er. Apellido</th>
-                                <th>2do. Apellido</th>
-                                <th>Nombres</th>
+                                <th>Apellidos y nombres</th>
                                 <th>Sexo</th>
-                                <th>Disc.</th>
+                                <th>Fecha Nac.</th>
                                 <th></th>
                             </tr>
                             </thead>

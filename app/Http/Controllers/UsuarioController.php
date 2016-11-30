@@ -5,6 +5,7 @@ namespace Sicere\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Sicere\Models\Institucion;
 use Sicere\Models\Rrhh;
 use Validator;
 use Sicere\Http\Requests;
@@ -19,8 +20,9 @@ class UsuarioController extends Controller
     }
 
     public function usuarios(){
-
-       return Datatables::of(User::all())->make(true);
+        $institucion = Institucion::find(session('institucion')->inst_id);
+        $usuarios = $institucion->usuarios;
+       return Datatables::of($usuarios)->make(true);
         //$posts = User::select(array('user.user_codigo','user.user_nombre','user.user_email'));
         //return Datatables::of($posts)->make();
     }
@@ -32,14 +34,15 @@ class UsuarioController extends Controller
 
     public function store(Request $request){
         $this->validate($request,[
-            'rrhh_id'=>'required',
+            'rrhh_id'=>'required| not_exists:usuario_rrhh',
             'user_nombre' => 'required',
             'user_codigo' => 'required| unique:usuario,user_codigo',
-            'user_password' => 'required',
-            'user_password2' => 'required| same:user_password',
+            'user_password' => 'required| min:6',
+            'user_password2' => 'required| same:user_password| min:6',
             'user_email' => 'email| unique:usuario,user_email',
             'role_list' => 'required'
         ],[
+            'rrhh_id.not_exists'=>'Esta persona ya tiene registrado un usuario',
             'required' => 'Este campo es requerido.',
             'user_password2.same' => 'Las contraseñas no coinciden.',
             'email' => 'Debe introducir un correo valido.',
@@ -48,12 +51,14 @@ class UsuarioController extends Controller
             'user_email.unique' => 'Este email ya esta registrado en la base de datos',
             'role_list.required' => 'Debe seleccionar al menos un rol'
         ]);
-
         $usuario = new User($request->all());
-        $usuario->user_seleccionable = 1;
-        $usuario->save();
-        $usuario->rrhh()->attach($request->rrhh_id);
-        $this->setRoles($usuario,$request->role_list);
+        DB::transaction(function() use ($usuario,$request){
+            $usuario->user_seleccionable = 1;
+            $usuario->save();
+            $usuario->instituciones()->sync([session('institucion')->inst_id]);
+            $usuario->rrhh()->attach($request->rrhh_id);
+            $this->setRoles($usuario,$request->role_list);
+        });
         return response()->json($usuario);
     }
 
@@ -77,9 +82,8 @@ class UsuarioController extends Controller
         }
 
         //para cambiar el resto
-        $listUsuarioData = ['user_nombre'=> $request->user_nombre, 'user_codigo' => $request->user_codigo, 'user_email'=> $request->user_email, 'user_seleccionable'=>$request->user_seleccionable];
+        $listUsuarioData = ['user_codigo' => $request->user_codigo, 'user_email'=> $request->user_email, 'user_seleccionable'=>$request->user_seleccionable,'role_list'=>$request->role_list];
         Validator::make($listUsuarioData,[
-            'user_nombre' => 'required',
             'user_codigo' => ['required',Rule::unique('usuario')->ignore($usuario->user_id,'user_id')],
             'user_email' => ['email',Rule::unique('usuario')->ignore($usuario->user_id,'user_id')],
             'user_seleccionable' => 'boolean',
@@ -95,7 +99,6 @@ class UsuarioController extends Controller
         $usuario->fill($listUsuarioData)->save();
         $this->setRoles($usuario,$request->role_list);
         return response()->json($usuario);
-        //return redirect()->route('usuario.index');
     }
 
     private function setRoles(User $user, $listRoles = []){

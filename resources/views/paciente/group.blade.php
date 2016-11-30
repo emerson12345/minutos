@@ -10,15 +10,12 @@
 <table class="table table-hover table-bordered table-striped table-condensed">
     <thead>
     <tr>
-        <th>Parentestco</th>
+        <th>Parentesco</th>
         <th>CI</th>
-        <th>1er apellido</th>
-        <th>2do apellido</th>
-        <th>Nombre(s)</th>
+        <th>Apellidos y nombres</th>
         <th>Sexo</th>
-        <th>Telf.</th>
-        <th>Direccion</th>
-        <th>Estado</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
         <th></th>
     </tr>
     </thead>
@@ -27,19 +24,15 @@
     <tr>
         <td>{{$persona->parentesco->parent_nombre}}</td>
         <td>{{$persona->gru_fam_nro_ci}}</td>
-        <td>{{$persona->gru_fam_ap_prim}}</td>
-        <td>{{$persona->gru_fam_ap_seg}}</td>
-        <td>{{$persona->gru_fam_nombre}}</td>
-        <td>{{$persona->gru_fam_sexo}}</td>
-        <td>{{$persona->gru_fam_telf}}</td>
-        <td>{{$persona->gru_fam_direccion}}</td>
         <td>
-            @if($persona->gru_fam_seleccionable)
-                <span class="label label-primary">VIGENTE</span>
-            @else
-                <span class="label label-danger">NO VIGENTE</span>
+            {{$persona->gru_fam_ap_prim}} {{$persona->gru_fam_ap_seg}} {{$persona->gru_fam_nombre}}
+            @if(!$persona->gru_fam_seleccionable)
+                (Fallecido)
             @endif
         </td>
+        <td>{{$persona->gru_fam_sexo=='M'?'Mujer':'Hombre'}}</td>
+        <td>{{$persona->gru_fam_direccion}}</td>
+        <td>{{$persona->gru_fam_telf}}</td>
         <td>
             <button type="button" class="btn-edit-group btn btn-primary btn-xs" data-url="{{route('adm.paciente.group.update',['pac_id'=>$paciente->pac_id,'group_id'=>$persona->gru_fam_id])}}">
                 <i class="fa fa-edit"></i>

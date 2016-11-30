@@ -25,9 +25,7 @@ class PacienteController extends Controller
         //return Datatables::of(Paciente::all())->make(true);
 
         $posts = VistaPacienteNombres::select
-        ('pac_nro_hc','pac_nro_ci','pac_ap_prim','pac_ap_seg','pac_nombre','pac_sexo',
-            'paciente_nombres'
-            )->get();
+        ('pac_id','pac_nro_hc','pac_nro_ci','pac_sexo','pac_fecha_nac','paciente_nombres')->get();
         return Datatables::of($posts)->make(true);
 
     }
@@ -47,9 +45,13 @@ class PacienteController extends Controller
         if($pac_id)
             $paciente = Paciente::find($pac_id);
         $this->validate($request,[
-            'pac_nro_hc' => ['required',Rule::unique('paciente')->ignore($pac_id,'pac_id')],
-            'pac_nro_ci' => [Rule::unique('paciente')->ignore($pac_id,'pac_id')],
-            'pac_nombre' => 'required',
+            'pac_nro_ci' => ['max:10',Rule::unique('paciente')->ignore($pac_id,'pac_id')],
+            'pac_ap_prim' => 'max:100',
+            'pac_ap_seg' => 'max:100',
+            'pac_nombre' => 'required| max:100',
+            'pac_ocupacion' => 'max:120',
+            'pac_comunidad' => 'max:120',
+            'pac_direccion' => 'max:120',
             'pac_fecha_nac'=>'date_format:d/m/Y',
             'pac_edad_anio' => 'required|integer',
             'pac_nro_telf' => 'integer'
@@ -58,7 +60,8 @@ class PacienteController extends Controller
             'unique'=> 'Este valor ya ha sido registrado',
             'date_format'=>'El formato de fecha debe ser dd/mm/aaaa',
             'pac_edad_anio.integer' => 'La edad debe ser un numero entero',
-            'pac_nro_telf.integer' => 'Telf. solo numerico'
+            'pac_nro_telf.integer' => 'Telf. solo numerico',
+            'max' => 'El maximo de caracteres permitidos es :max'
         ]);
 
         $paciente->fill($request->all());

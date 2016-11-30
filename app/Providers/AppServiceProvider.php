@@ -13,7 +13,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        \Validator::extend('not_exists',function($attribute, $value, $parameters, $validator){
+            $rrhh_id = $value;
+            return \DB::table($parameters[0])->where('rrhh_id',$rrhh_id)->count()>0?false:true;
+        });
     }
 
     /**

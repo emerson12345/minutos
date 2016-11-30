@@ -10,7 +10,7 @@ use Sicere\Http\Controllers\Controller;
 use Sicere\Models\Agenda;
 use Sicere\Models\Paciente;
 use Sicere\Models\Rrhh;
-
+use PDF;
 class AgendaController extends Controller
 {
     public function index(){
@@ -98,6 +98,54 @@ class AgendaController extends Controller
         return view('agenda.view');
     }
 
+    public function viewReport(Request $request){
+        $user = $request->user_id?:0;
+        $fec_ini = $request->fec_ini?:date('d/m/Y');
+        $fec_fin = $request->fec_fin?:date('d/m/Y');
+
+        PDF::setHeaderCallback(function($pdf) {
+            $pdf->Cell(0, 27, '', 'B', false, 'R', 0, '', 0, false, 'T', 'M');
+            $pdf->Image(asset('template/dist/img/bolivia.gif'), 15, 10, 0, 15, 'GIF', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
+            $pdf->SetFont('helvetica', 'B', 11);
+            $pdf->Text(33,22,'Sistema de centros de rehabilitación','R');
+            $pdf->SetFont('helvetica', 'K', 10);
+            $pdf->Text(15,27,'Establecimiento: '.session('institucion')->inst_nombre);
+            $pdf->Image(asset('template/dist/img/minsalud-logo.jpg'), 25, 12, 0, 12, 'JPG', 'http://www.tcpdf.org', '', true, 150, 'R', false, false, 0, false, false, false);
+        });
+        PDF::setFooterCallback(function($pdf) {
+            $strCodSeguridad=session('institucion')->inst_codigo . '|' . session('institucion')->inst_nombre .'|' . \Auth::user()->user_id;
+            $pdf->SetY(-15);
+            $pdf->SetFont('helvetica', 'I', 8);
+            $pdf->Cell(0, 10, 'Pagina '.$pdf->getAliasNumPage().'/'.$pdf->getAliasNbPages(), 'T', false, 'R', 0, '', 0, false, 'T', 'M');
+            //$pdf->write2DBarcode(bcrypt('Mi super codigo'), 'PDF417', 25, 275, 150, 6, null, 'N',true);
+            $pdf->write2DBarcode($strCodSeguridad, 'PDF417', 25, 275, 150, 6, null, 'N',true);
+        });
+        PDF::SetTitle('Agenda');
+        PDF::SetSubject('Reporte de sistema');
+        PDF::SetMargins(15, 30, 15);
+        PDF::SetFontSubsetting(false);
+        PDF::SetFontSize('10px');
+        PDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        PDF::AddPage('P', 'Letter');
+        /*
+        $eventos = DB::table('agenda')
+            ->join('paciente','paciente.pac_id','=','agenda.pac_id')
+            ->select('agenda.agenda_fec_ini'
+                ,'agenda.agenda_descripcion'
+                ,DB::raw("ltrim( concat_ws(' ',paciente.pac_ap_prim,paciente.pac_ap_seg,paciente.pac_nombre) ) as nombre_paciente"))
+            ->whereBetween(DB::raw('agenda_fec_ini::DATE'),[$fec_ini,$fec_fin])
+            ->where('agenda.user_id',$user)->get();
+        */
+        $fecha_inicio = Carbon::createFromFormat('d/m/Y',$fec_ini);
+        $fecha_fin = Carbon::createFromFormat('d/m/Y',$fec_fin);
+        while($fecha_inicio->lte($fecha_fin)){
+            PDF::Cell(0,0,$fecha_inicio->format('d/m/Y'),1,2);
+            $fecha_inicio->addDay();
+        }
+        PDF::lastPage();
+        PDF::Output('agenda.pdf','I');
+    }
+
     public function getEvents(Request $request){
         $fec_ini = $request->fec_ini?:date('d/m/Y');
         $fec_fin = $request->fec_fin?:date('d/m/Y');
@@ -112,6 +160,5 @@ class AgendaController extends Controller
             ->where('agenda.user_id',$user_id)->get();
 
         return response()->json($eventos);
-
     }
 }

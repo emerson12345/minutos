@@ -7,8 +7,22 @@ var usersTable = $("#users-table").DataTable({
         {data:'user_codigo'},
         {data:'user_nombre'},
         {data:'user_email'},
-        {data:'user_fec_alta'},
-        {data:'user_fec_mod'},
+        {
+            data:function(row, type, val, meta){
+                var fecha = row.user_fec_alta;
+                if(moment(row.user_fec_alta).isValid())
+                    fecha = moment(row.user_fec_alta).format('DD/MM/YYYY HH:mm:ss');
+                return fecha;
+            }
+        },
+        {
+            data:function(row, type, val, meta){
+                var fecha = row.user_fec_mod;
+                if(moment(row.user_fec_mod).isValid())
+                    fecha = moment(row.user_fec_mod).format('DD/MM/YYYY HH:mm:ss');
+                return fecha;
+            }
+        },
         {
             data:function (row,type,val,meta) {
                 var valReturn = "";
@@ -26,13 +40,6 @@ var usersTable = $("#users-table").DataTable({
             },
             orderable:false
         }
-        /*
-        {
-            data:function (row,type,val,meta) {
-                return '<button type="button" class="btn btn-edit btn-xs btn-primary" data-url="update/'+row.user_id+'"><i class="fa fa-edit"></i> Editar</button>'
-            },
-            orderable:false
-        }*/
     ]
 });
 $("#users-table").on('draw.dt',function () {
@@ -80,6 +87,10 @@ function handleEvent(){
                     }
                 }
             });
+            $("#rrhh_id").on('select2:select',function(evt){
+                var fullname = $("#rrhh_id").select2('data')[0].text;
+                $("#user_nombre").val(fullname);
+            });
         },
         complete:function () {
             $("#myModal").find(".overlay").remove();
@@ -106,7 +117,7 @@ $("#btn-save").on("click",function(){
         error:function(data) {
             var errors = data.responseJSON;
             $.each(errors,function(i,o){
-                $form.find("[name ^= '"+i+"']").closest(".col-sm-10").find("span.label").text(o);
+                $form.find("[name ^= '"+i+"']").closest(".col-sm-9").find("span.label").text(o);
             });
         },
         complete:function () {
