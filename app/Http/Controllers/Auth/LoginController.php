@@ -2,6 +2,7 @@
 
 namespace Sicere\Http\Controllers\Auth;
 
+use Illuminate\Support\Facades\Auth;
 use Sicere\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -47,8 +48,10 @@ class LoginController extends Controller
     }
 
     public function logout(){
+        if(Auth::check()){
         \Auth::logout();
         session()->flush();
+        }
         return redirect('/');
     }
 }
