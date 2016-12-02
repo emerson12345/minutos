@@ -19,7 +19,8 @@ class Agenda extends Model
         'agenda_fec_ini',
         'agenda_fec_fin',
         'agenda_descripcion',
-        'pac_id'
+        'pac_id',
+        'cua_id'
     ];
 
     protected $guarded = [];
@@ -36,5 +37,9 @@ class Agenda extends Model
 
     public function paciente(){
         return $this->belongsTo('Sicere\Models\Paciente','pac_id','pac_id');
+    }
+
+    public function usuario(){
+        return $this->belongsTo('Sicere\User','user_id','user_id');
     }
 }

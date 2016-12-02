@@ -1,16 +1,26 @@
 {!! Form::model($agenda,['class'=>'form-horizontal','id'=>'agenda-form']) !!}
 
 <div class="form-group">
-    {!! Form::label('pac_id', 'PACIENTE', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('pac_id', 'Paciente', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
         <select name="pac_id" id="pac_id" class="form-control" data-url="{{route('agenda.pacientes')}}">
         </select>
         <span class="label label-warning"></span>
     </div>
 </div>
+<!--Comment-->
 
 <div class="form-group">
-    {!! Form::label('agenda_fec_ini', 'FECHA Y HORA', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('cua_id', 'Servicio', ['class' => 'col-sm-2 control-label']) !!}
+    <div class="col-sm-10">
+        <?php $cuaderno = Auth::user()->cuadernos()->where('cua_seleccionable',1)->pluck('lib_cuadernos.cua_nombre','lib_cuadernos.cua_id');?>
+        {!! Form::select('cua_id',$cuaderno,null,['class'=>'form-control']) !!}
+        <span class="label label-warning"></span>
+    </div>
+</div>
+
+<div class="form-group">
+    {!! Form::label('agenda_fec_ini', 'Fecha y hora', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
         {!! Form::text('agenda_fec_ini',null,['class'=>'form-control']) !!}
         <span class="label label-warning"></span>
@@ -18,7 +28,7 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('agenda_descripcion', 'DESCRIPCION', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('agenda_descripcion', 'Descripción', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
         {!! Form::text('agenda_descripcion',null,['class'=>'form-control']) !!}
         <span class="label label-warning"></span>
@@ -26,7 +36,7 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('duracion', 'DURACION (min)', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('duracion', 'Duración (min)', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
         {!! Form::text('duracion',15,['class'=>'form-control','id'=>'duracion']) !!}
         <span class="label label-warning"></span>
@@ -34,7 +44,7 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('sesiones', 'SESIONES', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('sesiones', 'Número de sesiones', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
         {!! Form::text('sesiones',1,['class'=>'form-control','id'=>'sesiones']) !!}
         <span class="label label-warning"></span>
@@ -42,7 +52,7 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('dias','DIAS',['class'=>'col-sm-2 control-label']) !!}
+    {!! Form::label('dias','Días',['class'=>'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
         <label for="dia-lun">Lun.</label>
         <input type="checkbox" name="dia[]" value="1" id="dia-lun" class="week-day">&nbsp;&nbsp;&nbsp;&nbsp;

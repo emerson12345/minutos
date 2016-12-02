@@ -54,4 +54,8 @@ class User extends Authenticatable
     public function rrhh(){
         return $this->belongsToMany('Sicere\Models\Rrhh','usuario_rrhh','user_id','rrhh_id');
     }
+    
+    public function cuadernos(){
+        return $this->belongsToMany('Sicere\Models\LibCuaderno','usuario_lib_cuaderno','user_id','cua_id');
+    }
 }
