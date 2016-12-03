@@ -46,7 +46,7 @@ class Paciente extends Model
     }
 
     public function getNombreCompletoAttribute(){
-        return $this->pac_nombre.' '.$this->pac_ap_prim.' '.$this->pac_ap_seg;
+        return $this->pac_ap_prim.' '.$this->pac_ap_seg.' '.$this->pac_nombre;
     }
 
     public function expedido(){

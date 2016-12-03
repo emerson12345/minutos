@@ -25,6 +25,10 @@ class LibCuaderno extends Model
 
     protected $guarded = [];
 
+    public function usuario(){
+        return $this->belongsToMany('Sicere\User','usuario_lib_cuaderno','cua_id','user_id');
+    }
+
     public function formulario(){
         return $this->hasMany('Sicere\Models\LibFormulario','cua_id','cua_id');
     }
