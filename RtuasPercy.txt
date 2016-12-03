@@ -1,0 +1,51 @@
+//Eventos Calendario
+Route::group(['prefix'=>'Agenda'],function(){
+    Route::get('home','FullcalendareventoController@home')->name('Agenda.home');
+    //Route::get('index','FullcalendareventoController@index')->name('Agenda.index');
+    Route::get('cargaEventos{id?}','FullcalendareventoController@index')->name('fullcalendar.index');
+    Route::post('guardaEventos', array('as' => 'guardaEventos','uses' => 'FullcalendareventoController@create'));
+    Route::post('actualizaEventos','FullcalendareventoController@update');
+    Route::post('eliminaEvento','FullcalendareventoController@delete');
+    Route::get('reporte/{fecha_inicio}','FullcalendareventoController@reporteSemanal')->name('Agenda.reporte');
+});
+
+Route::group(['prefix'=>'libregistro'],function(){
+    Route::get('index','LibRegistroController@index')->name('libregistro.index');
+    Route::post('store','LibRegistroController@store')->name('libregistro.store');
+    Route::post('edit','LibRegistroController@edit')->name('libregistro.edit');
+});
+
+/* Rutas recivo recetario Percy*/
+Route::group(['prefix'=>'recibo_recetario'],function(){
+    Route::get('index','ReciboRecetarioController@index')->name('recibo_recetario.index');
+    Route::get('store/{ins_med_cod?}/{rec_indicaciones?}/{rec_cantidad?}/{rec_med_nombre?}','ReciboRecetarioController@store')->name('recibo_recetario.store');
+    Route::get('destroy/{rec_id}','ReciboRecetarioController@destroy')->name('recibo_recetario.destroy');
+    Route::post('edit','ReciboRecetarioController@edit')->name('recibo_recetario.edit');
+    Route::get('report/{rec_id}','ReciboRecetarioController@report')->name('recibo_recetario.report');
+});
+/* Rutas examen complementario*/
+Route::group(['prefix'=>'examen_complementario'],function(){
+    Route::get('index','PacienteHcComplementarioController@index')->name('examen_complementario.index');
+    Route::get('store/{ec_indicador}/{ec_resultado?}/{ec_solicitado?}','PacienteHcComplementarioController@store')->name('examen_complementario.store');
+    Route::get('destroy/{rec_id}','PacienteHcComplementarioController@destroy')->name('examen_complementario.destroy');
+    Route::post('edit','PacienteHcComplementarioController@edit')->name('examen_complementario.edit');
+    Route::get('report/{rec_id}','PacienteHcComplementarioController@report')->name('examen_complementario.report');
+});
+
+
+
+Route::group(['prefix'=>'cuaderno'],function(){
+    Route::get('index/{agenda_id?}','LibCuadernoController@index')->name('cuaderno.index');
+    Route::get('peticion/{cua_id}/{pac_id}','LibCuadernoController@peticion')->name('cuaderno.peticion');
+    Route::get('peticion_listas/{intIDColumna}/{for_id}/{col_tipo}','LibCuadernoController@peticionListas')->name('cuaderno.peticionListas');
+    Route::get('detalle/{hc_id}/{cua_id}','LibCuadernoController@detalle')->name('cuaderno.detalle');
+});
+
+
+Route::group(['prefix'=>'PacienteHc'],function(){
+    Route::get('index','PacienteHcController@index')->name('PacienteHc.index');
+    Route::get('historial_clinico/{id}','PacienteHcController@registroHistoricoPaciente')->name('PacienteHc.registroHistoricoPaciente');
+    Route::get('buscar_historial_clinico/{fecha_inicio}/{fecha_fin}/{cua_id}/{rrhh_id}/{pac_id}','PacienteHcController@searchHc')->name('PacienteHc.searchHc');
+    Route::get('atencion/{cua_id}/{pac_id}/{hc_id}/{fecha}','PacienteHcController@atencionHc')->name('PacienteHc.atencion');
+    Route::get('agenda','PacienteHcController@agenda')->name('PacienteHc.agenda');
+});
