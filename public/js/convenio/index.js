@@ -10,9 +10,9 @@ var conveniosTable = $("#convenios-table").DataTable({
             data:function (row,type,val,meta) {
                 var valReturn = "";
                 if(row.conv_seleccionable == 1)
-                    valReturn = "<span class='label label-primary'>VIGENTE</span>";
+                    valReturn = "<span class='label text-green'>VIGENTE</span>";
                 else
-                    valReturn = "<span class='label label-danger'>NO VIGENTE</span>"
+                    valReturn = "<span class='label text-red'>NO VIGENTE</span>"
                 return valReturn;
             },
             orderable:false
@@ -21,17 +21,31 @@ var conveniosTable = $("#convenios-table").DataTable({
             data:function (row,type,val,meta) {
                 var valReturn = "";
                 if(row.conv_niv_nacional == 1)
-                    valReturn = "<span class='label label-primary'>SI</span>";
+                    valReturn = "<span class='label text-black'>SI</span>";
                 else
-                    valReturn = "<span class='label label-primary'>NO</span>"
+                    valReturn = "<span class='label text-blue'>NO</span>"
                 return valReturn;
             }
         },
-        {data:'conv_fec_alta'},
-        {data:'conv_fec_mod'},
+        {
+            data:function(row, type, val, meta){
+                var fecha = row.conv_fec_alta;
+                if(moment(row.conv_fec_alta).isValid())
+                    fecha = moment(row.conv_fec_alta).format('DD/MM/YYYY HH:mm:ss');
+                return fecha;
+            }
+        },
+        {
+            data:function(row, type, val, meta){
+                var fecha = row.conv_fec_mod;
+                if(moment(row.conv_fec_mod).isValid())
+                    fecha = moment(row.conv_fec_mod).format('DD/MM/YYYY HH:mm:ss');
+                return fecha;
+            }
+        },
         {
             data:function (row,type,val,meta) {
-                return '<button type="button" class="btn btn-edit btn-xs btn-primary" data-url="update/'+row.conv_id+'"><i class="fa fa-edit"></i> Editar</button>'
+                return '<button type="button" class="btn btn-edit btn-xs btn-primary" data-url="update/'+row.conv_id+'" title="Editar"><i class="fa fa-edit"></i> </button>'
             },
             orderable:false
         }
