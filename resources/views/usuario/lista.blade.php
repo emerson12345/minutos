@@ -1,6 +1,6 @@
 @extends('layouts.template')
 @section('title')
-    Roles
+    Usuarios
 @stop
 @section('user')
     @if(Auth::check())
@@ -8,15 +8,10 @@
     @endif
 @stop
 @section('title_page')
-    Roles
+    Lista de usuarios
 @stop
 @section('menu_page')
-    <h1>Roles </h1>
-@stop
-@section('breadcrumb')
-    <ol class="breadcrumb">
-
-    </ol>
+    <h1>Acceso a establecimientos</h1>
 @stop
 
 @section('content')
@@ -25,18 +20,17 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <button type="button" class="btn btn-add btn-primary pull-right margin-bottom" data-url="{{route('adm.rol.create')}}">
-                            <i class="fa fa-plus"></i> Agregar rol
-                        </button>
+                        <a href="{{route('adm.usuario.report')}}" class="btn btn-default" target="_blank" title="Imprimir lista de usuarios"><i class="fa fa-file-pdf-o"></i> Imprimir</a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="roles-table" class="table table-bordered table-hover" data-url="{{route('adm.rol.list')}}">
+                        <table class="table table-bordered table-hover" id="users-table" data-url="{{route('adm.permiso.list')}}">
                             <thead>
                             <tr>
-                                <th>Codigo</th>
-                                <th>Nombre</th>
+                                <th>Nombre de usuario</th>
+                                <th>Apellidos y nombres</th>
+                                <th>Correo electrónico</th>
                                 <th>Fecha de alta</th>
                                 <th>Fecha de ult. modf.</th>
                                 <th>Vigente</th>
@@ -52,12 +46,12 @@
         </div>
     </section>
 
-    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+    <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Roles</h4>
+                    <h4 class="modal-title">Acceso a establecimientos</h4>
                 </div>
                 <div class="modal-body">
                     <div class="box box-primary box-solid">
@@ -66,7 +60,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Cancelar</button>
                     <button type="button" id="btn-save" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
@@ -76,13 +69,13 @@
     </div><!-- /.modal -->
 @stop
 
-@section('script')
-<link rel="stylesheet" href="{{asset('template/plugins/bootstrap-duallist/bootstrap-duallistbox.css')}}">
-<link rel="stylesheet" href="{{asset('template/plugins/select2/select2.min.css')}}">
-<script src="{{asset('template/plugins/bootstrap-daterangepicker/js/moment.min.js')}}"></script>
-<script src="{{asset('template/plugins/bootstrap-duallist/jquery.bootstrap-duallistbox.js')}}"></script>
-<script src="{{asset('template/plugins/select2/select2.full.min.js')}}"></script>
-<script src="{{asset('template/plugins/select2/i18n/es.js')}}"></script>
 
-<script src="{{asset('js/rol/index.js')}}"></script>
+@section('script')
+    <link rel="stylesheet" href="{{asset('template/plugins/bootstrap-duallist/bootstrap-duallistbox.css')}}">
+    <link rel="stylesheet" href="{{asset('template/plugins/select2/select2.min.css')}}">
+    <script src="{{asset('template/plugins/bootstrap-daterangepicker/js/moment.min.js')}}"></script>
+    <script src="{{asset('template/plugins/bootstrap-duallist/jquery.bootstrap-duallistbox.js')}}"></script>
+    <script src="{{asset('template/plugins/select2/select2.full.min.js')}}"></script>
+    <script src="{{asset('template/plugins/select2/i18n/es.js')}}"></script>
+    <script src="{{asset('js/usuario/lista.js')}}"></script>
 @stop

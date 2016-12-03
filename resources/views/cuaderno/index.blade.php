@@ -11,12 +11,12 @@
     Lista de cuadernos
 @stop
 @section('menu_page')
-    <h1>Cuadernos <small>lista</small></h1>
+    <h1>Cuadernos de registro</h1>
 @stop
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li>
-            <a href="{{route('adm.cuaderno.index')}}">Usuarios</a>
+
         </li>
     </ol>
 @stop
@@ -28,7 +28,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <a href="{{route('adm.cuaderno.create')}}" class="btn btn-add btn-primary pull-right margin-bottom">
-                            <i class="fa fa-plus"></i> Agregar cuaderno
+                            <i class="fa fa-plus"></i> Crear cuaderno
                         </a>
                     </div>
                 </div>
@@ -38,8 +38,8 @@
                             <thead>
                             <tr>
                                 <th>Nombre</th>
-                                <th>Fecha alta</th>
-                                <th>Fecha mod.</th>
+                                <th>Fecha de alta</th>
+                                <th>Fecha de ult. modf.</th>
                                 <th>Estado</th>
                                 <th></th>
                             </tr>
@@ -80,5 +80,11 @@
 
 
 @section('script')
+    <link rel="stylesheet" href="{{asset('template/plugins/bootstrap-duallist/bootstrap-duallistbox.css')}}">
+    <link rel="stylesheet" href="{{asset('template/plugins/select2/select2.min.css')}}">
+    <script src="{{asset('template/plugins/bootstrap-daterangepicker/js/moment.min.js')}}"></script>
+    <script src="{{asset('template/plugins/bootstrap-duallist/jquery.bootstrap-duallistbox.js')}}"></script>
+    <script src="{{asset('template/plugins/select2/select2.full.min.js')}}"></script>
+    <script src="{{asset('template/plugins/select2/i18n/es.js')}}"></script>
     <script src="{{asset('js/cuaderno/index.js')}}"></script>
 @stop

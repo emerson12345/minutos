@@ -8,15 +8,15 @@
     @endif
 @stop
 @section('title_page')
-    Lista de personal
+    Recursos humanos
 @stop
 @section('menu_page')
-    <h1>Personal <small>lista</small></h1>
+    <h1>Recursos humanos</h1>
 @stop
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li>
-            <a href="{{route('rrhh.index')}}">Personal</a>
+
         </li>
     </ol>
 @stop
@@ -90,6 +90,10 @@
     </div><!-- /.modal -->
 @stop
 @section('script')
+    <link rel="stylesheet" href="{{asset('template/plugins/datepicker/datepicker3.css')}}">
+    <script src="{{asset('template/plugins/bootstrap-daterangepicker/js/moment.min.js')}}"></script>
+    <script src="{{asset('template/plugins/datepicker/bootstrap-datepicker.js')}}"></script>
+    <script src="{{asset('template/plugins/datepicker/locales/bootstrap-datepicker.es.js')}}"></script>
     <script>
     var instituteTable = $("#rrhh-table").DataTable({
         "lengthMenu": [5,10, 25, 50],
@@ -107,16 +111,16 @@
                 data:function (row,type,val,meta) {
                     var valReturn = "";
                     if(row.rrhh_seleccionable == 1)
-                        valReturn = "<span class='label label-primary'>SI</span>";
+                        valReturn = "<span class='text-green'>SI</span>";
                     else
-                        valReturn = "<span class='label label-danger'>NO</span>"
+                        valReturn = "<span class='text-red'>NO</span>"
                     return valReturn;
                 },
                 orderable:false
             },
             {
                 data:function (row,type,val,meta) {
-                    return '<button type="button" class="btn btn-edit btn-xs btn-primary" data-url="edit/'+row.rrhh_id+'"><i class="fa fa-edit"></i> Editar</button>'
+                    return '<button type="button" class="btn btn-edit btn-xs btn-primary" data-url="edit/'+row.rrhh_id+'" title="Editar"><i class="fa fa-edit"></i></button>'
                 },
                 orderable:false
             }
@@ -138,6 +142,10 @@
             },
             success:function (data) {
                 $("#myModal").find(".box .box-body").html(data);
+                $("#rrhh_fecha_nac").datepicker({
+                    'format':'dd/mm/yyyy',
+                    language:'es',
+                });
             },
             complete:function () {
                 $("#myModal").find(".overlay").remove();
@@ -174,5 +182,8 @@
             }
         });
     });
+
+
     </script>
+
 @stop

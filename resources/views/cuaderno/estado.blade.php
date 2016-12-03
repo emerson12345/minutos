@@ -1,7 +1,6 @@
-
 @extends('layouts.template')
 @section('title')
-    Cuadernos
+    Estado de cuadernos
 @stop
 @section('user')
     @if(Auth::check())
@@ -12,11 +11,13 @@
     Crear/Editar
 @stop
 @section('menu_page')
-    <h1>Cuadernos</h1>
+    <h1>Estado de registro de cuadernos</h1>
 @stop
 @section('breadcrumb')
     <ol class="breadcrumb">
-
+        <li>
+            <a href="{{route('parametro.index')}}">Parámetros de configuración</a>
+        </li>
     </ol>
 @stop
 
@@ -55,11 +56,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="box-footer">
                 <label for="check-control" class="btn btn-primary" id="check-label" style="margin-bottom: 3px">
-                    <span class="text">Todo</span>
+                    <span class="text">Abrir para todas las fechas</span>
                     <input type="checkbox" id="check-control" class="badgebox">
                     <span class="badge">&check;</span>
                 </label>
+
+                    <button class="btn btn-primary pull-right" type="submit">
+                        <i class="fa fa-save"></i> Guardar
+                    </button>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="box box-solid box-primary">
@@ -70,11 +77,7 @@
                     </div>
                 </div>
             </div>
-            <div class="box-footer">
-                <button class="btn btn-primary pull-right" type="submit">
-                    <i class="fa fa-save"></i> Guardar
-                </button>
-            </div>
+
             {!! Form::close() !!}
         </div>
     </section>
@@ -137,10 +140,10 @@
         $("#check-control").on('click',function(){
             if($(this).prop('checked')){
                 $('#check-list').find('input[type=checkbox]').prop('checked',true);
-                $('#check-label').find("span.text").text('Ninguno');
+                $('#check-label').find("span.text").text('Cerrar para todas las fechas');
             }else{
                 $('#check-list').find('input[type=checkbox]').prop('checked',false);
-                $('#check-label').find("span.text").text('Todo');
+                $('#check-label').find("span.text").text('Abrir para todas las fechas');
             }
 
         });

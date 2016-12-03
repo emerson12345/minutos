@@ -1,1 +1,9 @@
 table.table thead{background-color: #C4DAF5;}
+LABEL
+{
+    text-transform: lowercase;
+}
+LABEL:first-letter
+{
+    text-transform: uppercase;
+}
