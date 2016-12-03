@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Sicere\Models\Institucion;
+use Illuminate\Support\Facades\Hash;
 use Sicere\Models\Rrhh;
+use Sicere\Models\Usuario;
 use Validator;
 use Sicere\Http\Requests;
 use Sicere\User;
@@ -18,7 +20,6 @@ class UsuarioController extends Controller
     public function index(){
         return view('usuario.index');
     }
-
     public function usuarios(){
         $institucion = Institucion::find(session('institucion')->inst_id);
         $usuarios = $institucion->usuarios;
@@ -144,5 +145,99 @@ class UsuarioController extends Controller
             ->whereRaw("upper(ltrim(concat_ws(' ',rrhh_ap_prim,rrhh_ap_seg,rrhh_nombre))) like upper(?)",$query)
             ->orWhere('rrhh_ci','like',$query)->get();
         return response()->json($lista);
+    }
+
+    public function password(){
+        $usuario = User::find(Auth::user()->user_id);
+        return view('usuario.password',['usuario'=>$usuario]);
+    }
+
+    public function update_password(Request $request){
+        $rules = [
+            'user_password_actual' => 'required',
+            'user_password' => 'required|min:5|max:150',
+            'user_password2' => 'required| same:user_password'
+        ];
+
+        $messages = [
+            'user_password_actual.required' => 'El campo es requerido',
+            'user_password.required' => 'El campo es requerido',
+            'user_password2.same' => 'Los passwords no coinciden',
+            'user_password.min' => 'El mínimo permitido son 5 caracteres',
+            'user_password.max' => 'El máximo permitido son 150 caracteres',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()){
+            return redirect('usuario/password')->withErrors($validator);
+        }
+        else{
+            if (Hash::check($request->user_password_actual, Auth::user()->user_password)){
+                $usuario = User::find(Auth::user()->user_id);
+                $listUsuarioData = ['user_password'=>$request->user_password];
+                $usuario->fill($listUsuarioData)->save();
+                return redirect('usuario/password')->with('status', 'Contraseña modificada con éxito');
+            }
+            else
+            {
+                return redirect('usuario/password')->with('message', 'Contraseña actual incorrecta, por favor verifique sus datos');
+            }
+        }
+    }
+
+    public function permiso_cuaderno($user_id){
+        $usuario = User::find($user_id);
+        return view('usuario.usercuaderno',['usuario'=>$usuario]);
+    }
+    public function set_cuaderno(Request $request,$user_id){
+        $usuario = User::find($user_id);
+        //para cambiar el resto
+        $listUsuarioData = ['cuaderno_list'=>$request->cuaderno_list];
+        Validator::make($listUsuarioData,[
+            'cuaderno_list' => 'required'
+        ],[
+            'required' => 'Este campo es requerido.',
+            'cuaderno_list.required' => 'Debe seleccionar al menos un cuaderno'
+        ])->validate();
+        //$usuario->fill($listUsuarioData)->save();
+        $this->setCuadernos($usuario,$request->cuaderno_list);
+        return response()->json($usuario);
+    }
+
+    private function setCuadernos(User $user, $listCuadernos = []){
+        if(!is_array($listCuadernos))
+            $listCuadernos=[];
+        $user->cuadernos()->sync($listCuadernos);
+    }
+
+    public function all_users(){
+        return Datatables::of(Usuario::all())->make(true);
+    }
+    public function all_permisos(){
+        return view('usuario.lista');
+    }
+
+    public function permiso_establecimiento($user_id){
+        $usuario = User::find($user_id);
+        return view('usuario.userestablecimiento',['usuario'=>$usuario]);
+    }
+
+    public function  set_establecimiento(Request $request,$user_id){
+        $usuario = User::find($user_id);
+        $listUsuarioData = ['institucion_list'=>$request->institucion_list];
+        Validator::make($listUsuarioData,[
+            'institucion_list' => 'required'
+        ],[
+            'required' => 'Este campo es requerido.',
+            'institucion_list.required' => 'Debe seleccionar al menos un establecimiento'
+        ])->validate();
+        $this->setEstablecimientos($usuario,$request->institucion_list);
+        return response()->json($usuario);
+    }
+
+    private function setEstablecimientos(User $user, $listInstitucion = []){
+        if(!is_array($listInstitucion))
+            $listInstitucion=[];
+        $user->instituciones()->sync($listInstitucion);
     }
 }
