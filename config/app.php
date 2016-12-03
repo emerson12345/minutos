@@ -162,7 +162,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
         /*
          * Package Service Providers...
          */
@@ -183,7 +182,6 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
         Elibyy\TCPDF\ServiceProvider::class,
-
         MaddHatter\LaravelFullcalendar\ServiceProvider::class,
     ],
 
