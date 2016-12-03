@@ -335,11 +335,14 @@
                             });
                         },
                         eventClick: function (event, jsEvent, view) {
-                            $('#myModal_instituciones_r').modal('show');
+                            //$('#myModal_instituciones_r').modal('show');
 
                             crsfToken = document.getElementsByName("_token")[0].value;
-                            var con=confirm("Esta seguro que desea eliminar el evento");
-                            if(con){
+                            //alert(event.id);
+                            window.location="http://localhost/SICEREP6/public/cuaderno/index/"+event.id;
+                            //var con=confirm("Esta seguro que desea eliminar el evento");
+                            //if(con){
+                                /*
                                 $.ajax({
                                     url: 'eliminaEvento',
                                     data: 'id=' + event.id,
@@ -351,10 +354,10 @@
                                         $('#calendar').fullCalendar('removeEvents', event._id);
                                         console.log("Evento eliminado");
                                     }
-                                });
-                            }else{
-                                console.log("Cancelado");
-                            }
+                                });*/
+                            //}else{
+                              //  console.log("Cancelado");
+                            //}
                         },
                         eventMouseover: function( event, jsEvent, view ) {
                             var start = (event.start.format("HH:mm"));
@@ -427,6 +430,7 @@
                     var fecha_inicio=$("#fec_ini").val();
                     window.open('reporte/'+fecha_inicio.split("/").join("-"));
                     /*
+                     $.ajax({
                      $.ajax({
                      beforeSend: function()
                      {

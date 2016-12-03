@@ -116,12 +116,10 @@
                                 foreach ($listInstitucionAll2 as $value) {
                                 ?>
                                 <tr role="row">
-                                    <td class="tr-cuadernos tr-dimencion"
-                                        id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>"
-                                            >
+                                    <td id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:270px;">
                                         <?= $value->inst_id; ?>
                                     </td>
-                                    <td class="tr-cuadernos tr-dimencion"   id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>">
+                                    <td id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:345px;">
                                         <?= $value->inst_nombre; ?>
                                     </td>
                                 </tr>
@@ -172,12 +170,10 @@
                                 foreach ($listInstitucionAll2 as $value) {
                                 ?>
                                 <tr role="row">
-                                    <td class="tr-cuadernos tr-dimencion"
-                                        id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>"
-                                            >
+                                    <td class="tr-cuadernos" id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:270px;">
                                         <?= $value->inst_id; ?>
                                     </td>
-                                    <td class="tr-cuadernos tr-dimencion"   id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>">
+                                    <td class="tr-cuadernos"   id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:345px;">
                                         <?= $value->inst_nombre; ?>
                                     </td>
                                 </tr>

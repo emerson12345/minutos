@@ -40,6 +40,7 @@ class PacienteHcController extends Controller
             ->join('institucion','institucion.inst_id','rrhh.inst_id')
             ->select('rrhh.rrhh_id','rrhh.rrhh_nombre','rrhh.rrhh_ap_prim','rrhh.rrhh_ap_seg','institucion.inst_nombre','institucion.inst_localidad')
             ->get();
+
         $view=View::make('PacienteHc.index',array('listCuadernosSearch'=>$listCuadernosSearch,'listPersonalSearch'=>$listPersonalSearch))
             ->nest('listPacientes', 'PacienteHc.listPacientes',array('listPacientes'=>$listPacientes))
             ->nest('listCuadernos','cuadernos.listCuadernos',array('listCuadernos'=>$listCuadernos))

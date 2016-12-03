@@ -139,17 +139,45 @@ function bisiesto($anio_actual){
         <div class="box">
             <div class="box-body">
                 <label for="">Paciente:</label><br>
-                <input type="hidden" name="pac_id" id="tb_id_paciente" size="5" readonly>
-                <input type="text" id="tb_nombre_paciente" size="30"  required="true">
+                <?php
+                if(isset($listAgendaPacientes))
+                    {
+                        ?>
+                    <input type="hidden" name="pac_id" id="tb_id_paciente" size="5" value="<?php echo $listAgendaPacientes->pac_id; ?>" readonly>
+                    <input type="text" id="tb_nombre_paciente" size="30"  value="<?php echo $listAgendaPacientes->pac_ap_prim." ".$listAgendaPacientes->pac_ap_seg." ".$listAgendaPacientes->pac_nombre;?>" required>
+                <?php
+                    }
+                    else
+                    {
+                        ?>
+                        <input type="hidden" name="pac_id" id="tb_id_paciente" size="5" readonly>
+                        <input type="text" id="tb_nombre_paciente" size="30" required>
+                <?php
+                    }
+                ?>
                 <input type="button" id="btn-paciente" class="btn-success" value="Buscar">
             </div>
         </div>
         <div class="box">
             <div class="box-body" >
-                <label for="">CUADERNOS</label>
+                <label for="">Cuadernos</label>
+
                 <input type="button" value="..." id="btn-cuadernos" name="btn-cuadernos">
                 <br>
-                <input type="text" id="tb-cuadernos" name="tb-cuadernos" size="45" required>
+                <?php
+                if(isset($listAgendaPacientes))
+                {
+                ?>
+                    <input type="text" id="tb-cuadernos" name="tb-cuadernos" size="45" required value="<?php echo $listAgendaPacientes->cua_nombre;?>">
+                <?php
+                }
+                else
+                {
+                ?>
+                    <input type="text" id="tb-cuadernos" name="tb-cuadernos" size="45" required>
+                <?php
+                }
+                ?>
             </div>
         </div>
 
@@ -197,7 +225,7 @@ function bisiesto($anio_actual){
                                                 Nro HC
                                             </th>
                                             <th class="tr-dimencion-title">
-                                                NOMBRE
+                                                Nombre
                                             </th>
                                             <th class="tr-dimencion-title">
                                                 CI
@@ -218,7 +246,7 @@ function bisiesto($anio_actual){
                                                 <?= $value->pac_id; ?>
                                             </td>
                                             <td class="tr-cuadernos tr-dimencion"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
-                                                <?= $value->pac_nombre." ".$value->pac_ap_prim." ".$value->pac_ap_seg; ?>
+                                                <?= $value->pac_ap_prim." ".$value->pac_ap_seg." ".$value->pac_nombre; ?>
                                             </td>
 
                                             <td class="tr-cuadernos tr-dimencion"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
@@ -245,6 +273,7 @@ function bisiesto($anio_actual){
                 </div>
             </div>
         </div>
+
         <!-- CUADERNOS------------------------------------------------------------------------------------------>
         <div id="myModal_cuadernos" class="modal fade" role="dialog">
             <div class="modal-dialog modal-lg">
@@ -264,10 +293,10 @@ function bisiesto($anio_actual){
                                         <thead>
                                         <tr role="row">
                                             <th class="tr-dimencion">
-                                                CODIGO
+                                                Codigo
                                             </th>
                                             <th class="tr-dimencion">
-                                                NOMBRE
+                                                Nombre
                                             </th>
                                         </tr>
                                         </thead>
@@ -276,12 +305,11 @@ function bisiesto($anio_actual){
                                         foreach ($listCuadernos as $value) {
                                         ?>
                                         <tr role="row">
-                                            <td class="tr-cuadernos tr-dimencion"
-                                                id="<?= $value->cua_id; ?>-<?= $value->cua_nombre; ?>"
-                                                    >
+                                            <td class="tr-cuadernos tr-dimencion" id="<?= $value->cua_id; ?>-<?= $value->cua_nombre; ?>"
+                                                    style="width:272px">
                                                 <?= $value->cua_id; ?>
                                             </td>
-                                            <td class="tr-cuadernos tr-dimencion"   id="<?= $value->cua_id; ?>-<?= $value->cua_nombre; ?>">
+                                            <td class="tr-cuadernos tr-dimencion"   id="<?= $value->cua_id; ?>-<?= $value->cua_nombre; ?>" style="width:370px">
                                                 <?= $value->cua_nombre; ?>
                                             </td>
                                         </tr>
@@ -321,10 +349,10 @@ function bisiesto($anio_actual){
                                         <thead>
                                         <tr role="row">
                                             <th class="tr-dimencion">
-                                                CODIGO
+                                                Codigo
                                             </th>
                                             <th class="tr-dimencion">
-                                                NOMBRE
+                                                Nombre
                                             </th>
                                         </tr>
                                         </thead>
@@ -333,13 +361,10 @@ function bisiesto($anio_actual){
                                         foreach ($listInstitucionAll2 as $value) {
                                         ?>
                                         <tr role="row">
-                                            <td class="tr-cuadernos tr-dimencion"
-                                                id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>"
-                                                y>     >e
-
-                                                >                                                <?= $value->inst_id; ?>
+                                            <td class="tr-cuadernos" id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:272px">
+                                                <?= $value->inst_id; ?>
                                             </td>
-                                            <td class="tr-cuadernos tr-dimencion"   id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>">
+                                            <td class="tr-cuadernos"   id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:345px">
                                                 <?= $value->inst_nombre; ?>
                                             </td>
                                         </tr>
@@ -378,10 +403,10 @@ function bisiesto($anio_actual){
                                         <thead>
                                         <tr role="row">
                                             <th class="tr-dimencion">
-                                                CODIGO
+                                                Codigo
                                             </th>
                                             <th class="tr-dimencion">
-                                                NOMBRE
+                                                Nombre
                                             </th>
                                         </tr>
                                         </thead>
@@ -390,12 +415,10 @@ function bisiesto($anio_actual){
                                         foreach ($listInstitucionAll2 as $value) {
                                         ?>
                                         <tr role="row">
-                                            <td class="tr-cuadernos tr-dimencion"
-                                                id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>"
-                                                    >
+                                            <td class="tr-cuadernos tr-dimencion" id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:272px">
                                                 <?= $value->inst_id; ?>
                                             </td>
-                                            <td class="tr-cuadernos tr-dimencion"   id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>">
+                                            <td class="tr-cuadernos tr-dimencion"   id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:345px">
                                                 <?= $value->inst_nombre; ?>
                                             </td>
                                         </tr>
@@ -424,14 +447,11 @@ function bisiesto($anio_actual){
                 <label for="">Personal de Salud: </label>
                 <?php echo Form::select('rrhh_id', $listRrhh, array('required'=> true)); ?>
                 <br>
-                <label for="">Personal de Salud2: </label>
-                <?php echo Form::select('rrhh_id2', $listRrhh, array('required'=> true)); ?>
-                <br>
                 <label for="">Tipo de Paciente: </label>
-                {!! Form::select('pact_id', array('1' => 'INSTITUCIONAL','2' => 'CONVENIO'),'default', array('id' => 'pact_id','required'=>true)) !!}
+                {!! Form::select('pact_id', array('1' => 'Institucional','2' => 'Convenio'),'default', array('id' => 'pact_id','required'=>true)) !!}
                 <div id='institucion'>
                     <label for="">
-                        Institucion:
+                        Institución:
                     </label>
                     {!! Form::select('conv_id', $listInstitucion)  !!}
                 </div>
@@ -465,12 +485,25 @@ function bisiesto($anio_actual){
     {{ Form::hidden('inst_id',session('institucion')->inst_id) }}
 
     {!! Form::close() !!}
+
 @stop
 @section('script')
     <script>
+
+
+
         var url_data='{{$url_cuaderno}}';
         var url_cuaderno_peticion_hc ='{{$url_cuaderno_peticion_hc}}';
+        var estado_agenda='{{$estadoAgenda}}';
         var fila_seleccinable,fila_seleccinable_cuadernos,fila_seleccinable_instituciones_r;
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        $(document).ready(
+                function(){
+                            if(estado_agenda==true)
+                                ajax_cuaderno2(url_cuaderno_peticion_hc,"#t_cuadernos","#cuaderno",'click',"GET",'{{$AgendaPacidentesCuaId}}','{{$AgendaPacidentesPacId}}');
+                }
+        );
+        /////////////////////////////////////////////////////
         $("#t_pacientes").on('click', 'td', function(e) {
             arr=e.toElement.id.split("-");
             intIdPac=arr[0];

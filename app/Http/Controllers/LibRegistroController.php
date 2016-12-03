@@ -136,8 +136,10 @@ class LibRegistroController extends Controller
                 ['hc_id'=>$hc_id,'pac_id' => $paciente_id, 'for_id' => $f->for_id,'red_descripcion'=>trim($request->input($f->for_id))]
             );
         }
-        $mensaje="Datos insertados correctamente";
-        return view('genericas.mensaje',['url_data'=>$url_data,'mensaje'=>$mensaje]);
+
+            $mensaje="Datos insertados correctamente";
+            $urlreciboRecetario = asset('recibo_recetario/index');
+            return view('genericas.mensaje_success',['url_data'=>$url_data,'mensaje'=>$mensaje,"urlreciboRecetario"=>$urlreciboRecetario]);
     }
     /**
      * Display the specified resource.
@@ -227,7 +229,6 @@ class LibRegistroController extends Controller
         }
         $mensaje="Datos actualizados correctamente";
         return view('genericas.mensaje',['url_data'=>$url_data,'mensaje'=>$mensaje]);
-
     }
     /**
      * Update the specified resource in storage.

@@ -80,18 +80,18 @@ function bisiesto($anio_actual){
             foreach ($listPacientes as $flight) {
             ?>
             <tr class="tr-cuadernos">
-                <td id="<?= $flight->pac_id ?>" class="tr-dimencion">
+                <td id="<?= $flight->pac_id ?>" class="tr-dimencion" style="width:59px">
                     <?= $flight->pac_nro_hc ?>
                 </td>
-                <td id="<?= $flight->pac_id ?>" class="tr-dimencion">
-                    <?= $flight->pac_nombre ?>
-                    <?= $flight->pac_ap_prim ?>
-                    <?= $flight->pac_ap_seg ?>
+                <td id="<?= $flight->pac_id ?>" class="tr-dimencion" style="width:90px">
+                    <?= $flight->pac_nombre ?><br>
+                    <?= $flight->pac_ap_prim ?><br>
+                    <?= $flight->pac_ap_seg ?><br>
                 </td>
-                <td id="<?= $flight->pac_id ?>" class="tr-dimencion">
+                <td id="<?= $flight->pac_id ?>" class="tr-dimencion" style="width:130px">
                     <?= EdadCompleta($flight->pac_fecha_nac); ?>
                 </td>
-                <td id="<?= $flight->pac_id ?>" class="tr-dimencion">
+                <td id="<?= $flight->pac_id ?>" class="tr-dimencion" style="width:0px">
                     <?= $flight->pac_nro_ci ?>
                 </td>
             </tr>

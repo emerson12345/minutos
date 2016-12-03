@@ -1,7 +1,7 @@
 <style>
     thead, tbody { display: block; }
     tbody {
-        height: 150px;
+        height: 300px;
         overflow-y: auto;
         overflow-x: hidden;
     }
@@ -14,15 +14,16 @@
         background-color: #e74c3c;
     }
     .tr-dimencion{
-        width: 200px;
+        font-size: 15px;
+        width: 300px;
     }
     .td-dimencion{
-        width: 200px;
+        width: 300px;
     }
 
 </style>
 <!-- Lista generica------------------------------------------------------------------------------------------>
-<div id="myModal-peticion-listas" class="modal fade" role="dialog">
+<div id="<?= $strIdModal; ?>" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
 
         <!-- Modal content-->
@@ -30,19 +31,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">
-                    <?php
-                    if($col_tipo==3){
-                        echo "CIE10";
-                    }
-                    else
-                    {
-                        if($col_tipo==16){
-                            echo "CIF";
-                        }
-                        else
-                            echo $listFormularios[0]->col_combre;
-                        }
-                    ?>
+                    <?= $strModalTitulo;?>
                 </h4>
             </div>
             <div class="modal-body">
@@ -50,30 +39,30 @@
                     <div class="box">
                         <div class="box-body" >
 
-                            <table id="t_cuadernos-list-generica" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                            <table id="t-<?= $strIdModal; ?>" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
                                 <thead>
                                 <tr role="row">
                                     <th class="tr-dimencion">
-                                        Código
+                                        CODIGO
                                     </th>
                                     <th class="tr-dimencion">
-                                        Nombre
+                                        NOMBRE
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php
                                 foreach ($listFormularios as $value) {
-                                ?>
-                                <tr role="row">
-                                    <td  class="tr-cuadernos tr-dimencion" id="<?= $value->lis_codigo; ?>+<?= $value->lis_descripcion; ?>" style="width:221px">
-                                        <?= $value->lis_codigo; ?>
-                                    </td>
-                                    <td class="tr-cuadernos tr-dimencion" id="<?= $value->lis_codigo; ?>+<?= $value->lis_descripcion; ?>" style="width:400px">
-                                        <?= $value->lis_descripcion; ?>
-                                    </td>
-                                </tr>
-                                <?php
+                                    ?>
+                                    <tr role="row">
+                                        <td  class="tr-cuadernos tr-dimencion" id="<?= $value->lis_codigo; ?>+<?= $value->lis_descripcion; ?>">
+                                            <?= $value->lis_codigo; ?>
+                                        </td>
+                                        <td class="tr-cuadernos tr-dimencion" id="<?= $value->lis_codigo; ?>+<?= $value->lis_descripcion; ?>">
+                                            <?= $value->lis_descripcion; ?>
+                                        </td>
+                                    </tr>
+                                    <?php
                                 }
                                 ?>
                                 </tbody>
@@ -90,6 +79,7 @@
 </div>
 <!--- END lista generica -->
 <script>
+    /*
     $('#myModal-peticion-listas').modal('show');
     $("#t_cuadernos-list-generica").DataTable();
 
@@ -102,4 +92,6 @@
         $("#"+form_id).val(e.toElement.id.split("+")[1]);
         $('#myModal-peticion-listas').modal('hide');
     });
+    */
+    //$("#t-reciboRecetario").DataTable();
 </script>

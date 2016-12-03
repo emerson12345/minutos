@@ -21,11 +21,34 @@ class LibCuadernoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($agenda_id=0)
     {
+        $listAgendaPacientes = DB::table('agenda')
+            ->join('paciente','agenda.pac_id','=','paciente.pac_id')
+            ->join('lib_cuadernos','lib_cuadernos.cua_id','=','agenda.cua_id')
+            ->where('agenda_id','=',$agenda_id)
+            ->select('paciente.pac_id','paciente.pac_ap_prim','paciente.pac_ap_seg','paciente.pac_nombre','lib_cuadernos.cua_id','lib_cuadernos.cua_nombre')
+            ->first();
+
         $url_cuaderno = asset('cuaderno/peticion/');
         $url_cuaderno_peticion_hc = asset('cuaderno/peticion/');
         $inst_id=session('institucion')->inst_id;
+        $estadoAgenda=true;
+
+        ////////////////////////////////////////////////////////////////////////////////
+        if ($agenda_id!=0){
+            $AgendaPacidentesPacId=$listAgendaPacientes->pac_id;
+            $AgendaPacidentesCuaId=$listAgendaPacientes->cua_id;
+        }
+        else
+        {
+            $estadoAgenda=false;
+            $AgendaPacidentesPacId=0;
+            $AgendaPacidentesCuaId=0;
+        }
+
+
+        ////////////////////////////////////////////////////////////////////////////////
         /*
         $listInstitucion = DB::table('institucion')
             ->join('municipio_convenio', 'municipio_convenio.mun_id', '=', 'institucion.mun_id')
@@ -52,14 +75,38 @@ class LibCuadernoController extends Controller
         $listInstitucionAll2=Institucion::all();
 
         //$listCuadernos = LibCuaderno::all();
-        $listCuadernos = DB::table('lib_cuadernos')
+        $listCuadernos = DB::table('usuario')
+            ->join('usuario_lib_cuaderno','usuario_lib_cuaderno.user_id','=','usuario.user_id')
+            ->join('lib_cuadernos','lib_cuadernos.cua_id','=','usuario_lib_cuaderno.cua_id')
             ->where('lib_cuadernos.cua_seleccionable','=','1')
-            ->select('*')
+            ->where('usuario.user_id','=',\Auth::user()->user_id)
+            ->select('lib_cuadernos.*')
             ->get();
+
+
         $listPacientes = Paciente::all();
         $listRrhh=  Rrhh::all()->where('inst_id','=',$inst_id)->pluck('rrhh_nombre','rrhh_id');
 
-        return view('cuadernos.show',[ 'listCuadernos' => $listCuadernos,'listPacientes' => $listPacientes,'listRrhh' => $listRrhh,'listInstitucion'=>$listInstitucion,'listInstitucionAll2'=>$listInstitucionAll2 ])->with('url_cuaderno', $url_cuaderno)->with('url_cuaderno_peticion_hc', $url_cuaderno_peticion_hc);
+
+
+//dd($listAgendaPacientes);
+        return view('cuadernos.show',
+            [
+                'listCuadernos' => $listCuadernos,
+                'listPacientes' => $listPacientes,
+                'listRrhh' => $listRrhh,
+                'listInstitucion'=>$listInstitucion,
+                'listInstitucionAll2'=>$listInstitucionAll2,
+                'listAgendaPacientes'=>$listAgendaPacientes
+            ])->with('url_cuaderno', $url_cuaderno)
+                ->with(
+                        array(
+                                'url_cuaderno_peticion_hc'=>$url_cuaderno_peticion_hc,
+                                'AgendaPacidentesPacId'=>$AgendaPacidentesPacId,
+                                'AgendaPacidentesCuaId'=>$AgendaPacidentesCuaId,
+                                'estadoAgenda'=>$estadoAgenda
+                        )
+                );
     }
     public function peticion($cua_id,$pac_id)
     {
@@ -77,6 +124,25 @@ class LibCuadernoController extends Controller
             ->get();
 
         $url_cuaderno = asset('cuaderno/peticion_listas/');
+
+
+        /*$listFormularios = DB::table('lib_cuadernos')
+            ->join('lib_formulario', 'lib_cuadernos.cua_id', '=', 'lib_formulario.cua_id')
+            ->join('lib_columnas', 'lib_columnas.col_id', '=', 'lib_formulario.col_id')
+            ->where([
+                ['lib_cuadernos.cua_id', '=', $cua_id],
+                ['lib_formulario.for_seleccionable', '=', '1'],
+            ])
+            ->select('lib_formulario.for_col_posi','lib_cuadernos.cua_id','lib_cuadernos.cua_nombre' ,'lib_formulario.for_id'
+                ,'lib_columnas.col_id','lib_columnas.col_combre','lib_columnas.col_tipo')
+            ->orderBy('lib_formulario.for_col_posi', 'asc')
+            ->get();*/
+        //dd($listFormularios);
+        //echo $users[0]->cua_id;
+        //print_r($users);
+
+        //$listFormularios = LibFormulario::all();
+
         $listFormularios = DB::table('lib_cuadernos')
             ->join('lib_formulario', 'lib_cuadernos.cua_id', '=', 'lib_formulario.cua_id')
             ->join('lib_columnas', 'lib_columnas.col_id', '=', 'lib_formulario.col_id')
@@ -86,11 +152,38 @@ class LibCuadernoController extends Controller
             ])
             ->select('lib_cuadernos.cua_id','lib_cuadernos.cua_nombre' ,'lib_formulario.for_id'
                 ,'lib_columnas.col_id','lib_columnas.col_combre','lib_columnas.col_tipo')
+            ->orderBy('lib_formulario.for_col_posi', 'asc')
             ->get();
-        //echo $users[0]->cua_id;
-        //print_r($users);
 
-        //$listFormularios = LibFormulario::all();
+
+        $countPacienteHcReceta=DB::table('lib_cuadernos')
+            ->join('cuaderno_estado','cuaderno_estado.cua_id','=','lib_cuadernos.cua_id')
+            ->where('lib_cuadernos.cua_id','=',$cua_id)
+            ->where('cuaderno_estado.fecha','=',date("d/m/Y"))
+            ->count();
+
+
+        $url_cuaderno_index = asset('/cuaderno/index/');
+
+        if($countPacienteHcReceta==0)
+        {
+            $mensaje="El cuaderno no esta habilitado para esta fecha";
+                return view('genericas.mensaje',['url_data'=>$url_cuaderno_index,'mensaje'=>$mensaje]);
+        }
+
+        $fecha_actual=date("Y-m-d");
+        $estadoCuadernoHC=DB::table('paciente_hc')
+            ->where('paciente_hc.hc_fecha','=',$fecha_actual)
+            ->where('paciente_hc.cua_id','=',$cua_id)
+            ->where('paciente_hc.pac_id','=',$pac_id)
+            ->count();
+
+        if($estadoCuadernoHC>=1) {
+            $mensaje = "El Historial Clinico de este paciente, para este cuaderno ya fue registrado anteriormente";
+            return view('genericas.mensaje', ['url_data' => $url_cuaderno_index, 'mensaje' => $mensaje]);
+        }
+
+
         return view('formulario.show',
             [
                 'listFormularios' => $listFormularios,

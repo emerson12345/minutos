@@ -1,11 +1,11 @@
 @extends('layouts.template')
 @section('title')
-    Historial Clinico
+ Historial Paciente
 @stop
 @section('user')
 @stop
 @section('title_page')
-    Cuadernos
+
 @stop
 @section('breadcrumb')
     <ol class="breadcrumb">
@@ -13,7 +13,7 @@
             <a href="#"><i class="fa fa-dashboard"></i>Inicio</a>
         </li>
         <li class="active">
-            <a href="#">Cuadernos</a>
+            <a href="#">Historial Paciente</a>
         </li>
     </ol>
 @stop
@@ -49,19 +49,16 @@
         .td-dimencion{
             width: 200px;
         }
-        *{
-            font-size: 11px;
-        }
         H3{
             font-size: 20px;
         }
         SELECT {
-            font-size: 10px;
+            font-size: 8px;
             font-family : verdana,arial,helvetica;
         }
         OPTION
         {
-            font-size: 9px;
+            font-size: 8px;
             font-family : verdana,arial,helvetica;
         }
     </style>
@@ -73,11 +70,12 @@
     <div id="myModal_personal_search" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
 
+
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">PERSONAL</h4>
+                    <h4 class="modal-title">Personal</h4>
                 </div>
                 <div class="modal-body">
                     <div class="col-md-10">
@@ -88,13 +86,13 @@
                                     <thead>
                                     <tr role="row">
                                         <th class="tr-dimencion">
-                                            CODIGO
+                                            Código
                                         </th>
                                         <th class="tr-dimencion">
-                                            NOMBRE
+                                            Nombre
                                         </th>
                                         <th class="tr-dimencion">
-                                            INSTITUCIÓN
+                                            Institución
                                         </th>
                                     </tr>
                                     </thead>
@@ -148,7 +146,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <!--- Fecha -->
-                            {!! Form::label('fechas', 'FECHAS') !!}
+                            {!! Form::label('fechas', 'Fechas') !!}
                             <div id="reportrange" class="pull-right margin-right-5" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; ">
                                 <input type="hidden" name="rep_fec_ini" id="fec_ini">
                                 <input type="hidden" name="rep_fec_fin" id="fec_fin">
@@ -160,14 +158,14 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            {!! Form::label('tb_libro_atencion', 'LIBRO DE ATENCIÓN') !!}
+                            {!! Form::label('tb_libro_atencion', 'Libro de atención') !!}
                             {!! Form::select('tb_listCuadernos_search', $listCuadernosSearch,null,array('id'=>'tb_listCuadernos_search')) !!}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-8">
                             <!--- Personal search -->
-                            {!! Form::label('tb_personal_atencion', 'PERSONAL') !!}
+                            {!! Form::label('tb_personal_atencion', 'Personal') !!}
                             <input type="text" name="tb_personal_atencion_id" id="tb_personal_atencion_id" style="visibility:hidden">
                             <input type="text" name="tb_personal_atencion" id="tb_personal_atencion">
                             <input type="button" name="btn_personal_search" id="btn_personal_search" value="...">
@@ -285,6 +283,7 @@
         tb_listCuadernos_search="";
         tb_personal_atencion_id="";
         $("#btn-paciente-search-general").on('click',function(e){
+            $("#AtenccionHc").html("");
 
             rep_fec_ini=$("#fec_ini").val();
             rep_fec_ini=rep_fec_ini.split("/").join("-");
