@@ -1,6 +1,6 @@
 @extends('layouts.template')
 @section('title')
-    Convenios
+    Programas
 @stop
 @section('user')
     @if(Auth::check())
@@ -8,15 +8,15 @@
     @endif
 @stop
 @section('title_page')
-    Convenios
+    Programas
 @stop
 @section('menu_page')
-    <h1>Convenio <small>lista</small></h1>
+    <h1>Gestión de programas </h1>
 @stop
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li>
-            <a href="{{route('adm.convenio.index')}}">Convenios</a>
+
         </li>
     </ol>
 @stop
@@ -28,7 +28,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <button type="button" class="btn btn-add btn-primary pull-right margin-bottom" data-url="{{route('adm.convenio.create')}}" >
-                            <i class="fa fa-plus"></i> Agregar convenios
+                            <i class="fa fa-plus"></i> Agregar programas
                         </button>
                     </div>
                 </div>
@@ -37,12 +37,12 @@
                         <table id="convenios-table" class="table table-bordered table-hover" data-url="{{route('adm.convenio.list')}}">
                             <thead>
                             <tr>
-                                <th>Codigo</th>
+                                <th>Código</th>
                                 <th>Nombre</th>
                                 <th>Estado</th>
-                                <th>Nacional</th>
-                                <th>Fecha alta</th>
-                                <th>Fecha mod.</th>
+                                <th>A nivel nacional</th>
+                                <th>Fecha de alta</th>
+                                <th>Fecha ult. modf.</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -60,7 +60,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Nuevo convenio</h4>
+                    <h4 class="modal-title">Programa</h4>
                 </div>
                 <div class="modal-body">
                     <div class="box box-primary box-solid">
@@ -80,5 +80,11 @@
 @stop
 
 @section('script')
+    <link rel="stylesheet" href="{{asset('template/plugins/bootstrap-duallist/bootstrap-duallistbox.css')}}">
+    <link rel="stylesheet" href="{{asset('template/plugins/select2/select2.min.css')}}">
+    <script src="{{asset('template/plugins/bootstrap-daterangepicker/js/moment.min.js')}}"></script>
+    <script src="{{asset('template/plugins/bootstrap-duallist/jquery.bootstrap-duallistbox.js')}}"></script>
+    <script src="{{asset('template/plugins/select2/select2.full.min.js')}}"></script>
+    <script src="{{asset('template/plugins/select2/i18n/es.js')}}"></script>
     <script src="{{asset('js/convenio/index.js')}}"></script>
 @stop

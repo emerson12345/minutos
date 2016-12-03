@@ -1,6 +1,6 @@
 @extends('layouts.template')
 @section('title')
-    Instituciones
+    Establecimientos
 @stop
 @section('user')
     @if(Auth::check())
@@ -8,16 +8,14 @@
     @endif
 @stop
 @section('title_page')
-    Lista de instituciones
+    Lista de establecimientos
 @stop
 @section('menu_page')
-    <h1>Instituciones <small>lista</small></h1>
+    <h1>Establecimientos</h1>
 @stop
 @section('breadcrumb')
     <ol class="breadcrumb">
-        <li>
-            <a href="{{route('institucion.index')}}">Instituciones</a>
-        </li>
+
     </ol>
 @stop
 
@@ -27,9 +25,9 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="{{route('institucion.report')}}" class="btn btn-default"><i class="fa fa-file-pdf-o"></i> PDF</a>
+                        <a href="{{route('institucion.report')}}" class="btn btn-default" target="_blank"><i class="fa fa-file-pdf-o"></i> Imprimir</a>
                         <button type="button" class="btn btn-add btn-primary pull-right margin-bottom" data-url="{{route('institucion.create')}}">
-                            <i class="fa fa-plus"></i> Agregar intitución
+                            <i class="fa fa-plus"></i> Agregar establecimiento
                         </button>
                     </div>
                 </div>
@@ -70,7 +68,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Nueva institución</h4>
+                    <h4 class="modal-title">Establecimiento</h4>
                 </div>
                 <div class="modal-body">
                     <div class="box box-primary box-solid">
@@ -106,16 +104,16 @@
                 data:function (row,type,val,meta) {
                     var valReturn = "";
                     if(row.inst_seleccionable == 1)
-                        valReturn = "<span class='label label-primary'>SI</span>";
+                        valReturn = "<span class='label text-green'>SI</span>";
                     else
-                        valReturn = "<span class='label label-danger'>NO</span>"
+                        valReturn = "<span class='label text-red'>NO</span>"
                     return valReturn;
                 },
                 orderable:false
             },
             {
                 data:function (row,type,val,meta) {
-                    return '<button type="button" class="btn btn-edit btn-xs btn-primary" data-url="edit/'+row.inst_id+'"><i class="fa fa-edit"></i> Editar</button>'
+                    return '<button type="button" class="btn btn-edit btn-xs btn-primary" data-url="edit/'+row.inst_id+'" title="Editar"><i class="fa fa-edit"></i></button>'
                 },
                 orderable:false
             }
