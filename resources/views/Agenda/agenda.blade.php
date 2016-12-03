@@ -16,38 +16,19 @@
 
 @section('content')
     <section class="content">
-        <div class="box box-primary box-solid">
-            <div class="box-body no-padding">
+        <div class="box box-primary box-solid" id="content-agenda">
+            <div class="box-body">
                 {!! Form::open(['target'=>'_blank','id'=>'form-agenda']) !!}
                 <div class="row" style="margin: 5px;">
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-default btn-sm">
-                            <i class="fa fa-file-pdf-o"></i>
-                            Imprimir
-                        </button>
-                    </div>
-                    <div class="col-md-3 col-md-offset-1">
+                    <div class="col-md-3 col-md-offset-6">
                         <div class="input-group">
                             <?php
-                                $cua_list = \Sicere\Models\LibCuaderno::where('cua_seleccionable',1)->get()->pluck('cua_nombre','cua_id');
+                            $cua_list = Auth::user()->cuadernos()->pluck('lib_cuadernos.cua_nombre','lib_cuadernos.cua_id');
                             ?>
                             <div class="input-group-addon">
-                                <strong>Cuaderno:</strong>
+                                <strong>Servicio:</strong>
                             </div>
                             {!! Form::select('cua_id',$cua_list,null,['class'=>'form-control input-sm','id'=>'cua_id']) !!}
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="input-group">
-                            <?php
-                            $institucion = \Sicere\Models\Institucion::find(session('institucion')->inst_id);
-                            $user_list = $institucion->usuarios()->pluck('usuario.user_nombre','usuario.user_id');
-                            $user_list->prepend('Todos',0)
-                            ?>
-                            <div class="input-group-addon">
-                                <strong>Usuario:</strong>
-                            </div>
-                            {!! Form::select('user_id',$user_list,null,['class'=>'form-control input-sm','id'=>'user_id']) !!}
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -60,20 +41,16 @@
                     </div>
                 </div>
                 {!! Form::close() !!}
-                <div id="calendar"></div>
+                <div id="content"></div>
             </div>
         </div>
     </section>
 @stop
 
-
 @section('script')
-    <link rel='stylesheet' href="{{asset('template/plugins/fullcalendar/fullcalendar.css')}}"/>
     <link rel='stylesheet' href="{{asset('template/plugins/bootstrap-daterangepicker/css/daterangepicker.css')}}"/>
-    <script src="{{asset('template/plugins/fullcalendar/lib/moment.min.js')}}"></script>
-    <script src="{{asset('template/plugins/fullcalendar/fullcalendar.min.js')}}"></script>
+    <script src="{{asset('template/plugins/bootstrap-daterangepicker/js/moment.min.js')}}"></script>
     <script src="{{asset('template/plugins/bootstrap-daterangepicker/js/daterangepicker.js')}}"></script>
-    <script src="{{asset('template/plugins/fullcalendar/locale/es.js')}}"></script>
     <script>
         $(function() {
             var start = moment();
@@ -82,6 +59,7 @@
                 $('#reportrange span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
                 $('#fec_ini').val(start.format('DD/MM/YYYY'));
                 $('#fec_fin').val(end.format('DD/MM/YYYY'));
+                getEvents();
             }
             $('#reportrange').daterangepicker({
                 locale:{'format':'DD/MM/YYYY','customRangeLabel':'Personalizado'},
@@ -97,47 +75,41 @@
             }, cb);
             cb(start, end);
         });
-        $("#calendar").fullCalendar({
-            slotDuration:'00:15:00',
-            allDaySlot:false,
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay'
-            },
-            buttonText: {
-                today: 'hoy',
-                month: 'mes',
-                week: 'semana',
-                day: 'dia'
-            },
-            viewRender:function(){
-                getEvents();
-            }
+
+        $(document).ready(function(){
+            getEvents();
         });
 
-        $("#user_id, #cua_id").on('change',getEvents);
+        $("#cua_id").on('change',getEvents);
 
         function getEvents(){
-            var moment = $("#calendar").fullCalendar('getDate');
-            var fec_ini =moment.startOf('month').format();
-            var fec_fin =moment.endOf('month').format();
-            var user_id = $("#user_id").val();
+            var fec_ini = $("#fec_ini").val();
+            var fec_fin = $("#fec_fin").val();
             var cua_id = $("#cua_id").val();
             $.ajax({
-                url:"{{route('agenda.events')}}",
+                url:"{{route('agenda.agenda.get')}}",
                 method:'post',
-                data:{cua_id:cua_id,user_id:user_id, fec_ini:fec_ini, fec_fin:fec_fin,_token:"{{csrf_token()}}" },
+                data:{cua_id:cua_id,fec_ini:fec_ini, fec_fin:fec_fin,_token:"{{csrf_token()}}" },
                 beforeSend:function () {
                     var $over = $("<div class='overlay'><i class='fa fa-refresh fa-spin'></i></div>");
-                    $("#calendar").closest(".box").append($over);
+                    $("#content-agenda").append($over);
                 },
                 success:function (data) {
-                    $("#calendar").fullCalendar('removeEvents');
-                    $("#calendar").fullCalendar( 'addEventSource', data );
+                    $("#content-agenda").find("#content").html(data);
+                    $(".btn-change-state").off().on('click',function(){
+                        var id = $(this).data('id');
+                        var url = $(this).data('url');
+                        var state = $(this).data('state');
+                        $.ajax({
+                            url:url,
+                            data:{agenda_id:id,agenda_estado:state,_token:"{{csrf_token()}}"},
+                            method:'post',
+                            complete:getEvents
+                        });
+                    });
                 },
                 complete:function () {
-                    $("#calendar").closest(".box").find(".overlay").remove();
+                    $("#content-agenda").find(".overlay").remove();
                 }
             });
         }
