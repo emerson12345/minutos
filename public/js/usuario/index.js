@@ -27,9 +27,9 @@ var usersTable = $("#users-table").DataTable({
             data:function (row,type,val,meta) {
                 var valReturn = "";
                 if(row.user_seleccionable == 1)
-                    valReturn = "<span class='text-green'>SI</span>";
+                    valReturn = "<span class='label text-green'>SI</span>";
                 else
-                    valReturn = "<span class='text-red'>NO</span>"
+                    valReturn = "<span class='label text-red'>NO</span>"
                 return valReturn;
             },
             orderable:false
@@ -37,6 +37,7 @@ var usersTable = $("#users-table").DataTable({
         {
             data:function (row,type,val,meta) {
                 return '<button type="button" class="btn btn-edit btn-xs btn-primary" data-url="update/'+row.user_id+'" title="Editar"><i class="fa fa-edit"></i></button>'
+                      +'<button type="button" class="btn btn-detail btn-xs btn-primary"  data-url="permiso_cuaderno/'+row.user_id+'" title="Permiso a cuadernos"><i class="fa fa-list-ul"></i></button>';
             },
             orderable:false
         }
@@ -44,6 +45,7 @@ var usersTable = $("#users-table").DataTable({
 });
 $("#users-table").on('draw.dt',function () {
     $(".btn-edit").off().on('click',handleEvent);
+    $(".btn-detail").off().on('click',handleEvent);
 });
 
 $(".btn-add").on('click',handleEvent);
