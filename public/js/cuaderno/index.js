@@ -5,22 +5,36 @@ var usersTable = $("#cuadernos-table").DataTable({
     "ajax": $("#cuadernos-table").data("url"),
     "columns":[
         {data:'cua_nombre'},
-        {data:'cua_fec_alta'},
-        {data:'cua_fec_mod'},
+        {
+            data:function(row, type, val, meta){
+                var fecha = row.cua_fec_alta;
+                if(moment(row.cua_fec_alta).isValid())
+                    fecha = moment(row.cua_fec_alta).format('DD/MM/YYYY HH:mm:ss');
+                return fecha;
+            }
+        },
+        {
+            data:function(row, type, val, meta){
+                var fecha = row.cua_fec_mod;
+                if(moment(row.cua_fec_mod).isValid())
+                    fecha = moment(row.cua_fec_mod).format('DD/MM/YYYY HH:mm:ss');
+                return fecha;
+            }
+        },
         {
             data:function (row,type,val,meta) {
                 var valReturn = "";
                 if(row.cua_seleccionable == 1)
-                    valReturn = "<span class='label label-primary'>VIGENTE</span>";
+                    valReturn = "<span class='label text-green'>VIGENTE</span>";
                 else
-                    valReturn = "<span class='label label-danger'>NO VIGENTE</span>"
+                    valReturn = "<span class='label text-red'>NO VIGENTE</span>"
                 return valReturn;
             },
             orderable:false
         },
         {
             data:function (row,type,val,meta) {
-                return '<a class="btn btn-edit btn-xs btn-primary" href="update/'+row.cua_id+'"><i class="fa fa-edit"></i> Editar</a>'
+                return '<a class="btn btn-edit btn-xs btn-primary" href="update/'+row.cua_id+'" title="Editar"><i class="fa fa-edit"></i> </a>'
             },
             orderable:false
         }
