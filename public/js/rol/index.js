@@ -6,22 +6,35 @@ var rolesTable = $("#roles-table").DataTable({
     "columns":[
         {data:'rol_codigo'},
         {data:'rol_nombre'},
-        {data:'rol_fec_alta'},
-        {data:'rol_fec_mod'},
+        {
+            data:function(row, type, val, meta){
+                var fecha = row.rol_fec_alta;
+                if(moment(row.rol_fec_alta).isValid())
+                    fecha = moment(row.rol_fec_alta).format('DD/MM/YYYY HH:mm:ss');
+                return fecha;
+            }
+        },
+        {
+            data:function(row, type, val, meta){
+            var fecha = row.rol_fec_mod;
+            if(moment(row.rol_fec_mod).isValid())
+                fecha = moment(row.rol_fec_mod).format('DD/MM/YYYY HH:mm:ss');
+            return fecha;
+        }},
         {
             data:function (row,type,val,meta) {
                 var valReturn = "";
                 if(row.rol_seleccionable == 1)
-                    valReturn = "<span class='label label-primary'>SI</span>";
+                    valReturn = "<span class='label text-green'>SI</span>";
                 else
-                    valReturn = "<span class='label label-danger'>NO</span>"
+                    valReturn = "<span class='label text-red'>NO</span>"
                 return valReturn;
             },
             orderable:false
         },
         {
             data:function (row,type,val,meta) {
-                return '<button type="button" class="btn btn-edit btn-xs btn-primary" data-url="update/'+row.rol_id+'"><i class="fa fa-edit"></i> Editar</button>'
+                return '<button type="button" class="btn btn-edit btn-xs btn-primary" data-url="update/'+row.rol_id+'" title="Editar"><i class="fa fa-edit"></i> </button>'
             },
             orderable:false
         }
