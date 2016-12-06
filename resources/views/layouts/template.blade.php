@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>
-        @yield('title')
+        Sistema de información de centros de rehabilitación
     </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -38,7 +38,7 @@
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>C</b>R</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><H6> <b>SICERE</b><br> Sistemas de Centros de rehabilitacion</H6> </span>
+            <span class="logo-lg"><H6> <b>SICERE</b><br> Sistema de información de centros de rehabilitación</H6> </span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
@@ -248,7 +248,7 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <?php $menu = \Sicere\Models\Aplicacion::where('app_renderiza',1)->where('app_nivel_menu',1)->get();?>
             <ul class="sidebar-menu">
-                <li class="header">Menu Principal</li>
+
                 @if(Auth::check()&&session()->has('menu'))
                 @foreach(session('menu') as $itemMenu)
                     <li class="treeview">

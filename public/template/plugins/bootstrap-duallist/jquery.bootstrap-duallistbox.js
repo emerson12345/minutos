@@ -6,9 +6,9 @@
       filterTextClear: 'show all',
       filterPlaceHolder: 'Filter',
       moveSelectedLabel: 'Move selected',
-      moveAllLabel: 'Move all',
+      moveAllLabel: 'Mover todo',
       removeSelectedLabel: 'Remove selected',
-      removeAllLabel: 'Remove all',
+      removeAllLabel: 'Remover todo',
       moveOnSelect: true,                                                                 // true/false (forced true on androids, see the comment later)
       preserveSelectionOnMove: false,                                                     // 'all' / 'moved' / false
       selectedListLabel: false,                                                           // 'string', false

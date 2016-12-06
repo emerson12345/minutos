@@ -179,5 +179,19 @@ Route::post('municipios','PacienteController@getMunicipios')->name('get.municipi
 
 
 /********Rutas para reportes**********/
+
 Route::get('reporte/produccion','ReporteController@produccion')->name('reporte.produccion');
 Route::post('reporte/produccion','Reportecontroller@produccionPDF')->name('reporte.produccion.pdf');
+Route::get('agenda/agenda','AgendaController@agenda')->name('agenda.agenda');
+Route::post('agenda/getAgenda','AgendaController@getAgenda')->name('agenda.agenda.get');
+Route::post('agenda/change','AgendaController@change')->name('agenda.change');
+
+Route::get('reporte/inasistencia','ReporteAgendaController@inasistencia')->name('reporte.agenda.inasistencia');
+Route::post('reporte/inasistencia','ReporteAgendaController@postInasistencia')->name('reporte.agenda.inasistencia.post');
+Route::get('reporte/abandonos','ReporteAgendaController@abandonos')->name('reporte.agenda.abandonos');
+Route::post('reporte/abandonos','ReporteAgendaController@postAbandonos')->name('reporte.agenda.abandonos.post');
+Route::get('reporte/exitosos','ReporteAgendaController@tratamientosExitosos')->name('reporte.agenda.exitosos');
+Route::post('reporte/exitosos','ReporteAgendaController@postTratamientosExitosos')->name('reporte.agenda.exitosos.post');
+Route::get('reporte/etario','ReporteAgendaController@grupoEtario')->name('reporte.agenda.etario');
+Route::post('reporte/etario','ReporteAgendaController@postgrupoEtario')->name('reporte.agenda.etario.post');
+Route::post('reporte/getCuadernos','ReporteAgendaController@getCuadernos')->name('reporte.agenda.cuadernos');
