@@ -106,6 +106,12 @@ Route::group(['prefix'=>'PacienteHc','middleware'=>['auth','access','log']],func
     //Route::get('agenda','PacienteHcController@agenda')->name('PacienteHc.agenda');
 });
 
+/****Copias de seguridad de la base de datos***/
+Route::group(['prefix'=>'backup','middleware'=>['auth','access','log']],function(){
+    Route::get('index','BackupController@index')->name('backup.index');
+    Route::get('create','BackupController@create')->name('backup.create');
+});
+
 Route::group(['prefix'=>'libregistro','middleware'=>['auth','access','log']],function(){
     Route::get('index','LibRegistroController@index')->name('libregistro.index');
     Route::post('store','LibRegistroController@store')->name('libregistro.store');
@@ -147,7 +153,7 @@ Route::group(['prefix'=>'convenio','middleware'=>['auth','access','log']],functi
     Route::post('update/{conv_id}','ConvenioController@store')->name('adm.convenio.edit');
 });
 
-Route::group(['prefix'=>'agenda','middleware'=>['auth','log']],function(){
+Route::group(['prefix'=>'agenda','middleware'=>['auth','access','log']],function(){
     Route::get('temporal/index','AgendaController@index')->name('agenda.temporal.index');
     Route::get('create','AgendaController@create')->name('agenda.create');
     Route::post('create','AgendaController@store')->name('agenda.store');
@@ -161,13 +167,12 @@ Route::group(['prefix'=>'agenda','middleware'=>['auth','log']],function(){
     Route::post('change','AgendaController@change')->name('agenda.change');
 });
 //Eventos Calendario
-Route::group(['prefix'=>'Agenda','middleware'=>['auth','log']],function(){
+Route::group(['prefix'=>'Agenda','middleware'=>['auth','access','log']],function(){
     Route::get('home','FullcalendareventoController@home')->name('Agenda.home');
     Route::get('cargaEventos{id?}','FullcalendareventoController@index')->name('fullcalendar.index');
+    Route::get('reporte/{fecha_inicio}','FullcalendareventoController@reporteSemanal')->name('Agenda.reporte');
     Route::post('guardaEventos', array('as' => 'guardaEventos','uses' => 'FullcalendareventoController@create'));
     Route::post('actualizaEventos','FullcalendareventoController@update');
-    Route::post('eliminaEvento','FullcalendareventoController@delete');
-    Route::get('reporte/{fecha_inicio}','FullcalendareventoController@reporteSemanal')->name('Agenda.reporte');
 });
 
 

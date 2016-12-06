@@ -9,12 +9,12 @@
     Backup de seguridad
 @stop
 @section('menu_page')
-        <h1>Backup de seguridad</h1>
+        <h1>Copia de seguridad</h1>
 @stop
 @section('breadcrumb')
     <ol class="breadcrumb">
         <li>
-            Incio > Backup
+
         </li>
     </ol>
 @stop
@@ -25,7 +25,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <input type="button" id="btn_backup" value="Realizar Backup">
+                        <input type="button" id="btn_backup" value="Generar copia de seguridad">
                     </div>
                     <div class="col-md-12" id="respuesta">
 
