@@ -241,7 +241,7 @@ class ReciboRecetarioController extends Controller
         PDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
         PDF::AddPage('P', 'Letter');
 
-        PDF::writeHTML(view('genericas.tabla',array('arr_tabla'=>$arr_tabla,'nombre_campos_form'=>$nombre_campos_form,'nombre_campos_tabla'=>$nombre_campos_tabla))->render(), true, false, true, false, '');
+        PDF::writeHTML(view('genericas.tabla',array('arr_tabla'=>$arr_tabla,'nombre_campos_form'=>$nombre_campos_form,'nombre_campos_tabla'=>$nombre_campos_tabla,'nombre_tabla'=>"recibo_recetario"))->render(), true, false, true, false, '');
 
         PDF::lastPage();
         PDF::Output('recibo_recetario.pdf','D');

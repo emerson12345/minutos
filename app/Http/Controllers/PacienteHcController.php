@@ -4,9 +4,11 @@ namespace Sicere\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use phpDocumentor\Reflection\DocBlock\Tags\Example;
 use Sicere\Http\Requests;
 use Sicere\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
+use Sicere\Models\ExamenesTipo;
 use Sicere\Models\Paciente;
 use Sicere\Models\LibCuaderno;
 use Sicere\Models\Rrhh;
@@ -45,6 +47,7 @@ class PacienteHcController extends Controller
             ->nest('listPacientes', 'PacienteHc.listPacientes',array('listPacientes'=>$listPacientes))
             ->nest('listCuadernos','cuadernos.listCuadernos',array('listCuadernos'=>$listCuadernos))
             ->nest('listRrhh','Rrhh.listRrhh',array('listRrhh'=>$listRrhh))
+            ->nest('btn_personal_search','genericas.boton',array('boton_nombre'=>'btn_personal_search'))
             ->with(array('url_paciente'=>$url_paciente,'url_buscar_Hc'=>$url_buscar_Hc));
         return $view;
     }
@@ -186,6 +189,25 @@ class PacienteHcController extends Controller
             ->get();
         $listPacientes = Paciente::all();
 
+        //// Examenes complementarios    ///////////////////////////////////////////////////////////////////////////////
+        $listExamenComplementario=DB::table("paciente_hc_complementario")
+            ->join("examenes_tipo","examenes_tipo.exc_tip_id","=","paciente_hc_complementario.exc_tip_id")
+            ->where("paciente_hc_complementario.hc_id","=",$hc_id)
+            ->select("paciente_hc_complementario.hc_com_id as cod","paciente_hc_complementario.hc_com_fec_alta",
+                    "paciente_hc_complementario.hc_com_solicitud","paciente_hc_complementario.hc_com_resultado",
+                    "paciente_hc_complementario.exc_tip_id","examenes_tipo.exc_tip_nombre")
+            ->get();
+        $listExamenesTipo=ExamenesTipo::all()->pluck('exc_tip_nombre','exc_tip_id');
+
+
+        $url_examen_complementario=asset("examen_complementario/edit");
+
+
+        $nombre_campos_form= array('Tipo de examen',"Solicitud","Fecha","COD");
+        $nombre_campos_tabla= array('exc_tip_nombre',"hc_com_solicitud","hc_com_fec_alta","cod");
+        $border=true;
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $listRrhh=  Rrhh::all()->where('inst_id','=',$inst_id)->pluck('rrhh_nombre','rrhh_id');
 
@@ -200,7 +222,25 @@ class PacienteHcController extends Controller
                 'cua_id'=>$cua_id,
                 'fecha'=>$fecha,
                 'EstadoModificar'=>$EstadoModificar,
-            ])->with('url_peticion_listas', $url_peticion_listas);
+            ])
+            ->nest('btn_referido_de_establecimeinto','genericas.boton',array('boton_nombre'=>'btn_referido_de_establecimeinto'))
+            ->nest('btn_referido_a_establecimeinto','genericas.boton',array('boton_nombre'=>'btn_referido_a_establecimeinto'))
+            ->nest('modal_examen_complementario','examen_complementario.modal_examen_complementario',
+                    array(
+                        'listExamenComplementario'=>$listExamenComplementario,
+                        'listExamenesTipo'=>$listExamenesTipo,
+                        "url_examen_complementario"=>$url_examen_complementario
+                    )
+            )
+            ->nest('tabla_examen_complementario','genericas.tabla',
+                array(
+                    'arr_tabla'=>$listExamenComplementario,
+                    'nombre_campos_form'=>$nombre_campos_form,
+                    'nombre_campos_tabla'=>$nombre_campos_tabla,
+                    "border"=>$border,
+                    "nombre_tabla"=>"examen_complementario")
+            )
+            ->with(array('url_peticion_listas'=>$url_peticion_listas));
     }
     public function searchHc($fecha_inicio,$fecha_fin,$cua_id,$rrhh_id,$pac_id)
     {

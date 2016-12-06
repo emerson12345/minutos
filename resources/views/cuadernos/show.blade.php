@@ -155,29 +155,34 @@ function bisiesto($anio_actual){
                 <?php
                     }
                 ?>
-                <input type="button" id="btn-paciente" class="btn-success" value="Buscar">
+               <!-- <input type="button" id="btn-paciente" class="btn btn-edit btn-xs btn-primary" value="Buscar">-->
+
+                <button type="button" id="btn-paciente" class="btn btn-edit btn-md btn-primary" value="Buscar">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+
             </div>
         </div>
         <div class="box">
             <div class="box-body" >
                 <label for="">Cuadernos</label>
-
-                <input type="button" value="..." id="btn-cuadernos" name="btn-cuadernos">
-                <br>
                 <?php
                 if(isset($listAgendaPacientes))
                 {
                 ?>
-                    <input type="text" id="tb-cuadernos" name="tb-cuadernos" size="45" required value="<?php echo $listAgendaPacientes->cua_nombre;?>">
+                    <input type="text" id="tb-cuadernos" name="tb-cuadernos" size="40" required value="<?php echo $listAgendaPacientes->cua_nombre;?>">
                 <?php
                 }
                 else
                 {
                 ?>
-                    <input type="text" id="tb-cuadernos" name="tb-cuadernos" size="45" required>
+                    <input type="text" id="tb-cuadernos" name="tb-cuadernos" size="40" required>
                 <?php
                 }
                 ?>
+                <button type="button" id="btn-cuadernos" name="btn-cuadernos" class="btn btn-edit btn-md btn-primary" value="Buscar">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
             </div>
         </div>
 
@@ -186,19 +191,24 @@ function bisiesto($anio_actual){
         <div class="box">
             <div class="box-body" >
                 <label for="">Referido de Establecimeinto</label>
-                <input type="button" value="..." id="btn_referido_de_establecimeinto" name="btn_referido_de_establecimeinto">
                 <br>
-                <input type="text" id="referido_de_inst_id" name="referido_de_inst_id" size="5" value="-1"  style="visibility:hidden">
-                <input type="text" id="tb_referido_de_establecimeinto" name="tb_referido_de_establecimeinto" size="45">
+                <input type="text" id="referido_de_inst_id" name="referido_de_inst_id" size="0" value="-1"  style="visibility:hidden">
+                <input type="text" id="tb_referido_de_establecimeinto" name="tb_referido_de_establecimeinto" size="40">
+                <button type="button" id="btn_referido_de_establecimeinto" name="btn_referido_de_establecimeinto" class="btn btn-edit btn-md btn-primary" value="Buscar">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
             </div>
         </div>
         <div class="box">
             <div class="box-body" >
                 <label for="">Referido a Establecimeinto</label>
-                <input type="button" value="..." id="btn_referido_a_establecimeinto" name="btn_referido_a_establecimeinto">
-                <br>
                 <input type="text" id="referido_a_inst_id" name="referido_a_inst_id" size="5" value="-1"  style="visibility:hidden">
-                <input type="text" id="tb_referido_a_establecimeinto" name="tb_referido_a_establecimeinto" size="45">
+                <input type="text" id="tb_referido_a_establecimeinto" name="tb_referido_a_establecimeinto" size="40">
+
+                <button type="button" id="btn_referido_a_establecimeinto" name="btn_referido_a_establecimeinto" class="btn btn-edit btn-md btn-primary" value="Buscar">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+
             </div>
         </div>
 

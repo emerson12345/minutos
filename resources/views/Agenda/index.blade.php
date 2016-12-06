@@ -137,6 +137,8 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <input type="hidden" id="url_agenda_cuaderno" value={{asset("cuaderno/index/")}}>
+
         @stop
         @section('script')
             <link rel='stylesheet' href="{{asset('template/plugins/fullcalendar/fullcalendar.css')}}"/>
@@ -339,7 +341,8 @@
 
                             crsfToken = document.getElementsByName("_token")[0].value;
                             //alert(event.id);
-                            window.location="http://localhost/SICEREP6/public/cuaderno/index/"+event.id;
+                            window.location=$("#url_agenda_cuaderno").val()+"/"+event.id;
+                                    //"http://localhost/SICEREP6/public/cuaderno/index/"+event.id;
                             //var con=confirm("Esta seguro que desea eliminar el evento");
                             //if(con){
                                 /*

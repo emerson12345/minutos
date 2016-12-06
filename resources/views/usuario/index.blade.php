@@ -75,9 +75,9 @@
 
 @section('script')
     <link rel="stylesheet" href="{{asset('template/plugins/bootstrap-duallist/bootstrap-duallistbox.css')}}">
+    <script src="{{asset('template/plugins/bootstrap-duallist/jquery.bootstrap-duallistbox.js')}}"></script>
     <link rel="stylesheet" href="{{asset('template/plugins/select2/select2.min.css')}}">
     <script src="{{asset('template/plugins/bootstrap-daterangepicker/js/moment.min.js')}}"></script>
-    <script src="{{asset('template/plugins/bootstrap-duallist/jquery.bootstrap-duallistbox.js')}}"></script>
     <script src="{{asset('template/plugins/select2/select2.full.min.js')}}"></script>
     <script src="{{asset('template/plugins/select2/i18n/es.js')}}"></script>
     <script src="{{asset('js/usuario/index.js')}}"></script>

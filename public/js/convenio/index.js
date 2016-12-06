@@ -101,7 +101,7 @@ $("#btn-save").on("click",function(){
         error:function(data) {
             var errors = data.responseJSON;
             $.each(errors,function(i,o){
-                $form.find("[name = '"+i+"']").closest(".col-sm-10").find("span").text(o);
+                $form.find("[name ^= '"+i+"']").closest(".col-sm-10").find("span").text(o);
             });
         },
         complete:function () {

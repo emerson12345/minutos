@@ -87,4 +87,5 @@
     <script src="{{asset('template/plugins/select2/select2.full.min.js')}}"></script>
     <script src="{{asset('template/plugins/select2/i18n/es.js')}}"></script>
     <script src="{{asset('js/convenio/index.js')}}"></script>
+
 @stop

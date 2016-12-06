@@ -168,7 +168,8 @@
                             {!! Form::label('tb_personal_atencion', 'Personal') !!}
                             <input type="text" name="tb_personal_atencion_id" id="tb_personal_atencion_id" style="visibility:hidden">
                             <input type="text" name="tb_personal_atencion" id="tb_personal_atencion">
-                            <input type="button" name="btn_personal_search" id="btn_personal_search" value="...">
+                            <!--<input type="button" name="btn_personal_search" id="btn_personal_search" value="..."> -->
+                            <?= $btn_personal_search ?>
 
                             <!--- End Personal search -->
                         </div>
