@@ -92,7 +92,7 @@ Route::group(['prefix'=>'adm_cuaderno','middleware'=>['auth','access','log']],fu
 });
 
 Route::group(['prefix'=>'cuaderno','middleware'=>['auth','access','log']],function(){
-    Route::get('index','LibCuadernoController@index')->name('cuaderno.index');
+    Route::get('index/{agenda_id?}','LibCuadernoController@index')->name('cuaderno.index');
     Route::get('peticion/{cua_id}/{pac_id}','LibCuadernoController@peticion')->name('cuaderno.peticion');
     Route::get('peticion_listas/{intIDColumna}/{for_id}/{col_tipo}','LibCuadernoController@peticionListas')->name('cuaderno.peticionListas');
     Route::get('detalle/{hc_id}/{cua_id}','LibCuadernoController@detalle')->name('cuaderno.detalle');
@@ -104,17 +104,6 @@ Route::group(['prefix'=>'PacienteHc','middleware'=>['auth','access','log']],func
     Route::get('buscar_historial_clinico/{fecha_inicio}/{fecha_fin}/{cua_id}/{rrhh_id}/{pac_id}','PacienteHcController@searchHc')->name('PacienteHc.searchHc');
     Route::get('atencion/{cua_id}/{pac_id}/{hc_id}/{fecha}','PacienteHcController@atencionHc')->name('PacienteHc.atencion');
     //Route::get('agenda','PacienteHcController@agenda')->name('PacienteHc.agenda');
-});
-
-//Eventos Calendario
-Route::group(['prefix'=>'Agenda','middleware'=>['auth','access','log']],function(){
-    Route::get('home','FullcalendareventoController@home')->name('Agenda.home');
-    //Route::get('index','FullcalendareventoController@index')->name('Agenda.index');
-    Route::get('cargaEventos{id?}','FullcalendareventoController@index')->name('fullcalendar.index');
-    Route::post('guardaEventos', array('as' => 'guardaEventos','uses' => 'FullcalendareventoController@create'));
-    Route::post('actualizaEventos','FullcalendareventoController@update');
-    Route::post('eliminaEvento','FullcalendareventoController@delete');
-    Route::get('reporte/{fecha_inicio}','FullcalendareventoController@reporteSemanal')->name('Agenda.reporte');
 });
 
 Route::group(['prefix'=>'libregistro','middleware'=>['auth','access','log']],function(){
@@ -158,16 +147,31 @@ Route::group(['prefix'=>'convenio','middleware'=>['auth','access','log']],functi
     Route::post('update/{conv_id}','ConvenioController@store')->name('adm.convenio.edit');
 });
 
-Route::group(['prefix'=>'agenda','middleware'=>['auth','access','log']],function(){
+Route::group(['prefix'=>'agenda','middleware'=>['auth','log']],function(){
     Route::get('temporal/index','AgendaController@index')->name('agenda.temporal.index');
     Route::get('create','AgendaController@create')->name('agenda.create');
     Route::post('create','AgendaController@store')->name('agenda.store');
     Route::get('getPaciente','AgendaController@pacientes')->name('agenda.pacientes');
     Route::get('getMedico','AgendaController@medicos')->name('agenda.medicos');
+    Route::get('view','AgendaController@view')->name('agenda.view');
+    Route::post('view','AgendaController@viewreport')->name('agenda.view');
+    Route::post('events','AgendaController@getEvents')->name('agenda.events');
+    Route::get('agenda','AgendaController@agenda')->name('agenda.agenda');
+    Route::post('getAgenda','AgendaController@getAgenda')->name('agenda.agenda.get');
+    Route::post('change','AgendaController@change')->name('agenda.change');
 });
-/**Agrupar estas rutas dentro de agenda**/
-Route::get('agenda/view','AgendaController@view')->name('agenda.view');
-Route::post('agenda/events','AgendaController@getEvents')->name('agenda.events');
+//Eventos Calendario
+Route::group(['prefix'=>'Agenda','middleware'=>['auth','log']],function(){
+    Route::get('home','FullcalendareventoController@home')->name('Agenda.home');
+    Route::get('cargaEventos{id?}','FullcalendareventoController@index')->name('fullcalendar.index');
+    Route::post('guardaEventos', array('as' => 'guardaEventos','uses' => 'FullcalendareventoController@create'));
+    Route::post('actualizaEventos','FullcalendareventoController@update');
+    Route::post('eliminaEvento','FullcalendareventoController@delete');
+    Route::get('reporte/{fecha_inicio}','FullcalendareventoController@reporteSemanal')->name('Agenda.reporte');
+});
+
+
+
 
 /***Poner estas rutas dentro de auth**/
 Route::get('/provincia/getprovincia', ['uses' => 'LugarProvinciaController@getprovincia','as' => 'provincia.getprovincia']);
@@ -178,20 +182,20 @@ Route::post('municipios','PacienteController@getMunicipios')->name('get.municipi
 
 
 
+
 /********Rutas para reportes**********/
-
-Route::get('reporte/produccion','ReporteController@produccion')->name('reporte.produccion');
-Route::post('reporte/produccion','Reportecontroller@produccionPDF')->name('reporte.produccion.pdf');
-Route::get('agenda/agenda','AgendaController@agenda')->name('agenda.agenda');
-Route::post('agenda/getAgenda','AgendaController@getAgenda')->name('agenda.agenda.get');
-Route::post('agenda/change','AgendaController@change')->name('agenda.change');
-
-Route::get('reporte/inasistencia','ReporteAgendaController@inasistencia')->name('reporte.agenda.inasistencia');
-Route::post('reporte/inasistencia','ReporteAgendaController@postInasistencia')->name('reporte.agenda.inasistencia.post');
-Route::get('reporte/abandonos','ReporteAgendaController@abandonos')->name('reporte.agenda.abandonos');
-Route::post('reporte/abandonos','ReporteAgendaController@postAbandonos')->name('reporte.agenda.abandonos.post');
-Route::get('reporte/exitosos','ReporteAgendaController@tratamientosExitosos')->name('reporte.agenda.exitosos');
-Route::post('reporte/exitosos','ReporteAgendaController@postTratamientosExitosos')->name('reporte.agenda.exitosos.post');
-Route::get('reporte/etario','ReporteAgendaController@grupoEtario')->name('reporte.agenda.etario');
-Route::post('reporte/etario','ReporteAgendaController@postgrupoEtario')->name('reporte.agenda.etario.post');
+Route::group(['prefix'=>'reporte','middleware'=>['auth','access','log']],function() {
+    Route::get('reporte/produccion','ReporteController@produccion')->name('reporte.produccion');
+    Route::post('reporte/produccion','Reportecontroller@produccionPDF')->name('reporte.produccion.pdf');
+    Route::get('reporte/inasistencia','ReporteAgendaController@inasistencia')->name('reporte.agenda.inasistencia');
+    Route::post('reporte/inasistencia','ReporteAgendaController@postInasistencia')->name('reporte.agenda.inasistencia.post');
+    Route::get('reporte/abandonos','ReporteAgendaController@abandonos')->name('reporte.agenda.abandonos');
+    Route::post('reporte/abandonos','ReporteAgendaController@postAbandonos')->name('reporte.agenda.abandonos.post');
+    Route::get('reporte/exitosos','ReporteAgendaController@tratamientosExitosos')->name('reporte.agenda.exitosos');
+    Route::post('reporte/exitosos','ReporteAgendaController@postTratamientosExitosos')->name('reporte.agenda.exitosos.post');
+    Route::get('reporte/etario','ReporteAgendaController@grupoEtario')->name('reporte.agenda.etario');
+    Route::post('reporte/etario','ReporteAgendaController@postgrupoEtario')->name('reporte.agenda.etario.post');
+});
+/****De uso general para cargar cuadernos asignados a usuario***/
 Route::post('reporte/getCuadernos','ReporteAgendaController@getCuadernos')->name('reporte.agenda.cuadernos');
+

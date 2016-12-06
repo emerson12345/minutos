@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>login</title>
+    <title>Sistema de información de centros de rehabilitación</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
@@ -16,8 +16,8 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <!--<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>-->
     <![endif]-->
     <style>
         h1{
@@ -101,7 +101,7 @@
                 </br></br></br></br></br></br>
 
                 <div style="width:500px; height:100px;">
-                    <img src="{{asset('template/dist/img/aicslogo.jpg')}}" height="60px" class="pull-right">
+                    <img src="{{asset('template/dist/img/aicslogo.png')}}" height="60px" class="pull-right">
 
                 </div>
             </div>
