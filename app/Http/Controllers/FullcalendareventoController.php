@@ -29,19 +29,28 @@ class FullcalendareventoController extends Controller
     }
     public function index()
     {
+        $user_id=Auth::user()->user_id;
         $data = array(); //declaramos un array principal que va contener los datos
-        $id = Agenda::all()->pluck('agenda_id'); //listamos todos los id de los eventos
-        $titulo = Agenda::all()->pluck('agenda_descripcion'); //lo mismo para lugar y fecha
-        $fechaIni = Agenda::all()->pluck('agenda_fec_ini');
-        $fechaFin = Agenda::all()->pluck('agenda_fec_fin');
-        $allDay = Agenda::all()->pluck('agenda_todo_dia');
-        $background = Agenda::all()->pluck('agenda_color');
+        $id = Agenda::all()->where("user_id","=",$user_id)->pluck('agenda_id'); //listamos todos los id de los eventos
+
+        $descripcion = Agenda::all()->where("user_id","=",$user_id)->pluck('agenda_descripcion'); //lo mismo para lugar y fecha
+
+        $titulo = DB::table('v_paciente_nombres')
+            ->join('agenda', 'agenda.pac_id', '=', 'v_paciente_nombres.pac_id')
+            ->where('agenda.user_id', '=', $user_id)
+            ->select('v_paciente_nombres.paciente_nombres')
+            ->pluck('paciente_nombres');
+
+        $fechaIni = Agenda::all()->where("user_id","=",$user_id)->pluck('agenda_fec_ini');
+        $fechaFin = Agenda::all()->where("user_id","=",$user_id)->pluck('agenda_fec_fin');
+        $allDay = Agenda::all()->where("user_id","=",$user_id)->pluck('agenda_todo_dia');
+        $background = Agenda::all()->where("user_id","=",$user_id)->pluck('agenda_color');
         $count = count($id); //contamos los ids obtenidos para saber el numero exacto de eventos
 
         //hacemos un ciclo para anidar los valores obtenidos a nuestro array principal $data
         for($i=0;$i<$count;$i++){
             $data[$i] = array(
-                "title"=>$titulo[$i], //obligatoriamente "title", "start" y "url" son campos requeridos
+                "title"=>$titulo[$i].": ".$descripcion[$i], //obligatoriamente "title", "start" y "url" son campos requeridos
                 "start"=>$fechaIni[$i], //por el plugin asi que asignamos a cada uno el valor correspondiente
                 "end"=>$fechaFin[$i],
                 "allDay"=>$allDay[$i],
@@ -56,7 +65,6 @@ class FullcalendareventoController extends Controller
         json_encode($data); //convertimos el array principal $data a un objeto Json
         return $data; //para luego retornarlo y estar listo para consumirlo
     }
-
     public function create(){
         //Valores recibidos via ajax
         $title = $_POST['title'];
@@ -80,6 +88,7 @@ class FullcalendareventoController extends Controller
         $evento->save();
     }
     public function update(){
+
         //Valores recibidos via ajax
         $id = $_POST['id'];
         $title = $_POST['title'];
@@ -88,18 +97,32 @@ class FullcalendareventoController extends Controller
         $allDay = $_POST['allday'];
         $back = $_POST['background'];
 
-        $evento=Agenda::find($id);
-        if($end=='NULL'){
-            $evento->agenda_fec_fin=NULL;
-        }else{
-            $evento->agenda_fec_fin=$end;
+        $agenda_estado = DB::table('agenda')
+            ->where('agenda.agenda_id', '=', $id)
+            ->select('*')
+            ->first();
+        if($agenda_estado->agenda_estado=="A")
+        {
+            $evento=Agenda::find($id);
+            if($end=='NULL'){
+                $evento->agenda_fec_fin=NULL;
+            }else{
+                $evento->agenda_fec_fin=$end;
+            }
+            $evento->agenda_fec_ini=$start;
+            $evento->agenda_todoeldia=$allDay;
+            $evento->agenda_color=$back;
+            $evento->agenda_descripcion=$title;
+            //$evento->fechaFin=$end;
+            $evento->save();
         }
-        $evento->agenda_fec_ini=$start;
-        $evento->agenda_todoeldia=$allDay;
-        $evento->agenda_color=$back;
-        $evento->agenda_descripcion=$title;
-        //$evento->fechaFin=$end;
-        $evento->save();
+        else
+        {
+            $evento=Agenda::find($id);
+            $evento->save();
+        }
+        //return $agenda_estado->agenda_estado;
+        //dd($agenda_estado);
     }
 
     public function delete(){
