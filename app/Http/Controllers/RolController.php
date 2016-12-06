@@ -34,7 +34,8 @@ class RolController extends Controller
         $this->validate($request,[
             'rol_nombre' => ['required',Rule::unique('rol')->ignore($rol_id,'rol_id')],
             'rol_codigo' => ['required',Rule::unique('rol')->ignore($rol_id,'rol_id')],
-            'rol_seleccionable' => 'boolean'
+            'rol_seleccionable' => 'boolean',
+            'app_list' =>'required'
         ],[
             'required' => 'Este campo es requerido.',
             'boolean' => 'Seleccione una opcion valida.',
