@@ -37,7 +37,7 @@ class UsuarioController extends Controller
         $this->validate($request,[
             'rrhh_id'=>'required| not_exists:usuario_rrhh',
             'user_nombre' => 'required',
-            'user_codigo' => 'required| unique:usuario,user_codigo',
+            'user_codigo' => 'required|alpha_num| unique:usuario,user_codigo',
             'user_password' => 'required| min:6',
             'user_password2' => 'required| same:user_password| min:6',
             'user_email' => 'email| unique:usuario,user_email',
@@ -49,6 +49,7 @@ class UsuarioController extends Controller
             'email' => 'Debe introducir un correo valido.',
             'boolean' => 'Seleccione una opcion valida.',
             'user_codigo.unique' => 'Este usuario ya esta registrado en la base de datos',
+            'user_codigo.alpha_num' => 'El nombre de usuario solo permite numeros y letras.',
             'user_email.unique' => 'Este email ya esta registrado en la base de datos',
             'role_list.required' => 'Debe seleccionar al menos un rol'
         ]);
@@ -85,7 +86,7 @@ class UsuarioController extends Controller
         //para cambiar el resto
         $listUsuarioData = ['user_codigo' => $request->user_codigo, 'user_email'=> $request->user_email, 'user_seleccionable'=>$request->user_seleccionable,'role_list'=>$request->role_list];
         Validator::make($listUsuarioData,[
-            'user_codigo' => ['required',Rule::unique('usuario')->ignore($usuario->user_id,'user_id')],
+            'user_codigo' => ['required','alpha_num',Rule::unique('usuario')->ignore($usuario->user_id,'user_id')],
             'user_email' => ['email',Rule::unique('usuario')->ignore($usuario->user_id,'user_id')],
             'user_seleccionable' => 'boolean',
             'role_list' => 'required'
@@ -94,6 +95,7 @@ class UsuarioController extends Controller
             'email' => 'Debe introducir un correo valido.',
             'boolean' => 'Seleccione una opcion valida.',
             'user_codigo.unique' => 'Este usuario ya esta registrado en la base de datos',
+            'user_codigo.alpha_num' => 'El nombre de usuario solo permite numeros y letras.',
             'user_email.unique' => 'Este email ya esta registrado en la base de datos',
             'role_list.required' => 'Debe seleccionar al menos un rol'
         ])->validate();

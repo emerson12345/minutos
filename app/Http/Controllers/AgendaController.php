@@ -93,8 +93,10 @@ class AgendaController extends Controller
     }
 
     public function medicos(Request $request){
+        $inst_id = session()->has('institucion')?session('institucion')->inst_id:0;
         $query = $request->input('query')?$request->input('query').'%':'';
         $lista = Rrhh::select('rrhh_id as id','rrhh_ci as nro_ci',DB::raw("ltrim(concat_ws(' ',rrhh_ap_prim,rrhh_ap_seg,rrhh_nombre)) as text"))
+            ->where('inst_id',$inst_id)
             ->whereRaw("upper(ltrim(concat_ws(' ',rrhh_ap_prim,rrhh_ap_seg,rrhh_nombre))) like upper(?)",$query)
             ->orWhere('rrhh_ci','like',$query)->get();
         return response()->json($lista);
@@ -178,6 +180,7 @@ class AgendaController extends Controller
     }
 
     public function getEvents(Request $request){
+        $inst_id = session()->has('institucion')?session('institucion')->inst_id:0;
         $fec_ini = $request->fec_ini?:date('d/m/Y');
         $fec_fin = $request->fec_fin?:date('d/m/Y');
         $user_id = $request->user_id?:0;
@@ -190,6 +193,7 @@ class AgendaController extends Controller
                 ,DB::raw("ltrim( concat_ws(' ',paciente.pac_ap_prim,paciente.pac_ap_seg,paciente.pac_nombre) ) as title"))
             ->whereBetween(DB::raw('agenda_fec_ini::DATE'),[$fec_ini,$fec_fin])
             ->where('agenda.user_id',$user_id==0?'<>':'=',$user_id)
+            ->where('agenda.inst_id',$inst_id)
             ->where('agenda.cua_id',$cua_id)->get();
         return response()->json($eventos);
     }

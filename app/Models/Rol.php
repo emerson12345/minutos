@@ -28,6 +28,6 @@ class Rol extends Model
     }
 
     public function aplicaciones(){
-        return $this->belongsToMany('Sicere\Models\Aplicacion','aplicacion_rol','rol_id','app_id');
+        return $this->belongsToMany('Sicere\Models\Aplicacion','aplicacion_rol','rol_id','app_id')->orderBy('app_orden','asc');
     }
 }

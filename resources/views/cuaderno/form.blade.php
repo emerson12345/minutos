@@ -50,12 +50,11 @@
 
                 <div class="btn-group">
                     <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Agregar columna</button>
-                    @if(!$cuaderno->exists)
                     <button type="button" id="btn-remove-row" class="btn btn-default btn-xs"><i class="fa fa-minus"></i> Eliminar columna</button>
-                    @endif
                     <button type="button" id="btn-up-row" class="btn btn-default btn-xs"><i class="fa fa-arrow-up"></i> Subir</button>
                     <button type="button" id="btn-down-row" class="btn btn-default btn-xs"><i class="fa fa-arrow-down"></i> Bajar</button>
                 </div>
+                <span class="label label-warning" name="lib_formulario"></span>
 
                 <table class="table table-bordered table-striped table-condensed" id="table-items-selected">
                     <thead>

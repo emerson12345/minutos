@@ -56,9 +56,11 @@ class CuadernoController extends Controller
         $this->validate($request,[
             'cua_nombre' => ['required',Rule::unique('lib_cuadernos')->ignore($cua_id,'cua_id')],
             'user_seleccionable' => 'boolean',
+            'lib_formulario'=>'required',
             'lib_formulario.*.col_id'=>'integer'
         ],[
             'required' => 'Este campo es requerido.',
+            'lib_formulario.required'=>'Debe agregar al menos una columnna al formulario',
             'boolean' => 'Seleccione una opcion valida.',
             'unique' => 'Este valor ya ha sido tomado.',
         ]);

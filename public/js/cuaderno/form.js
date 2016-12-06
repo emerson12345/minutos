@@ -17,7 +17,7 @@ $("#btn-add-column").on("click",function(){
         var id = $currentRow.data("id");
         var nombre = $currentRow.find("td").eq(0).text();
 
-        var $row = $('<tr data-id="'+id+'">'
+        var $row = $('<tr data-id="'+id+'" class="new-column">'
             +'<td></td>'
             +'<td>'+nombre+'</td>'
             +'<td>'
@@ -46,8 +46,13 @@ $("#btn-add-column").on("click",function(){
 });
 
 $("#btn-remove-row").on("click",function(){
-    $("#table-items-selected tbody").find("tr.item-selected").remove();
-    renameRows();
+    var $item =$("#table-items-selected tbody").find("tr.item-selected").eq(0);
+    if($item.hasClass('new-column')){
+        $item.remove();
+        renameRows();
+    }else{
+        alert('Atencion, no puede eliminar una columna que ha sido registrada con anterioridad en el cuaderno.');
+    }
 });
 
 $("#btn-up-row").on("click",function(){
@@ -100,6 +105,7 @@ $("form").submit(function(e){
             var errors = data.responseJSON;
             $.each(errors,function(i,o){
                 $form.find("[name = '"+i+"']").closest(".col-sm-10").find("span").text(o);
+                $("[name = "+i+"]").text(o);
             });
         },
         complete:function(){

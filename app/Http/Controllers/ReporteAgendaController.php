@@ -365,19 +365,38 @@ class ReporteAgendaController extends Controller
         PDF::Ln();
         PDF::SetFont('');
         $etarios = [ [0,4],[5,9],[10,20],[21,59],[60,200] ];
+        $totalEtarios = [0,0,0,0,0];
+        $totalCuadernos = [];
+        $totalGeneral = 0;
         foreach($cuadernos as $cua){
             $cuaderno = LibCuaderno::find($cua);
+            $totalCuaderno = 0;
             PDF::Cell(75,5,$cuaderno->cua_nombre,'LTB',0,'L',false,null,1);
-            foreach ($etarios as $etario){
+            foreach ($etarios as $i=>$etario){
                 $total = $this->getCountEtario($fecha_ini,$fecha_fin,$user_id,$cuaderno->cua_id,$etario[0],$etario[1]);
+                $totalEtarios[$i]+=$total;
+                $totalCuaderno+=$total;
                 PDF::Cell(15,5,$total,1,0,'C',false,null,1);
             }
+            PDF::Cell(15,5,$totalCuaderno,1,0,'C',false,null,1);
+            $totalCuadernos[] = $totalCuaderno;
+            $totalGeneral+=$totalCuaderno;
             PDF::Ln();
         }
-
+        $perc = $totalGeneral==0?0:100/$totalGeneral;
+        PDF::SetXY(180,58);
+        foreach ($totalCuadernos as $subTotal){
+            PDF::Cell(15,5,number_format($subTotal*$perc,2),'TBR',2,'R',false,null,1);
+        }
+        PDF::SetX(15);
         PDF::SetFillColor(240);
         PDF::SetFont('','B');
         PDF::Cell(75,5,'Total','LTB',0,'R',true,null,1);
+        foreach ($totalEtarios as $subTotal){
+            PDF::Cell(15,5,$subTotal,'LTB',0,'C',true,null,1);
+        }
+        PDF::Cell(15,5,'0','LTBR',0,'C',true,null,1);
+        PDF::Cell(15,5,'100.00','TBR',0,'R',true,null,1);
         PDF::lastPage();
         PDF::Output('produccion.pdf');
     }

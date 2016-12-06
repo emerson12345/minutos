@@ -65,10 +65,16 @@ class Permisos
                         $menu[$app_parent->app_id]['label']= $app_parent->app_nombre;
                         $temp = ['label'=>$app->app_nombre, 'url' => $app->app_enlace_menu];
                         $menu[$app_parent->app_id]['items'][$app->app_id] = $temp;
+                        $menu[$app_parent->app_id]['icon'] = $app_parent->app_icon?:'fa-question';
+                        $menu[$app_parent->app_id]['order'] = $app_parent->app_orden?:0;
                     }
                 }
             }
         }
+
+        usort($menu,function($a,$b){
+            return $a['order']-$b['order'];
+        });
         return $menu;
     }
 }
