@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Sicere\Http\Controllers\Controller;
 
 
+
 class BackupController extends Controller
 {
     /**
@@ -28,11 +29,17 @@ class BackupController extends Controller
      */
     public function create()
     {
+        $pathBackup=base_path("storage\\backup\\");
         $hoy=(date("d-m-Y"));
         $name=$this->limpiar(Auth::user()->user_codigo)."-".$_ENV["DB_DATABASE"]."-".$hoy."-backup";
+
         putenv("PGPASSWORD=".$_ENV["DB_PASSWORD"]);
-        $dumpcmd = array("pg_dump", "-U", escapeshellarg("postgres"), "-F", "c", "-b", "-v", "-f", escapeshellarg("backup/$name.sql"), escapeshellarg($_ENV["DB_DATABASE"]));
+        $dumpcmd = array("pg_dump", "-U", escapeshellarg($_ENV["DB_USERNAME"]), "-F", "c", "-b", "-v", "-f", escapeshellarg($pathBackup."".$name.".sql"), escapeshellarg($_ENV["DB_DATABASE"]));
+
+
+
         exec( join(' ', $dumpcmd), $cmdout, $cmdresult );
+        //dd(join(' ', $dumpcmd));
         putenv("PGPASSWORD");
         if ($cmdresult != 0)
             echo "error";
