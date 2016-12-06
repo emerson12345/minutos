@@ -46,7 +46,11 @@
     {!! Form::label('role_list','Roles',['class'=>'col-sm-3 control-label']) !!}
     <div class="col-sm-9">
         <span class="label label-warning"></span>
-        {!! Form::select('role_list[]',\Sicere\Models\Rol::where('rol_seleccionable',1)->pluck('rol_nombre','rol_id'),null,['class'=>'form-control roles', 'multiple'=>true,'id'=>'role_list','style'=>'width:100%']) !!}
+        {!! Form::select('role_list[]',\Sicere\Models\Rol::where('rol_seleccionable',1)->pluck('rol_nombre','rol_id'),null,
+        ['class'=>'form-control roles',
+        'multiple'=>true,
+        'id'=>'role_list',
+        'style'=>'width:100%']) !!}
     </div>
 </div>
 {!! Form::close() !!}

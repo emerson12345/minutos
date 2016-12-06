@@ -15,6 +15,28 @@
         font-family : verdana,arial,helvetica;
     }
 </style>
+<!----- INSTITUCIONES -->
+<div id="modal_examen_complementario" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="box">
+
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Examenes complementarios</h4>
+                </div>
+                <div class="modal-body">
+                    <?= $tabla_examen_complementario ?>
+                    <?= $modal_examen_complementario ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--- END INSTITUCIONES -->
 
 <div class="box">
     <div class="box-body">
@@ -24,12 +46,21 @@
                     if($EstadoModificar==true)
                     {
                     ?>
-                        <input type="submit" value="Modificar"><br>
+                    <div class="col-md-8">
+                        <input type="submit" value="Modificar" class="btn btn-edit btn-md btn-primary">
+                    </div>
+                    <div class="col-md-4">
+                        <input type="button" value="Examen complementario" id="btn_examen_complementario" class="btn btn-edit btn-md btn-primary">
+                    </div>
+                    <br>
                     <?php
                     }
                     ?>
+
+
             </div>
         </div>
+        <br><br>
         <div class="row">
             <div class="col-md-3">
                 {{ Form::hidden('hc_id',$hc_id) }}
@@ -68,8 +99,9 @@
             <div class="col-md-5">
                 <label for="">Referido de Establecimeinto</label>
                 <input type="text" id="referido_de_inst_id" name="referido_de_inst_id" size="1" value="<?= $listDatosHc->referido_a_inst_id; ?>"  style="visibility:hidden">
-                <input type="text" id="tb_referido_de_establecimeinto" name="tb_referido_de_establecimeinto" size="30" value="<?= $listDatosHc->referido_d; ?>">
-                <input type="button" value="..." id="btn_referido_de_establecimeinto" name="btn_referido_de_establecimeinto">
+                <input type="text" id="tb_referido_de_establecimeinto" name="tb_referido_de_establecimeinto" size="25" value="<?= $listDatosHc->referido_d; ?>">
+                <?= $btn_referido_de_establecimeinto;?>
+                <!--<input type="button" value="..." id="btn_referido_de_establecimeinto" name="btn_referido_de_establecimeinto"> -->
             </div>
             <div class="col-md-1">
 
@@ -77,10 +109,9 @@
             <div class="col-md-5">
                 <label for="">Referido a Establecimeinto</label>
                 <input type="text" id="referido_a_inst_id" name="referido_a_inst_id" size="1" value="<?= $listDatosHc->referido_a_inst_id; ?>"  style="visibility:hidden">
-                <input type="text" id="tb_referido_a_establecimeinto" name="tb_referido_a_establecimeinto" size="30" value="<?= $listDatosHc->referido_a; ?>">
-                <input type="button" value="..." id="btn_referido_a_establecimeinto" name="btn_referido_a_establecimeinto">
-
-
+                <input type="text" id="tb_referido_a_establecimeinto" name="tb_referido_a_establecimeinto" size="25" value="<?= $listDatosHc->referido_a; ?>">
+                <!--<input type="button" value="..." id="btn_referido_a_establecimeinto" name="btn_referido_a_establecimeinto">-->
+                <?= $btn_referido_a_establecimeinto ?>
             </div>
         </div>
     </div>
@@ -139,6 +170,7 @@
     </div>
 </div>
 <!--- END INSTITUCIONES -->
+
 <!----- INSTITUCIONES REFERIDO A-->
 <div id="myModal_instituciones_ra" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -308,6 +340,10 @@
     $("#btn_referido_a_establecimeinto").on('click',function(e){
         $("#table_instituciones_ra").DataTable();
         $('#myModal_instituciones_ra').modal('show');
+    });
+    $("#btn_examen_complementario").on('click',function(e){
+        //$("#table_instituciones_ra").DataTable();
+        $('#modal_examen_complementario').modal('show');
     });
     $("#table_instituciones_ra").on('click','td',function(e){
         if (typeof fila_seleccinable_instituciones_r == 'undefined') {

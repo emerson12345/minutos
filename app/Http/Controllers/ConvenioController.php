@@ -38,13 +38,14 @@ class ConvenioController extends Controller
         $this->validate($request,[
             'conv_nombre' => ['required',Rule::unique('convenio')->ignore($conv_id,'conv_id')],
             'conv_codigo' => ['required',Rule::unique('convenio')->ignore($conv_id,'conv_id')],
-            'conv_seleccionable' => 'boolean'
+            'conv_seleccionable' => 'boolean',
+            'municipios'=>'required_if:conv_niv_nacional,0'
         ],[
             'required' => 'Este campo es requerido.',
             'boolean' => 'Seleccione una opcion valida.',
-            'unique'=> 'Este valor ya ha sido registrado'
+            'unique'=> 'Este valor ya ha sido registrado',
+            'required_if' => 'Este campo es requerido.'
         ]);
-
         DB::transaction(function() use ($request,$convenio){
             $munList = [];
             if($request->conv_niv_nacional == '0' && $request->municipios)
