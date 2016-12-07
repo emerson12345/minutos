@@ -154,21 +154,25 @@ Route::group(['prefix'=>'convenio','middleware'=>['auth','access','log']],functi
 });
 
 Route::group(['prefix'=>'agenda','middleware'=>['auth','access','log']],function(){
-    Route::get('temporal/index','AgendaController@index')->name('agenda.temporal.index');
-    Route::get('create','AgendaController@create')->name('agenda.create');
-    Route::post('create','AgendaController@store')->name('agenda.store');
-    Route::get('getPaciente','AgendaController@pacientes')->name('agenda.pacientes');
-    Route::get('getMedico','AgendaController@medicos')->name('agenda.medicos');
+    /***Agenda publica***/
     Route::get('view','AgendaController@view')->name('agenda.view');
-    Route::post('view','AgendaController@viewreport')->name('agenda.view');
+    Route::post('view','AgendaController@viewreport')->name('agenda.view.post');
     Route::post('events','AgendaController@getEvents')->name('agenda.events');
+    //Route::get('getMedico','AgendaController@medicos')->name('agenda.medicos');
+    //***Agenda depende del usuario***//
     Route::get('agenda','AgendaController@agenda')->name('agenda.agenda');
     Route::post('getAgenda','AgendaController@getAgenda')->name('agenda.agenda.get');
     Route::post('change','AgendaController@change')->name('agenda.change');
 });
+
+
+
 //Eventos Calendario
 Route::group(['prefix'=>'Agenda','middleware'=>['auth','access','log']],function(){
     Route::get('home','FullcalendareventoController@home')->name('Agenda.home');
+    Route::get('create','AgendaController@create')->name('agenda.create');
+    Route::post('create','AgendaController@store')->name('agenda.store');
+    Route::get('getPaciente','AgendaController@pacientes')->name('agenda.pacientes');
     Route::get('cargaEventos{id?}','FullcalendareventoController@index')->name('fullcalendar.index');
     Route::get('reporte/{fecha_inicio}','FullcalendareventoController@reporteSemanal')->name('Agenda.reporte');
     Route::post('guardaEventos', array('as' => 'guardaEventos','uses' => 'FullcalendareventoController@create'));
@@ -201,6 +205,7 @@ Route::group(['prefix'=>'reporte','middleware'=>['auth','access','log']],functio
     Route::get('reporte/etario','ReporteAgendaController@grupoEtario')->name('reporte.agenda.etario');
     Route::post('reporte/etario','ReporteAgendaController@postgrupoEtario')->name('reporte.agenda.etario.post');
 });
+
 /****De uso general para cargar cuadernos asignados a usuario***/
 Route::post('reporte/getCuadernos','ReporteAgendaController@getCuadernos')->name('reporte.agenda.cuadernos');
 
