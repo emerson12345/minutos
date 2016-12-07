@@ -202,6 +202,8 @@ class Command
      *
      * @return int The command exit code
      *
+     * @throws \Exception
+     *
      * @see setCode()
      * @see execute()
      */

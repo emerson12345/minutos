@@ -34,7 +34,7 @@ var usersTable = $("#cuadernos-table").DataTable({
         },
         {
             data:function (row,type,val,meta) {
-                return '<a class="btn btn-edit btn-xs btn-primary" href="update/'+row.cua_id+'" title="Editar"><i class="fa fa-edit"></i> </a>'
+                return '<a class="btn btn-edit btn-xs btn-primary" href="'+row.edit_url+'" title="Editar"><i class="fa fa-edit"></i> </a>'
             },
             orderable:false
         }

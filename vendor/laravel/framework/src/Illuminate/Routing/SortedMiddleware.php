@@ -65,7 +65,7 @@ class SortedMiddleware extends Collection
             }
         }
 
-        return array_values(array_unique($middlewares, SORT_REGULAR));
+        return $middlewares;
     }
 
     /**

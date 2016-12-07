@@ -3,7 +3,7 @@
 namespace Sicere\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use DB;
 /**
  * Class InstitucionActividad
  */
@@ -29,12 +29,17 @@ class InstitucionActividad extends Model
         'act_nro_supervision',
         'act_nro_auditoria',
         'act_nro_educativas_salud',
-        'act_seleccionable',
-        'act_fec_alta',
-        'act_fec_mod'
+        'act_seleccionable'
     ];
 
     protected $guarded = [];
 
+    public function max_nro_orden(){
+        $inst_id = session()->has('institucion')?session('institucion')->inst_id:0;
+        $max_nro = DB::select("select 
+          COALESCE(max(act_nro),0) as max_act_nro 
+          from institucion_actividad where inst_id={$inst_id}")[0]->max_act_nro;
+        return $max_nro;
+    }
 
 }

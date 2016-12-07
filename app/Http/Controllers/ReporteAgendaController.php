@@ -4,9 +4,11 @@ namespace Sicere\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use SebastianBergmann\CodeCoverage\Report\Xml\Report;
 use Sicere\Http\Controllers\Controller;
 use Sicere\Models\Agenda;
 use Sicere\Models\LibCuaderno;
+use Sicere\Models\ReportTemplate;
 use Sicere\User;
 use PDF;
 use Auth;
@@ -19,7 +21,6 @@ class ReporteAgendaController extends Controller
 
     public function postInasistencia(Request $request){
         $inst_id = session()->has('institucion')?session('institucion')->inst_id:0;
-
         $user_id = $request->user_id?:0;
         $anio = $request->anio?:date('Y');
         $mes = $request->mes?:date('n');
@@ -48,31 +49,10 @@ class ReporteAgendaController extends Controller
             $reportDataTotal['total']+=$total;
         }
 
-        PDF::setHeaderCallback(function($pdf) {
-            $pdf->Cell(0, 27, '', 'B', false, 'R', 0, '', 0, false, 'T', 'M');
-            $pdf->Image(asset('template/dist/img/bolivia.gif'), 15, 10, 0, 15, 'GIF', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
-            $pdf->SetFont('helvetica', 'B', 11);
-            $pdf->Text(33,22,'Sistema de centros de rehabilitación','R');
-            $pdf->SetFont('helvetica', 'K', 10);
-            $pdf->Image(asset('template/dist/img/minsalud-logo.jpg'), 25, 12, 0, 12, 'JPG', 'http://www.tcpdf.org', '', true, 150, 'R', false, false, 0, false, false, false);
-        });
-        PDF::setFooterCallback(function($pdf) {
-            $strCodSeguridad=session('institucion')->inst_codigo . '|' . session('institucion')->inst_nombre .'|' . \Auth::user()->user_id;
-            $pdf->SetY(-15);
-            $pdf->SetFont('helvetica', 'I', 8);
-            $pdf->Cell(0, 10, 'Pagina '.$pdf->getAliasNumPage().'/'.$pdf->getAliasNbPages(), 'T', false, 'R', 0, '', 0, false, 'T', 'M');
-            //$pdf->write2DBarcode(bcrypt('Mi super codigo'), 'PDF417', 25, 275, 150, 6, null, 'N',true);
-            $pdf->write2DBarcode($strCodSeguridad, 'PDF417', 25, 275, 150, 6, null, 'N',true);
-        });
-        PDF::SetTitle('Agenda');
-        PDF::SetSubject('Reporte de sistema');
-        PDF::SetMargins(15, 35, 15);
-        PDF::SetFontSubsetting(false);
-        PDF::SetFontSize('10px');
-        PDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        ReportTemplate::printHeaderFooter();
         PDF::AddPage('P', 'Letter');
         PDF::SetFont('','B');
-        $this->printTitlePDF('PORCENTAJE DE INASISTENCIA A CITAS',$fecha_ini,$fecha_fin);
+        ReportTemplate::printTitle('PORCENTAJE DE INASISTENCIA A CITAS',$fecha_ini,$fecha_fin);
         PDF::SetFillColor(200);
         $perc = $reportDataTotal['total']==0?:100/$reportDataTotal['total'];
         PDF::Cell(90,5,'SERVICIO','LTB',0,'C',true,null,1);
@@ -140,30 +120,9 @@ class ReporteAgendaController extends Controller
         $data =$this->getTotalForCuadernos($fecha_ini,$fecha_fin,$user_id,$cuadernos,4);
         $totales = array_pop($data);
 
-        PDF::setHeaderCallback(function($pdf) {
-            $pdf->Cell(0, 27, '', 'B', false, 'R', 0, '', 0, false, 'T', 'M');
-            $pdf->Image(asset('template/dist/img/bolivia.gif'), 15, 10, 0, 15, 'GIF', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
-            $pdf->SetFont('helvetica', 'B', 11);
-            $pdf->Text(33,22,'Sistema de centros de rehabilitación','R');
-            $pdf->SetFont('helvetica', 'K', 10);
-            $pdf->Image(asset('template/dist/img/minsalud-logo.jpg'), 25, 12, 0, 12, 'JPG', 'http://www.tcpdf.org', '', true, 150, 'R', false, false, 0, false, false, false);
-        });
-        PDF::setFooterCallback(function($pdf) {
-            $strCodSeguridad=session('institucion')->inst_codigo . '|' . session('institucion')->inst_nombre .'|' . \Auth::user()->user_id;
-            $pdf->SetY(-15);
-            $pdf->SetFont('helvetica', 'I', 8);
-            $pdf->Cell(0, 10, 'Pagina '.$pdf->getAliasNumPage().'/'.$pdf->getAliasNbPages(), 'T', false, 'R', 0, '', 0, false, 'T', 'M');
-            //$pdf->write2DBarcode(bcrypt('Mi super codigo'), 'PDF417', 25, 275, 150, 6, null, 'N',true);
-            $pdf->write2DBarcode($strCodSeguridad, 'PDF417', 25, 275, 150, 6, null, 'N',true);
-        });
-        PDF::SetTitle('Abandonos');
-        PDF::SetSubject('Reporte de sistema');
-        PDF::SetMargins(15, 35, 15);
-        PDF::SetFontSubsetting(false);
-        PDF::SetFontSize('10px');
-        PDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        ReportTemplate::printHeaderFooter();
         PDF::AddPage('P', 'Letter');
-        $this->printTitlePDF('PORCENTAJE DE TRATAMIENTOS ABANDONADOS',$fecha_ini,$fecha_fin);
+        ReportTemplate::printTitle('PORCENTAJE DE TRATAMIENTOS ABANDONADOS',$fecha_ini,$fecha_fin);
         PDF::SetFillColor(200);
         PDF::SetFont('','B');
         PDF::Cell(90,5,'SERVICIO','LTB',0,'C',true,null,1);
@@ -235,30 +194,9 @@ class ReporteAgendaController extends Controller
         $data =$this->getTotalForCuadernos($fecha_ini,$fecha_fin,$user_id,$cuadernos,1);
         $totales = array_pop($data);
 
-        PDF::setHeaderCallback(function($pdf) {
-            $pdf->Cell(0, 27, '', 'B', false, 'R', 0, '', 0, false, 'T', 'M');
-            $pdf->Image(asset('template/dist/img/bolivia.gif'), 15, 10, 0, 15, 'GIF', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
-            $pdf->SetFont('helvetica', 'B', 11);
-            $pdf->Text(33,22,'Sistema de centros de rehabilitación','R');
-            $pdf->SetFont('helvetica', 'K', 10);
-            $pdf->Image(asset('template/dist/img/minsalud-logo.jpg'), 25, 12, 0, 12, 'JPG', 'http://www.tcpdf.org', '', true, 150, 'R', false, false, 0, false, false, false);
-        });
-        PDF::setFooterCallback(function($pdf) {
-            $strCodSeguridad=session('institucion')->inst_codigo . '|' . session('institucion')->inst_nombre .'|' . \Auth::user()->user_id;
-            $pdf->SetY(-15);
-            $pdf->SetFont('helvetica', 'I', 8);
-            $pdf->Cell(0, 10, 'Pagina '.$pdf->getAliasNumPage().'/'.$pdf->getAliasNbPages(), 'T', false, 'R', 0, '', 0, false, 'T', 'M');
-            //$pdf->write2DBarcode(bcrypt('Mi super codigo'), 'PDF417', 25, 275, 150, 6, null, 'N',true);
-            $pdf->write2DBarcode($strCodSeguridad, 'PDF417', 25, 275, 150, 6, null, 'N',true);
-        });
-        PDF::SetTitle('Exitosos');
-        PDF::SetSubject('Reporte de sistema');
-        PDF::SetMargins(15, 35, 15);
-        PDF::SetFontSubsetting(false);
-        PDF::SetFontSize('10px');
-        PDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        ReportTemplate::printHeaderFooter();
         PDF::AddPage('P', 'Letter');
-        $this->printTitlePDF('PORCENTAJE DE TRATAMIENTOS CONCLUIDOS CON EXITO',$fecha_ini,$fecha_fin);
+        ReportTemplate::printTitle('PORCENTAJE DE TRATAMIENTOS CONCLUIDOS CON EXITO',$fecha_ini,$fecha_fin);
         PDF::SetFillColor(200);
         PDF::SetFont('','B');
         PDF::Cell(90,5,'SERVICIO','LTB',0,'C',true,null,1);
@@ -329,31 +267,9 @@ class ReporteAgendaController extends Controller
         $fecha_ini = $fecha_temp->startOfMonth()->format('d/m/Y');
         $fecha_fin = $fecha_temp->endOfMonth()->format('d/m/Y');
         $cuadernos = $request->cuaderno?:[];
-
-        PDF::setHeaderCallback(function($pdf) {
-            $pdf->Cell(0, 27, '', 'B', false, 'R', 0, '', 0, false, 'T', 'M');
-            $pdf->Image(asset('template/dist/img/bolivia.gif'), 15, 10, 0, 15, 'GIF', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
-            $pdf->SetFont('helvetica', 'B', 11);
-            $pdf->Text(33,22,'Sistema de centros de rehabilitación','R');
-            $pdf->SetFont('helvetica', 'K', 10);
-            $pdf->Image(asset('template/dist/img/minsalud-logo.jpg'), 25, 12, 0, 12, 'JPG', 'http://www.tcpdf.org', '', true, 150, 'R', false, false, 0, false, false, false);
-        });
-        PDF::setFooterCallback(function($pdf) {
-            $strCodSeguridad=session('institucion')->inst_codigo . '|' . session('institucion')->inst_nombre .'|' . \Auth::user()->user_id;
-            $pdf->SetY(-15);
-            $pdf->SetFont('helvetica', 'I', 8);
-            $pdf->Cell(0, 10, 'Pagina '.$pdf->getAliasNumPage().'/'.$pdf->getAliasNbPages(), 'T', false, 'R', 0, '', 0, false, 'T', 'M');
-            //$pdf->write2DBarcode(bcrypt('Mi super codigo'), 'PDF417', 25, 275, 150, 6, null, 'N',true);
-            $pdf->write2DBarcode($strCodSeguridad, 'PDF417', 25, 275, 150, 6, null, 'N',true);
-        });
-        PDF::SetTitle('Grupo etario');
-        PDF::SetSubject('Reporte de sistema');
-        PDF::SetMargins(15, 35, 15);
-        PDF::SetFontSubsetting(false);
-        PDF::SetFontSize('10px');
-        PDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        ReportTemplate::printHeaderFooter();
         PDF::AddPage('P', 'Letter');
-        $this->printTitlePDF('CANTIDAD DE SESIONES POR GRUPO ETARIO',$fecha_ini,$fecha_fin);
+        ReportTemplate::printTitle('CANTIDAD DE SESIONES POR GRUPO ETARIO',$fecha_ini,$fecha_fin);
         PDF::SetLineWidth(0.2);
         $header = ['De 0 a 4 años', 'De 5 a 9 años', 'De 10 a 20 años', 'De 21 a 59 años', '> 60 años'];
         PDF::Cell(75,5,'Servicio',1,0,'C',false,null,1);
@@ -485,35 +401,7 @@ class ReporteAgendaController extends Controller
             ) as temp_table
             where temp_table.pac_edad BETWEEN {$edad_ini} and {$edad_fin}
         ");
-
         return $data[0]->total;
     }
 
-    public function printTitlePDF($title,$fec_ini,$fec_fin){
-        $inst_id = session()->has('institucion')?session('institucion')->inst_id:0;
-        $institucion = \Sicere\Models\Institucion::find($inst_id);
-        if($institucion){
-            PDF::SetY(28);
-            PDF::SetFont('Helvetica','',8);
-            if($institucion->departamento)
-                PDF::Cell(40,5,'SEDES '.$institucion->departamento->dep_nombre,0,0,'L',false,null,1);
-            else
-                PDF::Cell(40,5,'SEDES',0,0,'L',false,null,1);
-            if($institucion->area)
-                PDF::Cell(40,5,'RED: '.$institucion->area->area_nombre,0,0,'L',false,null,1);
-            else
-                PDF::Cell(40,5,'RED: NE',0,0,'L',false,null,1);
-            if($institucion->municipio)
-                PDF::Cell(40,5,'MUNICIPIO: '.$institucion->municipio->mun_nombre,0,0,'L',false,null,1);
-            else
-                PDF::Cell(40,5,'MUNICIPIO: NE',0,0,'L',false,null,1);
-            PDF::Cell(70,5,'ESTABLECIMIENTO: '.$institucion->inst_nombre,0,0,'L',false,null,1);
-        }
-        PDF::Ln();
-        PDF::Ln();
-        PDF::SetFont('Helvetica','B',11);
-        PDF::Cell(0,5,$title,0,1,'C');
-        PDF::Cell(0,5,$fec_ini.' - '.$fec_fin,0,1,'C');
-        PDF::Ln();
-    }
 }

@@ -3,6 +3,7 @@
 namespace Illuminate\Notifications\Events;
 
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Notifications\Notification;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
@@ -53,12 +54,6 @@ class BroadcastNotificationCreated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        $channels = $this->notification->broadcastOn();
-
-        if (! empty($channels)) {
-            return $channels;
-        }
-
         return [new PrivateChannel($this->channelName())];
     }
 
@@ -82,10 +77,6 @@ class BroadcastNotificationCreated implements ShouldBroadcast
      */
     protected function channelName()
     {
-        if (method_exists($this->notifiable, 'receivesBroadcastNotificationsOn')) {
-            return $this->notifiable->receivesBroadcastNotificationsOn($this->notification);
-        }
-
         $class = str_replace('\\', '.', get_class($this->notifiable));
 
         return $class.'.'.$this->notifiable->getKey();

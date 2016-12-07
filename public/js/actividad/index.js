@@ -9,7 +9,7 @@ var actividadesTable = $("#actividades-table").DataTable({
             data:function(row, type, val, meta){
                 var fecha = row.act_fecha;
                 if(moment(row.act_fecha).isValid())
-                    fecha = moment(row.act_fecha).format('DD/MM/YYYY HH:mm:ss');
+                    fecha = moment(row.act_fecha).format('DD/MM/YYYY');
                 return fecha;
             },
             orderable:true,
@@ -29,8 +29,7 @@ var actividadesTable = $("#actividades-table").DataTable({
         },
         {
             data:function (row,type,val,meta) {
-                return '<button type="button" class="btn btn-edit btn-xs btn-primary" data-url="" title="Editar"><i class="fa fa-edit"></i></button>'
-                    +'<button type="button" class="btn btn-detail btn-xs btn-primary"  data-url="" title="Permiso a cuadernos"><i class="fa fa-list-ul"></i></button>';
+                return '<button type="button" class="btn btn-edit btn-xs btn-primary" data-url="update/'+row.act_id+'" title="Editar"><i class="fa fa-edit"></i></button>';
             },
             orderable:false,
             searchable:false
@@ -38,7 +37,7 @@ var actividadesTable = $("#actividades-table").DataTable({
     ]
 });
 
-$("#actividades-table-table").on('draw.dt',function () {
+$("#actividades-table").on('draw.dt',function () {
     $(".btn-edit").off().on('click',handleEvent);
 });
 
@@ -54,6 +53,20 @@ function handleEvent(){
         },
         success:function (data) {
             $("#myModal").find(".box .box-body").html(data);
+            $("#act_nro, #act_nro_educativas_familia, #act_nro_comunidad, #act_nro_cai").TouchSpin({
+                verticalbuttons:true,
+                max:10000,
+                step:1
+            });
+            $("#act_nro_cai_os, #act_nro_comite_salud, #act_nro_supervision, #act_nro_auditoria, #act_nro_educativas_salud").TouchSpin({
+                verticalbuttons:true,
+                max:10000,
+                step:1
+            });
+            $("#act_fecha").datepicker({
+                'format':'dd/mm/yyyy',
+                language:'es',
+            });
         },
         complete:function () {
             $("#myModal").find(".overlay").remove();
@@ -62,7 +75,7 @@ function handleEvent(){
     $("#myModal").modal("show");
 }
 
-/*
+
 $("#btn-save").on("click",function(){
     var $form =$(this).closest(".modal-content").find(".modal-body form");
     $.ajax({
@@ -75,13 +88,13 @@ $("#btn-save").on("click",function(){
             $form.find("span.label").text("");
         },
         success:function(data){
-            usersTable.ajax.reload();
+            actividadesTable.ajax.reload();
             $("#myModal").modal('hide');
         },
         error:function(data) {
             var errors = data.responseJSON;
             $.each(errors,function(i,o){
-                $form.find("[name ^= '"+i+"']").closest(".col-sm-9").find("span.label").text(o);
+                $form.find("[name ^= '"+i+"']").closest(".form-group").find("span.label").text(o);
             });
         },
         complete:function () {
@@ -89,5 +102,3 @@ $("#btn-save").on("click",function(){
         }
     });
 });
-
-    */
