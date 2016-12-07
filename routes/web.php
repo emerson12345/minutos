@@ -48,13 +48,6 @@ $this->post('logout', 'Auth\LoginController@logout')->name('logout');
 $this->get('account_init','Auth\InitController@accountInit')->name('account.init');
 $this->post('account_init','Auth\InitController@accountInitPost')->name('account.init.post');
 
-
-Route::group(['prefix'=>'cuaderno','middleware'=>['auth','access','log']],function(){
-    Route::get('index','LibCuadernoController@index')->name('cuaderno.index');
-    Route::get('peticion/{id}','LibCuadernoController@peticion')->name('cuaderno.peticion');
-    Route::get('peticion_listas/{intIDColumna}','LibCuadernoController@peticionListas')->name('cuaderno.peticionListas');
-});
-
 /***Rutas de emerson ***/
 Route::group(['prefix'=>'institucion','middleware'=>['auth','access','log']],function(){
     Route::get('index','InstitucionController@index')->name('institucion.index');
@@ -82,6 +75,15 @@ Route::group(['prefix'=>'permiso','middleware'=>['auth','access','log']],functio
 });
 
 /***Rutas de percy***/
+Route::group(['prefix'=>'cuaderno','middleware'=>['auth','access','log']],function(){
+    Route::get('index','LibCuadernoController@index')->name('cuaderno.index');
+    Route::get('peticion/{id}','LibCuadernoController@peticion')->name('cuaderno.peticion');
+    Route::get('peticion_listas/{intIDColumna}','LibCuadernoController@peticionListas')->name('cuaderno.peticionListas');
+});
+
+
+
+
 Route::group(['prefix'=>'adm_cuaderno','middleware'=>['auth','access','log']],function(){
     Route::get('index','CuadernoController@index')->name('adm.cuaderno.index');
     Route::get('cuadernos','CuadernoController@cuadernos')->name('adm.cuaderno.list');
@@ -91,13 +93,31 @@ Route::group(['prefix'=>'adm_cuaderno','middleware'=>['auth','access','log']],fu
     Route::post('update/{cua_id}','CuadernoController@store')->name('adm.cuaderno.edit');
 });
 
+/**Registro de atención al paciente ***/
 Route::group(['prefix'=>'cuaderno','middleware'=>['auth','access','log']],function(){
     Route::get('index/{agenda_id?}','LibCuadernoController@index')->name('cuaderno.index');
     Route::get('peticion/{cua_id}/{pac_id}','LibCuadernoController@peticion')->name('cuaderno.peticion');
     Route::get('peticion_listas/{intIDColumna}/{for_id}/{col_tipo}','LibCuadernoController@peticionListas')->name('cuaderno.peticionListas');
     Route::get('detalle/{hc_id}/{cua_id}','LibCuadernoController@detalle')->name('cuaderno.detalle');
 });
+/* Rutas recivo recetario Percy*/
+Route::group(['prefix'=>'recibo_recetario','middleware'=>['auth','access','log']],function(){
+    Route::get('index','ReciboRecetarioController@index')->name('recibo_recetario.index');
+    Route::get('store/{ins_med_cod?}/{rec_indicaciones?}/{rec_cantidad?}/{rec_med_nombre?}','ReciboRecetarioController@store')->name('recibo_recetario.store');
+    Route::get('destroy/{rec_id}','ReciboRecetarioController@destroy')->name('recibo_recetario.destroy');
+    Route::post('edit','ReciboRecetarioController@edit')->name('recibo_recetario.edit');
+    Route::get('report/{rec_id}','ReciboRecetarioController@report')->name('recibo_recetario.report');
+});
+/* Rutas examen complementario*/
+Route::group(['prefix'=>'examen_complementario','middleware'=>['auth','access','log']],function(){
+    Route::get('index','PacienteHcComplementarioController@index')->name('examen_complementario.index');
+    Route::get('store/{ec_indicador}/{ec_resultado?}/{ec_solicitado?}','PacienteHcComplementarioController@store')->name('examen_complementario.store');
+    Route::get('destroy/{rec_id}','PacienteHcComplementarioController@destroy')->name('examen_complementario.destroy');
+    Route::post('edit','PacienteHcComplementarioController@edit')->name('examen_complementario.edit');
+    Route::get('report/{rec_id}','PacienteHcComplementarioController@report')->name('examen_complementario.report');
+});
 
+/****Historial clínico del paciente***/
 Route::group(['prefix'=>'PacienteHc','middleware'=>['auth','access','log']],function(){
     Route::get('index','PacienteHcController@index')->name('PacienteHc.index');
     Route::get('historial_clinico/{id}','PacienteHcController@registroHistoricoPaciente')->name('PacienteHc.registroHistoricoPaciente');
