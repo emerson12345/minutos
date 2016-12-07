@@ -100,12 +100,18 @@
                         var id = $(this).data('id');
                         var url = $(this).data('url');
                         var state = $(this).data('state');
-                        $.ajax({
-                            url:url,
-                            data:{agenda_id:id,agenda_estado:state,_token:"{{csrf_token()}}"},
-                            method:'post',
-                            complete:getEvents
-                        });
+                        var messageState = 'CANCELADO';
+                        if(state == 'N')
+                            messageState = 'NO ATENDIDO';
+                        var confirmar=confirm("¿Está seguro de marcar esta cita como '"+messageState+"'?");
+                        if(confirmar == true){
+                            $.ajax({
+                                url:url,
+                                data:{agenda_id:id,agenda_estado:state,_token:"{{csrf_token()}}"},
+                                method:'post',
+                                complete:getEvents
+                            });
+                        }
                     });
                 },
                 complete:function () {

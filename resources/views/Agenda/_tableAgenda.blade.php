@@ -16,7 +16,7 @@
         <td>{{$evento->agenda_descripcion}}</td>
         <td>
             @if($evento->agenda_estado == 'A')
-                <button data-id="{{$evento->agenda_id}}" data-state='T' data-url='{{route('agenda.change')}}' type="button" class="btn btn-change-state btn-xs btn-primary" title="Atendido"><i class="fa fa-check"></i></button>
+                <a href="{{route('cuaderno.index',['agenda_id'=>$evento->agenda_id])}}" class="btn btn-xs btn-primary" title="Atender"><i class="fa fa-check"></i></a>
                 <button data-id="{{$evento->agenda_id}}" data-state='N' data-url='{{route('agenda.change')}}' type="button" class="btn btn-change-state btn-xs btn-danger" title="No atendido"><i class="fa fa-close"></i></button>
                 <button data-id="{{$evento->agenda_id}}" data-state='C' data-url='{{route('agenda.change')}}' type="button" class="btn btn-change-state btn-xs btn-warning" title="Cancelado"><i class="fa fa-ban"></i></button>
             @else
