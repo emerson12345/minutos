@@ -327,7 +327,8 @@
             fila_seleccinable_instituciones_r=$(this);
 
         }
-        arr=e.toElement.id.split("-");
+        arr=e.target.id.split("-");
+        //alert(e.target.id);
         intIdPac=arr[0];
         strNombrePac=arr[1];
         $('#tb_referido_de_establecimeinto').val(strNombrePac);
@@ -357,7 +358,7 @@
             fila_seleccinable_instituciones_r=$(this);
 
         }
-        arr=e.toElement.id.split("-");
+        arr=e.target.id.split("-");
         intIdPac=arr[0];
         strNombrePac=arr[1];
         $('#tb_referido_a_establecimeinto').val(strNombrePac);
@@ -370,7 +371,7 @@
     var url_peticion_listas='{{$url_peticion_listas}}';
     //var url_data='http://127.0.0.1/SICEREP2/public/cuaderno/peticion_listas';
     $("a").on('click',function(e) {
-        data=e.toElement.id.split("-");
+        data=e.target.id.split("-");
         var col_id=data[0];
         var for_id=data[1];
         var col_tipo=data[2];

@@ -98,8 +98,8 @@
         console.log("lista generia show");
         console.log("id form "+form_id);
         console.log("lista generia show");
-        console.log("valor "+e.toElement.id.split("+")[1]);
-        $("#"+form_id).val(e.toElement.id.split("+")[1]);
+        console.log("valor "+e.target.id.split("+")[1]);
+        $("#"+form_id).val(e.target.id.split("+")[1]);
         $('#myModal-peticion-listas').modal('hide');
     });
 </script>

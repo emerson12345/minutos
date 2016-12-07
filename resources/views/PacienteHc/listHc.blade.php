@@ -35,7 +35,7 @@
 <script>
     var fila_seleccinable_hc;
     $("#t_Hc").on('click', 'td', function(e) {
-        var n=e.toElement.id.split("_");
+        var n=e.target.id.split("_");
         var cua_id=n[0];
         var pac_id=n[1];
         var hc_id=n[2];

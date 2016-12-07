@@ -166,12 +166,14 @@ class ReciboRecetarioController extends Controller
 
         $arr_tabla=DB::table("paciente_hc_receta")
                         ->where('paciente_hc_receta.hc_id','=',$hc_id)
-                        ->select("*")
+                        ->select(
+                            'ins_med_cod', 'rec_med_nombre', 'rec_indicaciones', 'rec_cantidad','rec_id as cod'
+                        )
                         ->get()
                         ->toArray();
 
-        $nombre_campos_form= array('Código', 'Medicamentos e inzumos', 'Indicaciones para el paciente', 'Cantidad');
-        $nombre_campos_tabla= array('ins_med_cod', 'rec_med_nombre', 'rec_indicaciones', 'rec_cantidad');
+        $nombre_campos_form= array('Código', 'Medicamentos e inzumos', 'Indicaciones para el paciente', 'Cantidad','cod');
+        $nombre_campos_tabla= array('ins_med_cod', 'rec_med_nombre', 'rec_indicaciones', 'rec_cantidad','cod');
 
 
 

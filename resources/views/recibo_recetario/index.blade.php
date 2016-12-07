@@ -168,7 +168,17 @@
     <script>
 
         var ins_med_cod="",rec_med_nombre="",rec_indicaciones="",rec_cantidad="";
-        $("#source").DataTable();
+        $("#source").DataTable(
+                {
+                    "columnDefs": [
+                        {
+                            "targets": [ 0 ],
+                            "visible": false,
+                            "searchable": true
+                        }
+                    ]
+                }
+        );
         $("#btn-recibo").on('click',function() {
          alert("Recibo");
         });
