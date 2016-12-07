@@ -228,7 +228,7 @@
         });
         var t_pacientes_id_search=false;
         $("#t_pacientes").on('click', 'td', function(e) {
-            t_pacientes_id_search=e.toElement.id;
+            t_pacientes_id_search=e.target.id;
             $("#AtenccionHc").html("");
                 if (typeof fila_seleccinable_pacientes == 'undefined') {
                     $(this).parent().addClass("tr-seleccionable");
@@ -245,7 +245,7 @@
                 {
                     console.log($("#PacienteHc").html("cargando..."));
                 },
-                url:url_data_hc+"/"+e.toElement.id,
+                url:url_data_hc+"/"+e.target.id,
                 type:"GET",
                 data:{nom:"xc"},
                 success: function(info){
@@ -274,7 +274,7 @@
                 fila_personal_search=$(this);
 
             }
-            arr=e.toElement.id.split("-");
+            arr=e.target.id.split("-");
             intIdPer=arr[0];
             strNombrePer=arr[1];
             $('#tb_personal_atencion').val(strNombrePer);

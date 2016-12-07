@@ -499,9 +499,6 @@ function bisiesto($anio_actual){
 @stop
 @section('script')
     <script>
-
-
-
         var url_data='{{$url_cuaderno}}';
         var url_cuaderno_peticion_hc ='{{$url_cuaderno_peticion_hc}}';
         var estado_agenda='{{$estadoAgenda}}';
@@ -515,21 +512,22 @@ function bisiesto($anio_actual){
         );
         /////////////////////////////////////////////////////
         $("#t_pacientes").on('click', 'td', function(e) {
-            arr=e.toElement.id.split("-");
+            //e.toElement.id
+            arr=e.target.id.split("-");
             intIdPac=arr[0];
             strNombrePac=arr[1];
             $('#tb_id_paciente').val(intIdPac);
             $('#tb_nombre_paciente').val(strNombrePac);
-            console.log(e.toElement.id);
+            console.log(e.target.id);
             $('#myModal_pacientes').modal('hide');
         });
         /*
 
          $("#t_pacientes").on('click', 'td', function(e) {
          console.log("dsfasdfdasf");
-         console.log(e.toElement.id);
+         console.log(e.target.id);
          console.log("dsfasdfdasf");
-         $("#pac_id").val(e.toElement.id);
+         $("#pac_id").val(e.target.id);
          $("#datos-paciente").html("<b>Paciente: </b> "+$(this).html());
          });*/
 
@@ -574,7 +572,7 @@ function bisiesto($anio_actual){
                 fila_seleccinable_cuadernos=$(this);
 
             }
-            arr=e.toElement.id.split("-");
+            arr=e.target.id.split("-");
             intIdPac=arr[0];
             strNombrePac=arr[1];
             $('#tb-cuadernos').val(strNombrePac);
@@ -599,7 +597,7 @@ function bisiesto($anio_actual){
                 fila_seleccinable_instituciones_r=$(this);
 
             }
-            arr=e.toElement.id.split("-");
+            arr=e.target.id.split("-");
             intIdPac=arr[0];
             strNombrePac=arr[1];
             $('#tb_referido_de_establecimeinto').val(strNombrePac);
@@ -625,7 +623,7 @@ function bisiesto($anio_actual){
                 fila_seleccinable_instituciones_r=$(this);
 
             }
-            arr=e.toElement.id.split("-");
+            arr=e.target.id.split("-");
             intIdPac=arr[0];
             strNombrePac=arr[1];
             $('#tb_referido_a_establecimeinto').val(strNombrePac);
@@ -636,7 +634,7 @@ function bisiesto($anio_actual){
         //////////////////////end instituciones////////////////////////////////////
         $("#t_Rrhh").on('click', 'td', function(e) {
             $("#datos-rhh").html("<b>Rhh: </b> "+$(this).html());
-            $("#rrhh_id").val(e.toElement.id);
+            $("#rrhh_id").val(e.target.id);
         });
         $("#tb_nombre_paciente").on('keypress', function(e){
             e.preventDefault();

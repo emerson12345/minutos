@@ -193,8 +193,7 @@
     alert("adsfasdfasfdda");
     var url_data='{{$url_cuaderno}}';
     $("a").on('click',function(e) {
-
-        data=e.toElement.id.split("-");
+        data=e.target.id.split("-");
         var col_id=data[0];
         var for_id=data[1];
         var col_tipo=data[2];

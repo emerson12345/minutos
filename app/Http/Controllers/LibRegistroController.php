@@ -171,13 +171,6 @@ class LibRegistroController extends Controller
         $fecha=$request->input('fecha');
         $url_data=asset('PacienteHc/index');
 
-
-
-
-        //echo $request->input('hc_consulta_nueva');
-
-
-
         $listFormularios=DB::table('lib_formulario')
             ->where('lib_formulario.cua_id','=',$cua_id)
             ->select('lib_formulario.for_id')
@@ -227,8 +220,13 @@ class LibRegistroController extends Controller
                 );
 
         }
+
         $mensaje="Datos actualizados correctamente";
         return view('genericas.mensaje',['url_data'=>$url_data,'mensaje'=>$mensaje]);
+
+        //$mensaje="Datos insertados correctamente";
+        //$urlreciboRecetario = asset('recibo_recetario/index');
+        //return view('genericas.mensaje_success',['url_data'=>$url_data,'mensaje'=>$mensaje,"urlreciboRecetario"=>$urlreciboRecetario]);
     }
     /**
      * Update the specified resource in storage.

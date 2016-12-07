@@ -73,6 +73,7 @@ class PacienteHcController extends Controller
                     ->select('lib_cuadernos.cua_nombre','paciente_hc.hc_fecha','paciente_hc.hc_id','paciente_hc.pac_id','lib_cuadernos.cua_id','institucion.inst_nombre')
                     ->distinct()
                     ->get();
+        //dd($id);
 
         return view('PacienteHc.listHc',['listPacienteHc' => $listPacienteHc])->with('url_hc', $url_hc);
     }
