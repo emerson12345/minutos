@@ -187,17 +187,17 @@
                                     @if(Auth::check())
                                     {{Auth::user()->user_nombre}}
                                     @endif
-                                    <small>Noviembre. 2016</small>
+                                    <small>{{\Carbon\Carbon::now()->format('d/m/Y')}}</small>
                                 </p>
                             </li>
                             <!-- Menu Body -->
                             <li class="user-body">
                                 <div class="row">
                                     <div class="pull-left text-center">
-                                        <a href="#">Ministerio</a>
+                                        <a href="https://www.minsalud.gob.bo/" title="Ministerio de salud" target="_blank">Ministerio</a>
                                     </div>
                                     <div class="pull-right text-center">
-                                        <a href="{{ url('/usuario/password') }}">Modificar contraseña</a>
+                                        <a href="{{ url('/usuario/password') }}" title="Modificar contraseña">Contraseña</a>
                                     </div>
                                 </div>
                                 <!-- /.row -->
