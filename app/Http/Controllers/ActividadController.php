@@ -71,6 +71,7 @@ class ActividadController extends Controller
         PDF::SetFillColor(200);
         PDF::SetFont("","B",10);
         PDF::SetY($y);
+        
         PDF::StartTransform();
         PDF::Rotate(90);
         PDF::Cell(60,21,'Nº de orden',1,2,'C',true);
