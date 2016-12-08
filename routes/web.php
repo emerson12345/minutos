@@ -229,3 +229,13 @@ Route::group(['prefix'=>'reporte','middleware'=>['auth','access','log']],functio
 /****De uso general para cargar cuadernos asignados a usuario***/
 Route::post('reporte/getCuadernos','ReporteAgendaController@getCuadernos')->name('reporte.agenda.cuadernos');
 
+/****Actividades del establecimiento***/
+Route::group(['prefix'=>'actividad','middleware'=>['auth','access','log']],function(){
+    Route::get('index','ActividadController@index')->name('actividad.index');
+    Route::get('actividades','ActividadController@actividades')->name('actividad.list');
+    Route::get('create','ActividadController@create')->name('actividad.create');
+    Route::post('create','ActividadController@store')->name('actividad.store');
+    Route::get('update/{act_id}','ActividadController@update')->name('actividad.update');
+    Route::post('update/{act_id}','ActividadController@store')->name('actividad.edit');
+    Route::get('report','ActividadController@report')->name('actividad.report');
+});
