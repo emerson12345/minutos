@@ -561,6 +561,11 @@ function bisiesto($anio_actual){
             $('#myModal_cuadernos').modal('show');
         });
         $("#table_cuadernos").on('click','td',function(e){
+            var tb_id_paciente;
+            if($("#tb_id_paciente").val()=="")
+                tb_id_paciente=-1;
+            else
+                tb_id_paciente=$("#tb_id_paciente").val();
             if (typeof fila_seleccinable_cuadernos == 'undefined') {
                 $(this).addClass("tr-seleccionable");
                 fila_seleccinable_cuadernos=$(this);
@@ -577,7 +582,7 @@ function bisiesto($anio_actual){
             strNombrePac=arr[1];
             $('#tb-cuadernos').val(strNombrePac);
             $('#myModal_cuadernos').modal('hide');
-            ajax_cuaderno2(url_cuaderno_peticion_hc,"#t_cuadernos","#cuaderno",'click',"GET",intIdPac,$('#tb_id_paciente').val());
+            ajax_cuaderno2(url_cuaderno_peticion_hc,"#t_cuadernos","#cuaderno",'click',"GET",intIdPac,tb_id_paciente);
         });
         //////////////////////end cuadernos////////////////////////////////////
         /////////////////////////instituciones///////////////////////////////////////////

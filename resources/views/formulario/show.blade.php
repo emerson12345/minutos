@@ -164,7 +164,7 @@
                                                 <div class="list-data">
                                                 <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
                                                 ';
-                            echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' class='tr-dimencion'>
+                            echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' class='tr-dimencion' readonly>
                                         </div>";
                         }
                         break;
@@ -175,7 +175,7 @@
                                                         <div class="list-data">
                                                         <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
                                                         ';
-                            echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."'>
+                            echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' readonly>
                                                 </div>";
                         }
                         break;
@@ -189,7 +189,7 @@
                                         <div class="list-data">
                                         <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
                                         </div>';
-                            echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' class='tr-dimencion'>";
+                            echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' class='tr-dimencion' readonly>";
                         }
                         break;
                     case 0:

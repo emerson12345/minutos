@@ -177,7 +177,7 @@ class PacienteHcComplementarioController extends Controller
     }
     public function  report_general($hc_com_id)
     {
-
+        /*
         $nombre_campos_form= array('Tipo de examen', 'Examen solicitado', 'Resultado','cod');
         $nombre_campos_tabla= array('exc_tip_nombre', 'hc_com_solicitud', 'hc_com_resultado','cod');
 
@@ -254,6 +254,68 @@ class PacienteHcComplementarioController extends Controller
 
         PDF::writeHTML(view('genericas.tabla',array('arr_tabla'=>$arr_tabla,'nombre_campos_form'=>$nombre_campos_form,'nombre_campos_tabla'=>$nombre_campos_tabla,'nombre_tabla'=>"examen_complementario"))->render(), true, false, true, false, '');
 
+        PDF::lastPage();
+        PDF::Output('recibo_recetario.pdf','D');*/
+
+        ////////////////////////////////////////////////////////////
+        $hc_id=DB::select('select max(hc_id) from paciente_hc')[0]->max;
+
+        //$arr_tabla=DB::select("select * from paciente_hc_receta");
+
+        $arr_tabla=DB::table("paciente_hc_complementario")
+            ->join("examenes_tipo","examenes_tipo.exc_tip_id","=","paciente_hc_complementario.exc_tip_id")
+            ->select("paciente_hc_complementario.hc_com_id as cod","paciente_hc_complementario.hc_id","examenes_tipo.exc_tip_nombre"
+                ,"paciente_hc_complementario.exc_tip_id","paciente_hc_complementario.hc_com_fecha","paciente_hc_complementario.hc_com_resultado"
+                ,"paciente_hc_complementario.hc_com_solicitud"
+            )
+            ->where("paciente_hc_complementario.hc_id","=",$hc_id)
+            ->get()
+            ->toArray();
+
+        $nombre_campos_form= array('Tipo de examen', 'Examen solicitado', 'Resultado','cod');
+        $nombre_campos_tabla= array('exc_tip_nombre', 'hc_com_solicitud', 'hc_com_resultado','cod');
+
+        $listDatosPaciente=DB::table('paciente')
+            ->join('paciente_hc','paciente_hc.pac_id','=','paciente.pac_id')
+            ->join('paciente_hc_complementario','paciente_hc.hc_id','=','paciente_hc_complementario.hc_id')
+            ->where('paciente_hc.hc_id','=',$hc_id)
+            ->select('paciente_hc_complementario.hc_com_fec_alta','paciente.pac_sexo','paciente.pac_ap_prim','paciente.pac_ap_seg','paciente.pac_nombre','paciente_hc.hc_id',
+                'paciente.pac_direccion')
+            ->first();
+
+        $y=50;
+        $x=16;
+        $sexo="Mujer";
+        if($listDatosPaciente->pac_sexo=="M")
+            $sexo="Hombre";
+        $dia=substr($listDatosPaciente->hc_com_fec_alta, 8,2);
+        $mes=substr($listDatosPaciente->hc_com_fec_alta, 5,2);
+        $anio=substr($listDatosPaciente->hc_com_fec_alta,0,4);
+
+        ReportTemplate::printHeaderFooter();
+        PDF::AddPage('P', 'Letter');
+        PDF::SetFont('','B');
+        ReportTemplate::printTitle('EXAMEN COMPLEMENTARIO');
+        PDF::SetFont('','');
+
+        PDF::Text($x,$y,'Paciente: '.$listDatosPaciente->pac_ap_prim." ".$listDatosPaciente->pac_ap_seg." ".$listDatosPaciente->pac_nombre);
+        $y=$y+5;
+        PDF::Text($x,$y,'Domicilio: '.$listDatosPaciente->pac_direccion);
+        $y=$y+5;
+        PDF::Text($x,$y,'Sexo: '.$sexo);
+        PDF::Text(120,49,'Historia Clinica: '.$listDatosPaciente->hc_id);
+        //PDF::Text(120,54,'Medico Responsable: '.Auth::user()->user_nombre);
+        PDF::Text(120,54,'Fecha de Consulta: '.$dia."/".$mes."/".$anio);
+        PDF::Image(asset('template/dist/img/minsalud-logo.jpg'), 25, 12, 0, 12, 'JPG', 'http://www.tcpdf.org', '', true, 150, 'R', false, false, 0, false, false, false);
+        PDF::SetTitle('My Report');
+        PDF::SetSubject('Reporte de sistema');
+        PDF::SetMargins(15, 50, 15);
+        PDF::SetFontSubsetting(false);
+        PDF::SetFontSize('10px');
+        PDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        //PDF::AddPage('P', 'Letter');
+
+        PDF::writeHTML(view('examen_complementario.reporte',array('arr_tabla'=>$arr_tabla,'nombre_campos_form'=>$nombre_campos_form,'nombre_campos_tabla'=>$nombre_campos_tabla,'nombre_tabla'=>"recibo_recetario"))->render(), true, false, true, false, '');
         PDF::lastPage();
         PDF::Output('recibo_recetario.pdf','D');
     }
