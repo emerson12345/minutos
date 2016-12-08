@@ -20,6 +20,7 @@ class ReporteAgendaController extends Controller
     }
 
     public function postInasistencia(Request $request){
+
         $inst_id = session()->has('institucion')?session('institucion')->inst_id:0;
         $user_id = $request->user_id?:0;
         $anio = $request->anio?:date('Y');
@@ -27,6 +28,7 @@ class ReporteAgendaController extends Controller
         $fecha_temp = Carbon::create($anio,$mes,1);
         $fecha_ini = $fecha_temp->startOfMonth()->format('d/m/Y');
         $fecha_fin = $fecha_temp->endOfMonth()->format('d/m/Y');
+
         $cuadernos = $request->cuaderno?:[];
         $reportDataTotal=['atend'=>0,'no_atend'=>0,'total'=>0];
         $reportData = [];
