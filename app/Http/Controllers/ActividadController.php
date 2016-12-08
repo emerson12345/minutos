@@ -68,6 +68,7 @@ class ActividadController extends Controller
         PDF::SetFont('','B');
         ReportTemplate::printTitle('ACTIVIDADES DEL SERVICIO DE REHABILITACION');
         $y = 105;
+        
         PDF::SetFillColor(200);
         PDF::SetFont("","B",10);
         PDF::SetY($y);
