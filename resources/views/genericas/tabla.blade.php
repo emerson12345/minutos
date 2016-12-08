@@ -13,6 +13,7 @@
             <div class="box">
                     <!-- /.box-header -->
                 <br>
+                <br>                <br>                <br>                <br>
                         <?php
                             if(isset($border))
                                 echo '<table class="table-condensed" id="tabla_'.$nombre_tabla.'">';

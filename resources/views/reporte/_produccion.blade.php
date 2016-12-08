@@ -1,30 +1,12 @@
 
 <?php
 $institucion = \Sicere\Models\Institucion::find($rep_institucion);
-PDF::SetY(28);
-PDF::SetFont('Helvetica','',8);
-if($institucion->departamento)
-    PDF::Cell(40,5,'SEDES '.$institucion->departamento->dep_nombre,0,0,'L',false,null,1);
-else
-    PDF::Cell(40,5,'SEDES',0,0,'L',false,null,1);
-if($institucion->area)
-    PDF::Cell(40,5,'RED: '.$institucion->area->area_nombre,0,0,'L',false,null,1);
-else
-    PDF::Cell(40,5,'RED: NE',0,0,'L',false,null,1);
-if($institucion->municipio)
-    PDF::Cell(40,5,'MUNICIPIO: '.$institucion->municipio->mun_nombre,0,0,'L',false,null,1);
-else
-    PDF::Cell(40,5,'MUNICIPIO: NE',0,0,'L',false,null,1);
-PDF::Cell(70,5,'ESTABLECIMIENTO: '.$institucion->inst_nombre,0,0,'L',false,null,1);
-PDF::Ln();
-PDF::SetFont('Helvetica','',11);
-PDF::Cell(0,5,'REPORTE DE PRODUCCION',0,1,'C');
-PDF::Cell(0,5,$fec_ini.' - '.$fec_fin,0,1,'C');
+
 PDF::SetDrawColor(128, 0, 0);
 PDF::SetLineWidth(0.2);
 PDF::SetFont('Helvetica','',9);
-$x = 92;
-$y = 45;
+$x = 100;
+$y = 50;
 PDF::setXY($x,$y);
 $header = ['De 0 a 4 años', 'De 5 a 9 años', 'De 10 a 20 años', 'De 21 a 59 años', '> 60 años'];
 foreach ($header as $i=>$h){
@@ -49,7 +31,7 @@ $totales = array_fill(0,21,0);
 if($cuadernos){
     foreach($cuadernos as $cua_id){
         $cuaderno = \Sicere\Models\LibCuaderno::find($cua_id);
-        PDF::Cell(67,5,$cuaderno->cua_nombre,'TBL',0,'L',true,null,1);
+        PDF::Cell(85,5,$cuaderno->cua_nombre,'TBL',0,'L',true,null,1);
         $edades = [ [0,4],[5,9],[10,20],[21,59],[60,200] ];
         $total = 0;
 
@@ -72,7 +54,7 @@ if($cuadernos){
     }
 }
 $subtotales[] = $totales[20];
-PDF::Cell(67,5,'Totales','TBL',0,'R',true,null,1);
+PDF::Cell(85,5,'Totales','TBL',0,'R',true,null,1);
 for($i = 0;$i<20;$i++)
     PDF::Cell(7.5,5,$totales[$i],'TB',0,'C',true,null,1);
 PDF::Cell(15,5,$totales[20],'TB',0,'C',true,null,1);

@@ -34,7 +34,7 @@
                     <div class="col-md-10">
                         <div class="box">
                             <div class="box-body" >
-                                Cargando....
+                                jdsfklajklds
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,6 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-5">
-                        <a href="{{route('agenda.agenda')}}" class="btn btn-default" ><i class="btn btn-success"></i> Detalles</a>
                 </div>
                 <div class="col-md-4">
                     <!--- Fecha -->
@@ -69,13 +68,12 @@
                 <div class="col-md-3">
                     <input type="button" value="Imprimir Agenda semanal" id="btn_imprimir_agenda" class="btn btn-success">
                 </div>
-
             </div>
         </div>
     </div>
         <div class="panel panel-default">
             <!-- Content Header (Page header) -->
-            <div class="panel-heading"><h2> Agenda de citas</h2></div>
+            <div class="panel-heading"><h2> Calendario   </h2>  </div>
             <div class="panel-body">
                 <!-- Main content -->
                 <section class="content">
@@ -138,8 +136,6 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-
-    <input type="hidden" id="url_agenda_cuaderno" value={{asset("cuaderno/index/")}}>
 
         @stop
         @section('script')
@@ -343,9 +339,7 @@
 
                             crsfToken = document.getElementsByName("_token")[0].value;
                             //alert(event.id);
-                            //jhhhh
-                            window.location=$("#url_agenda_cuaderno").val()+"/"+event.id;
-                                    //"http://localhost/SICEREP6/public/cuaderno/index/"+event.id;
+                            window.location="http://localhost/SICEREP6/public/cuaderno/index/"+event.id;
                             //var con=confirm("Esta seguro que desea eliminar el evento");
                             //if(con){
                                 /*

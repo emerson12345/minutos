@@ -143,7 +143,7 @@ class NotificationFake implements NotificationFactory
         }
 
         foreach ($notifiables as $notifiable) {
-            $notification->id = Uuid::uuid4()->toString();
+            $notification->id = (string) Uuid::uuid4();
 
             $this->notifications[get_class($notifiable)][$notifiable->getKey()][get_class($notification)][] = [
                 'notification' => $notification,

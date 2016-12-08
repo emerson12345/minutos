@@ -163,11 +163,13 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
             return;
         }
 
-        if ($this->user()) {
-            return $this->user()->getAuthIdentifier();
+        $id = $this->session->get($this->getName());
+
+        if (is_null($id) && $this->user()) {
+            $id = $this->user()->getAuthIdentifier();
         }
 
-        return $this->session->get($this->getName());
+        return $id;
     }
 
     /**

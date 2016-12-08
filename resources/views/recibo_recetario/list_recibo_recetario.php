@@ -1,26 +1,8 @@
 <style>
-    .tr-cuadernos:hover
-    {
-        background-color: #1abc9c;
-        cursor: pointer;
-    }
-    .tr-seleccionable{
-        background-color: #e74c3c;
-    }
-    .tr-dimencion{
-        width: 15px;
-    }
-    .td-dimencion{
-        width: 15px;
-    }
     .dimension{
         height: 250px;
         overflow-x:hidden;
         overflow-y:hidden;
-    }
-    input[type=text]
-    {
-        width:70px;
     }
 </style>
 <div class="box box-primary box-solid">
@@ -30,9 +12,8 @@
             <table id="source" class="table table-bordered table-hover dimension">
                 <thead>
                 <tr>
-                    <th class="tr-dimencion">Código</th>
-                    <th class="tr-dimencion">Medicamentos e insumos</th>
-                    <th class="tr-dimencion">Indicadores para el usuario</th>
+                    <th class="tr-dimencion">Producto</th>
+                    <th class="tr-dimencion">Indicadores</th>
                     <th class="tr-dimencion">Cantidad</th>
                     <th class="tr-dimencion"></th>
                 </tr>
@@ -42,10 +23,7 @@
                 foreach ($listPacienteHcReceta as $value) {
                     ?>
                     <tr role="row" id="<?= $value->rec_id; ?>">
-                        <td  class="tr-cuadernos tr-dimencion">
-                            <?= $value->ins_med_cod; ?>
-                        </td>
-                        <td class="tr-cuadernos tr-dimencion">
+                         <td class="tr-cuadernos tr-dimencion">
                             <?= $value->rec_med_nombre; ?>
                         </td>
                         <td class="tr-cuadernos tr-dimencion">

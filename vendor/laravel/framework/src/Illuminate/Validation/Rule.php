@@ -2,12 +2,8 @@
 
 namespace Illuminate\Validation;
 
-use Illuminate\Support\Traits\Macroable;
-
 class Rule
 {
-    use Macroable;
-
     /**
      * Get a dimensions constraint builder instance.
      *
@@ -46,7 +42,7 @@ class Rule
      * Get a not_in constraint builder instance.
      *
      * @param  array  $values
-     * @return \Illuminate\Validation\Rules\NotIn
+     * @return \Illuminate\Validation\Rules\In
      */
     public static function notIn(array $values)
     {

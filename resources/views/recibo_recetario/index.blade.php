@@ -23,108 +23,91 @@
 
 @section('content')
 
-    <style>
-        .tr-cuadernos:hover
-        {
-            background-color: #1abc9c;
-            cursor: pointer;
-        }
-        .tr-seleccionable{
-            background-color: #e74c3c;
-        }
-        .tr-dimencion{
-            width: 15px;
-        }
-        .td-dimencion{
-            width: 15px;
-        }
-        .dimension{
-            height: 250px;
-            overflow-x:hidden;
-            overflow-y:hidden;
-        }
-        input[type=text]
-        {
-            width:70px;
-        }
-    </style>
-  <div class="col-md-7">
-    <section class="content">
-        <h3>Recibo Recetario</h3>
-        <a href="report/1">imprimir</a>
-        <div class="box box-primary box-solid">
-            <div class="box-body">
-                <div class="table-responsive dimension">
+<style>
+    .dimension{
+    height: 250px;
+    overflow-x:hidden;
+    overflow-y:hidden;
+    }
+</style>
 
-                    <table id="source" class="table table-bordered table-hover dimension">
-                        <thead>
-                        <tr>
-                            <th class="tr-dimencion">Código</th>
-                            <th class="tr-dimencion">Medicamentos e insumos</th>
-                            <th class="tr-dimencion">Indicaciones para el paciente</th>
-                            <th class="tr-dimencion">Cantidad</th>
-                            <th class="tr-dimencion"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr role="row">
-                            <td  class="tr-dimencion">
-                                0
-                            </td>
-                            <td class="tr-dimencion">
-                                <input type="text" name="indicadores_para_el_uso" required>
-                            </td>
-                            <td class="tr-dimencion">
-                                <input type="text" name="indicadores_para_el_uso" required>
-                            </td>
-                            <td class="tr-dimencion">
-                                <input type="number" name="cantidad">
-                            </td>
-                            <td class="tr-dimencion">
-                                <input type="button" class="reciboRecetario btn btn-primary btn-xs" value="Agregar">
-                                <!--
-                                <button class="btn btn-primary btn-xs" id="btn-reciboRecetario">
-                                    Agregar
-                                </button> -->
-                            </td>
-                        </tr>
-                        <?php
-                        foreach ($listFormularios as $value) {
-                        ?>
-                        <tr role="row">
-                            <td  class="tr-dimencion">
-                                <?= $value->lis_codigo; ?>
-                            </td>
-                            <td class="tr-dimencion">
-                                <?= $value->lis_descripcion; ?>
-                            </td>
-                            <td class="tr-dimencion">
-                                <input type="text" name="indicadores_para_el_uso" required>
-                            </td>
-                            <td class="tr-dimencion">
-                                <input type="number" name="cantidad">
-                            </td>
-                            <td class="tr-dimencion">
-                                <input type="button" class="reciboRecetario btn btn-primary btn-xs" value="Agregar">
-                                <!--
-                                <button class="btn btn-primary btn-xs" id="btn-reciboRecetario">
-                                    Agregar
-                                </button> -->
-                            </td>
-                        </tr>
-                        <?php
-                        }
-                        ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.box -->
-    </section><!-- /.box body -->
-    <div id="Resultado">
+    <div class="col-md-7">
+        <section class="content">
+            <h3>Recibo Recetario</h3>
+            <a href="report/1">imprimir</a>
+            <div class="box box-primary box-solid">
+                <div class="box-body">
+                    <div class="table-responsive dimension">
 
+                        <table id="source" class="table table-bordered table-hover dimension">
+                            <thead>
+                            <tr>
+                                <th class="tr-dimencion">Código</th>
+                                <th class="tr-dimencion">Producto</th>
+                                <th class="tr-dimencion">Indicaciones</th>
+                                <th class="tr-cantidad">Cantidad</th>
+                                <th class="tr-dimencion"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr role="row">
+                                <td  class="tr-dimencion">
+                                    0
+                                </td>
+                                <td class="tr-dimencion">
+                                    <input type="text" name="indicadores_para_el_uso" required>
+                                </td>
+                                <td class="tr-dimencion">
+                                    <input type="text" name="indicadores_para_el_uso" required>
+                                </td>
+                                <td class="tr-cantidad">
+                                    <input type="number" name="cantidad" class="tr-cantidad">
+                                </td>
+                                <td class="tr-dimencion">
+                                    <input type="button" class="reciboRecetario btn btn-primary btn-xs" value="Agregar">
+                                    <!--
+                                    <button class="btn btn-primary btn-xs" id="btn-reciboRecetario">
+                                        Agregar
+                                    </button> -->
+                                </td>
+                            </tr>
+                            <?php
+                            foreach ($listFormularios as $value) {
+                            ?>
+                            <tr role="row">
+                                <td  class="tr-dimencion" id="0">
+                                    <?= $value->lis_codigo; ?>
+                                </td>
+                                <td class="tr-dimencion">
+                                    <?= $value->lis_descripcion; ?>
+                                </td>
+                                <td class="tr-dimencion">
+                                    <input type="text" name="indicadores_para_el_uso" class="seleccionado">
+                                </td>
+                                <td class="tr-cantidad">
+                                    <input type="number" name="cantidad" class="tr-cantidad">
+                                </td>
+                                <td class="tr-dimencion">
+                                    <input type="button" class="reciboRecetario btn btn-primary btn-xs" value="Agregar">
+                                    <!--
+                                    <button class="btn btn-primary btn-xs" id="btn-reciboRecetario">
+                                        Agregar
+                                    </button> -->
+                                </td>
+                            </tr>
+                            <?php
+                            }
+                            ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.box -->
+        </section><!-- /.box body -->
+        <div id="Resultado">
+
+        </div>
     </div>
-  </div>
     <div class="col-md-5">
         <section class="content">
             <h3>Examen Complementario</h3>
@@ -168,42 +151,65 @@
     <script>
 
         var ins_med_cod="",rec_med_nombre="",rec_indicaciones="",rec_cantidad="";
-        $("#source").DataTable(
+        $("#source").DataTable({
+            "lengthMenu": [[3, 25, 50, -1], [3, 25, 50, "All"]],
+            "columnDefs": [
                 {
-                    "columnDefs": [
-                        {
-                            "targets": [ 0 ],
-                            "visible": false,
-                            "searchable": true
-                        }
-                    ]
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": true
+                },
+                {
+                    "width": "40%",
+                    "targets": [1],
+                    "visible": true,
+                    "searchable": true
+                },
+                {
+                    "width": "40%",
+                    "targets": [2],
+                    "visible": true,
+                    "searchable": true
+                },
+                {
+                    "width": "10%",
+                    "targets": [4],
+                    "visible": true,
+                    "searchable": false
+                },
+                {
+                    "width": "10%",
+                    "targets": [3],
+                    "visible": true,
+                    "searchable": true
                 }
-        );
-        $("#btn-recibo").on('click',function() {
-         alert("Recibo");
+            ]
         });
-        $("#source").on('click', '.reciboRecetario', function(e) {
-            var x=0;
+        $("#btn-recibo").on('click',function() {
+            alert("Recibo");
+        });
+        $("#source").on('click', '.reciboRecetario', function(e){
+            var x=1;
             $(this).parents("tr").find("td").each(function(){
-                switch(x) {
-                    case 0:
-                        ins_med_cod = $(this).html().trim();
-                        if(ins_med_cod=="")
-                            ins_med_cod=-1;
-                        break;
+                switch(x){
+                    /*
+                     case 0:
+                     ins_med_cod = $(this).html().trim();
+                     if(ins_med_cod=="")
+                     ins_med_cod=-1;
+                     break;*/
                     case 1:
-                        if (ins_med_cod == 0) {
-                            rec_med_nombre = $(this).find("input").val().trim();
-                            if(rec_med_nombre=="")
-                                rec_med_nombre=-1;
-                            $(this).find("input").val("");
-                        }
-                        else {
+                        //console.log($(this).find("textarea"));
+                        //console.log($(this).children("textarea").val());
+                        if($(this).find("input").is("input"))
+                            rec_med_nombre=$(this).find("input").val();
+                        else
+                        {
                             rec_med_nombre = $(this).html().trim();
                             if(rec_med_nombre=="")
                                 rec_med_nombre=-1;
-                            //alert($(this).checkValidity());
                         }
+                        $(this).find("input").val("");
                         break;
                     case 2:
                         rec_indicaciones=$(this).find("input").val().trim();
@@ -221,8 +227,8 @@
                 x=x+1;
             });
             var urlReciboRecetario='{{$urlreciboRecetario}}';
+            ins_med_cod="B";
             ajaxGET("#Resultado",urlReciboRecetario+'/'+ins_med_cod+"/"+rec_indicaciones+"/"+rec_cantidad+"/"+rec_med_nombre);
-
         });
         $("#btn_ec").on('click',function(e)
         {

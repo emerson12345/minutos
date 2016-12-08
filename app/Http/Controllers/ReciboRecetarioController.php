@@ -12,6 +12,7 @@ use Sicere\Models\Paciente;
 use Sicere\Models\PacienteHc;
 use Sicere\Models\PacienteHcReceta;
 use PDF;
+use Sicere\Models\ReportTemplate;
 
 class ReciboRecetarioController extends Controller
 {
@@ -73,7 +74,7 @@ class ReciboRecetarioController extends Controller
         $hc_id=DB::select('select max(hc_id) from paciente_hc')[0]->max;
 
         $countPacienteHcReceta=DB::table('paciente_hc_receta')
-            ->where('paciente_hc_receta.ins_med_cod','=',$ins_med_cod)
+            ->where('paciente_hc_receta.rec_med_nombre','=',$rec_med_nombre)
             ->where('paciente_hc_receta.ins_med_cod','!=','0')
             ->where('paciente_hc_receta.hc_id','=',$hc_id)
             ->count();
@@ -92,9 +93,6 @@ class ReciboRecetarioController extends Controller
                     ]
                 );
             }
-        }
-        else{
-
         }
         $listPacienteHcReceta=DB::table('paciente_hc_receta')
             ->where('paciente_hc_receta.hc_id','=',$hc_id)
@@ -159,10 +157,7 @@ class ReciboRecetarioController extends Controller
     }
     public function  report($rec_id)
     {
-
         $hc_id=DB::select('select max(hc_id) from paciente_hc')[0]->max;
-
-        //$arr_tabla=DB::select("select * from paciente_hc_receta");
 
         $arr_tabla=DB::table("paciente_hc_receta")
                         ->where('paciente_hc_receta.hc_id','=',$hc_id)
@@ -172,79 +167,51 @@ class ReciboRecetarioController extends Controller
                         ->get()
                         ->toArray();
 
-        $nombre_campos_form= array('Código', 'Medicamentos e inzumos', 'Indicaciones para el paciente', 'Cantidad','cod');
-        $nombre_campos_tabla= array('ins_med_cod', 'rec_med_nombre', 'rec_indicaciones', 'rec_cantidad','cod');
-
-
-
-        /*
-        PDF::setHeaderCallback(function($pdf) {
-            $pdf->Cell(0, 27, '', 'B', false, 'R', 0, '', 0, false, 'T', 'M');
-            $pdf->Image(asset('template/dist/img/bolivia.gif'), 15, 10, 0, 15, 'GIF', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
-            $pdf->SetFont('helvetica', 'B', 11);
-            $pdf->Text(33,22,'Sistema de centros de rehabilitación','R');
-            $pdf->SetFont('helvetica', 'K', 10);
-            $pdf->Text(15,27,'Establecimiento: '.session('institucion')->inst_nombre);
-            $pdf->Image(asset('template/dist/img/minsalud-logo.jpg'), 25, 12, 0, 12, 'JPG', 'http://www.tcpdf.org', '', true, 150, 'R', false, false, 0, false, false, false);
-        });*/
-
+        $nombre_campos_form= array('Producto', 'Indicación', 'Cantidad');
+        $nombre_campos_tabla= array('rec_med_nombre', 'rec_indicaciones', 'rec_cantidad');
 
         $listDatosPaciente=DB::table('paciente')
             ->join('paciente_hc','paciente_hc.pac_id','=','paciente.pac_id')
+            ->join('paciente_hc_receta','paciente_hc_receta.hc_id','=','paciente_hc.hc_id')
             ->where('paciente_hc.hc_id','=',$hc_id)
-            ->select('paciente.pac_ap_prim','paciente.pac_ap_seg','paciente.pac_nombre','paciente_hc.hc_id',
+            ->select('paciente_hc_receta.rec_fec_alta','paciente.pac_ap_prim','paciente.pac_sexo','paciente.pac_ap_seg','paciente.pac_nombre','paciente_hc.hc_id',
                 'paciente.pac_direccion')
             ->first();
 
-        $listLugar=DB::table('usuario_institucion')
-            ->join('institucion','institucion.inst_id','=','usuario_institucion.inst_id')
-            ->join('lugar_municipio','lugar_municipio.mun_id','=','institucion.mun_id')
-            ->where('user_id','=',Auth::user()->user_id)
-            ->where('inst_nombre','=',session('institucion')->inst_nombre)
-            ->select('lugar_municipio.mun_nombre')
-            ->first();
+        $y=50;
+        $x=16;
 
-        //echo $listDatosPaciente->pac_direccion;
+        $sexo="Mujer";
+        if($listDatosPaciente->pac_sexo=="M")
+            $sexo="Hombre";
+        $dia=substr($listDatosPaciente->rec_fec_alta, 8,2);
+        $mes=substr($listDatosPaciente->rec_fec_alta, 5,2);
+        $anio=substr($listDatosPaciente->rec_fec_alta,0,4);
 
+        ReportTemplate::printHeaderFooter();
+        PDF::AddPage('P', 'Letter');
+        PDF::SetFont('','B');
+        ReportTemplate::printTitle('RECIBO RECETARIO');
+        PDF::SetFont('','');
 
-        PDF::setHeaderCallback(function($pdf) use($listDatosPaciente,$listLugar) {
-            $pdf->Cell(0, 27, '', 'B', false, 'R', 0, '', 0, false, 'T', 'M');
-            $pdf->Image(asset('template/dist/img/bolivia.gif'), 15, 10, 0, 15, 'GIF', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
-            $pdf->SetFont('helvetica', 'B', 11);
-            $pdf->Text(33,22,'Sistema de centros de rehabilitación','R');
-            $pdf->SetFont('helvetica', 'K', 10);
-
-            $pdf->Text(80,31,'RECIBO RECETARIO');
-
-            $pdf->Text(15,41,'Municipio:'.$listLugar->mun_nombre);
-            $pdf->Text(15,46,'Establecimiento: '.session('institucion')->inst_nombre);
-            $pdf->Text(15,51,'Nombres y Apellidos:'.$listDatosPaciente->pac_ap_prim." ".$listDatosPaciente->pac_ap_seg." ".$listDatosPaciente->pac_nombre);
-            $pdf->Text(15,56,'Domicilio:'.$listDatosPaciente->pac_direccion);
-            $pdf->Text(120,41,'Historia Clinica:'.$listDatosPaciente->hc_id);
-            $pdf->Image(asset('template/dist/img/minsalud-logo.jpg'), 25, 12, 0, 12, 'JPG', 'http://www.tcpdf.org', '', true, 150, 'R', false, false, 0, false, false, false);
-        });
-
-
-
-
-        PDF::setFooterCallback(function($pdf) {
-            $strCodSeguridad=session('institucion')->inst_codigo . '|' . session('institucion')->inst_nombre .'|' . Auth::user()->user_id;
-            $pdf->SetY(-15);
-            $pdf->SetFont('helvetica', 'I', 8);
-            $pdf->Cell(0, 10, 'Pagina '.$pdf->getAliasNumPage().'/'.$pdf->getAliasNbPages(), 'T', false, 'R', 0, '', 0, false, 'T', 'M');
-            //$pdf->write2DBarcode(bcrypt('Mi super codigo'), 'PDF417', 25, 275, 150, 6, null, 'N',true);
-            $pdf->write2DBarcode($strCodSeguridad, 'PDF417', 25, 275, 150, 6, null, 'N',true);
-        });
+        PDF::Text($x,$y,'Paciente: '.$listDatosPaciente->pac_ap_prim." ".$listDatosPaciente->pac_ap_seg." ".$listDatosPaciente->pac_nombre);
+        $y=$y+5;
+        PDF::Text($x,$y,'Domicilio: '.$listDatosPaciente->pac_direccion);
+        $y=$y+5;
+        PDF::Text($x,$y,'Sexo: '.$sexo);
+        PDF::Text(120,49,'Historia Clinica: '.$listDatosPaciente->hc_id);
+        //PDF::Text(120,54,'Medico Responsable: '.Auth::user()->user_nombre);
+        PDF::Text(120,54,'Fecha de Consulta: '.$dia."/".$mes."/".$anio);
+        PDF::Image(asset('template/dist/img/minsalud-logo.jpg'), 25, 12, 0, 12, 'JPG', 'http://www.tcpdf.org', '', true, 150, 'R', false, false, 0, false, false, false);
         PDF::SetTitle('My Report');
         PDF::SetSubject('Reporte de sistema');
         PDF::SetMargins(15, 50, 15);
         PDF::SetFontSubsetting(false);
         PDF::SetFontSize('10px');
         PDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-        PDF::AddPage('P', 'Letter');
+        //PDF::AddPage('P', 'Letter');
 
-        PDF::writeHTML(view('genericas.tabla',array('arr_tabla'=>$arr_tabla,'nombre_campos_form'=>$nombre_campos_form,'nombre_campos_tabla'=>$nombre_campos_tabla,'nombre_tabla'=>"recibo_recetario"))->render(), true, false, true, false, '');
-
+        PDF::writeHTML(view('recibo_recetario.reporte',array('arr_tabla'=>$arr_tabla,'nombre_campos_form'=>$nombre_campos_form,'nombre_campos_tabla'=>$nombre_campos_tabla,'nombre_tabla'=>"recibo_recetario"))->render(), true, false, true, false, '');
         PDF::lastPage();
         PDF::Output('recibo_recetario.pdf','D');
     }

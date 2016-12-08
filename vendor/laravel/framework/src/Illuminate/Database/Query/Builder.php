@@ -1807,17 +1807,9 @@ class Builder
      */
     public function chunk($count, callable $callback)
     {
-        $page = 1;
+        $results = $this->forPage($page = 1, $count)->get();
 
-        do {
-            $results = $this->forPage($page, $count)->get();
-
-            $countResults = $results->count();
-
-            if ($countResults == 0) {
-                break;
-            }
-
+        while (! $results->isEmpty()) {
             // On each chunk result set, we will pass them to the callback and then let the
             // developer take care of everything within the callback, which allows us to
             // keep the memory low for spinning through large result sets for working.
@@ -1826,7 +1818,9 @@ class Builder
             }
 
             $page++;
-        } while ($countResults == $count);
+
+            $results = $this->forPage($page, $count)->get();
+        }
 
         return true;
     }
@@ -1842,25 +1836,21 @@ class Builder
      */
     public function chunkById($count, callable $callback, $column = 'id', $alias = null)
     {
+        $lastId = null;
+
         $alias = $alias ?: $column;
 
-        $lastId = 0;
+        $results = $this->forPageAfterId($count, 0, $column)->get();
 
-        do {
-            $results = $this->forPageAfterId($count, $lastId, $column)->get();
-
-            $countResults = $results->count();
-
-            if ($countResults == 0) {
-                break;
-            }
-
+        while (! $results->isEmpty()) {
             if (call_user_func($callback, $results) === false) {
                 return false;
             }
 
             $lastId = $results->last()->{$alias};
-        } while ($countResults == $count);
+
+            $results = $this->forPageAfterId($count, $lastId, $column)->get();
+        }
 
         return true;
     }
@@ -1876,7 +1866,7 @@ class Builder
      */
     public function each(callable $callback, $count = 1000)
     {
-        if (empty($this->orders) && empty($this->unionOrders)) {
+        if (is_null($this->orders) && is_null($this->unionOrders)) {
             throw new RuntimeException('You must specify an orderBy clause when using the "each" function.');
         }
 
@@ -2160,10 +2150,12 @@ class Builder
      */
     public function update(array $values)
     {
+        $bindings = array_values(array_merge($values, $this->getBindings()));
+
         $sql = $this->grammar->compileUpdate($this, $values);
 
         return $this->connection->update($sql, $this->cleanBindings(
-            $this->grammar->prepareBindingsForUpdate($this->bindings, $values)
+            $this->grammar->prepareBindingsForUpdate($bindings, $values)
         ));
     }
 

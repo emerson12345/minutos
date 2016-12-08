@@ -113,7 +113,7 @@
 
 
 
-<div class="container-fluid well" style="bottom: 0; position: absolute; margin: 0;padding: 10px; width: 100%;text-align: center">
+<div class="container-fluid well footer navbar-fixed-bottom" style="margin: 0;padding: 10px; width: 100%;text-align: center">
     <strong>Copyright ©</a>.</strong> Todos los derechos reservados
 </div>
 </body>

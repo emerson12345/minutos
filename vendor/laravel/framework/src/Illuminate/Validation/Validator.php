@@ -6,7 +6,6 @@ use Closure;
 use DateTime;
 use Countable;
 use Exception;
-use Throwable;
 use DateTimeZone;
 use RuntimeException;
 use DateTimeInterface;
@@ -65,6 +64,13 @@ class Validator implements ValidatorContract
      * @var array
      */
     protected $data;
+
+    /**
+     * The files under validation.
+     *
+     * @var array
+     */
+    protected $files = [];
 
     /**
      * The initial rules provided.
@@ -198,7 +204,7 @@ class Validator implements ValidatorContract
         $this->translator = $translator;
         $this->customMessages = $messages;
         $this->customAttributes = $customAttributes;
-        $this->data = $this->parseData($data);
+        $this->data = $this->hydrateFiles($this->parseData($data));
 
         $this->setRules($rules);
     }
@@ -226,6 +232,38 @@ class Validator implements ValidatorContract
         }
 
         return $newData;
+    }
+
+    /**
+     * Hydrate the files array.
+     *
+     * @param  array   $data
+     * @param  string  $arrayKey
+     * @return array
+     */
+    protected function hydrateFiles(array $data, $arrayKey = null)
+    {
+        if (is_null($arrayKey)) {
+            $this->files = [];
+        }
+
+        foreach ($data as $key => $value) {
+            $newKey = $arrayKey ? "$arrayKey.$key" : $key;
+
+            // If this value is an instance of the HttpFoundation File class we will
+            // remove it from the data array and add it to the files array, which
+            // we use to conveniently separate out these files from other data.
+            if ($value instanceof File) {
+                $this->files[$newKey] = $value;
+
+                unset($data[$key]);
+            } elseif (is_array($value) && ! empty($value) &&
+                      empty($this->hydrateFiles($value, $newKey))) {
+                unset($data[$key]);
+            }
+        }
+
+        return $data;
     }
 
     /**
@@ -304,7 +342,9 @@ class Validator implements ValidatorContract
      */
     public function each($attribute, $rules)
     {
-        $data = Arr::dot($this->initializeAttributeOnData($attribute));
+        $data = array_merge(
+            Arr::dot($this->initializeAttributeOnData($attribute)), $this->files
+        );
 
         $pattern = str_replace('\*', '[^\.]+', preg_quote($attribute));
 
@@ -575,7 +615,11 @@ class Validator implements ValidatorContract
      */
     protected function getValue($attribute)
     {
-        return Arr::get($this->data, $attribute);
+        if (! is_null($value = Arr::get($this->data, $attribute))) {
+            return $value;
+        } elseif (! is_null($value = Arr::get($this->files, $attribute))) {
+            return $value;
+        }
     }
 
     /**
@@ -621,7 +665,8 @@ class Validator implements ValidatorContract
     {
         if ($this->hasRule($attribute, ['Sometimes'])) {
             return array_key_exists($attribute, Arr::dot($this->data))
-                || in_array($attribute, array_keys($this->data));
+                || in_array($attribute, array_keys($this->data))
+                || array_key_exists($attribute, $this->files);
         }
 
         return true;
@@ -793,7 +838,7 @@ class Validator implements ValidatorContract
      */
     protected function validatePresent($attribute, $value)
     {
-        return Arr::has($this->data, $attribute);
+        return Arr::has(array_merge($this->data, $this->files), $attribute);
     }
 
     /**
@@ -805,7 +850,7 @@ class Validator implements ValidatorContract
      */
     protected function validateFilled($attribute, $value)
     {
-        if (Arr::has($this->data, $attribute)) {
+        if (Arr::has(array_merge($this->data, $this->files), $attribute)) {
             return $this->validateRequired($attribute, $value);
         }
 
@@ -981,7 +1026,7 @@ class Validator implements ValidatorContract
         $count = 0;
 
         foreach ($attributes as $key) {
-            if (Arr::get($this->data, $key)) {
+            if (Arr::get($this->data, $key) || Arr::get($this->files, $key)) {
                 $count++;
             }
         }
@@ -1610,11 +1655,7 @@ class Validator implements ValidatorContract
         }
 
         if ($url = parse_url($value, PHP_URL_HOST)) {
-            try {
-                return count(dns_get_record($url, DNS_A | DNS_AAAA)) > 0;
-            } catch (Exception $e) {
-                return false;
-            }
+            return count(dns_get_record($url, DNS_A | DNS_AAAA)) > 0;
         }
 
         return false;
@@ -1977,8 +2018,6 @@ class Validator implements ValidatorContract
             new DateTimeZone($value);
         } catch (Exception $e) {
             return false;
-        } catch (Throwable $e) {
-            return false;
         }
 
         return true;
@@ -2149,7 +2188,7 @@ class Validator implements ValidatorContract
             return 'numeric';
         } elseif ($this->hasRule($attribute, ['Array'])) {
             return 'array';
-        } elseif ($this->getValue($attribute) instanceof UploadedFile) {
+        } elseif (array_key_exists($attribute, $this->files)) {
             return 'file';
         }
 
@@ -2619,7 +2658,7 @@ class Validator implements ValidatorContract
      */
     public function attributes()
     {
-        return $this->data;
+        return array_merge($this->data, $this->files);
     }
 
     /**
@@ -2793,7 +2832,7 @@ class Validator implements ValidatorContract
      */
     protected function getExplicitKeys($attribute)
     {
-        $pattern = str_replace('\*', '([^\.]+)', preg_quote($this->getPrimaryAttribute($attribute), '/'));
+        $pattern = str_replace('\*', '([^\.]+)', preg_quote($this->getPrimaryAttribute($attribute)));
 
         if (preg_match('/^'.$pattern.'/', $attribute, $keys)) {
             array_shift($keys);
@@ -3051,6 +3090,29 @@ class Validator implements ValidatorContract
     public function setValueNames(array $values)
     {
         $this->customValues = $values;
+
+        return $this;
+    }
+
+    /**
+     * Get the files under validation.
+     *
+     * @return array
+     */
+    public function getFiles()
+    {
+        return $this->files;
+    }
+
+    /**
+     * Set the files under validation.
+     *
+     * @param  array  $files
+     * @return $this
+     */
+    public function setFiles(array $files)
+    {
+        $this->files = $files;
 
         return $this;
     }

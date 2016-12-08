@@ -55,6 +55,10 @@ class Institucion extends Model
     public function municipio(){
         return $this->belongsTo('Sicere\Models\LugarMunicipio','mun_id','mun_id');
     }
+
+    public function actividades(){
+        return $this->hasMany('Sicere\Models\InstitucionActividad','inst_id','inst_id')->orderBy('act_fecha','asc');
+    }
     
     public static function get_institucion()
     {

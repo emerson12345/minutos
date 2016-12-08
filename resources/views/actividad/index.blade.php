@@ -19,6 +19,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
+                        <a href="{{route('actividad.report')}}" class="btn btn-default" target="_blank"><i class="fa fa-file-pdf-o"></i> Imprimir</a>
                         <button type="button" class="btn btn-add btn-primary pull-right margin-bottom" data-url="{{route('actividad.create')}}">
                             <i class="fa fa-plus"></i> Agregar actividad
                         </button>
@@ -70,6 +71,11 @@
 @stop
 
 @section('script')
+    <link rel="stylesheet" href="{{asset('template/plugins/datepicker/datepicker3.css')}}">
+    <link rel="stylesheet" href="{{asset('template/plugins/touchspin/jquery.bootstrap-touchspin.min.css')}}">
     <script src="{{asset('template/plugins/bootstrap-daterangepicker/js/moment.min.js')}}"></script>
+    <script src="{{asset('template/plugins/datepicker/bootstrap-datepicker.js')}}"></script>
+    <script src="{{asset('template/plugins/datepicker/locales/bootstrap-datepicker.es.js')}}"></script>
+    <script src="{{asset('template/plugins/touchspin/jquery.bootstrap-touchspin.min.js')}}"></script>
     <script src="{{asset('js/actividad/index.js')}}"></script>
 @stop

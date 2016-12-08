@@ -57,7 +57,7 @@ class ChannelManager extends Manager implements DispatcherContract, FactoryContr
         $original = clone $notification;
 
         foreach ($notifiables as $notifiable) {
-            $notificationId = Uuid::uuid4()->toString();
+            $notificationId = (string) Uuid::uuid4();
 
             $channels = $channels ?: $notification->via($notifiable);
 
@@ -68,9 +68,7 @@ class ChannelManager extends Manager implements DispatcherContract, FactoryContr
             foreach ($channels as $channel) {
                 $notification = clone $original;
 
-                if (! $notification->id) {
-                    $notification->id = $notificationId;
-                }
+                $notification->id = $notificationId;
 
                 if (! $this->shouldSendNotification($notifiable, $notification, $channel)) {
                     continue;
@@ -104,7 +102,7 @@ class ChannelManager extends Manager implements DispatcherContract, FactoryContr
      * Queue the given notification instances.
      *
      * @param  mixed  $notifiables
-     * @param  array[\Illuminate\Notifications\Channels\Notification]  $notification
+     * @param  array[\Illuminate\Notifcations\Channels\Notification]  $notification
      * @return void
      */
     protected function queueNotification($notifiables, $notification)
@@ -113,16 +111,8 @@ class ChannelManager extends Manager implements DispatcherContract, FactoryContr
 
         $bus = $this->app->make(Bus::class);
 
-        $original = clone $notification;
-
         foreach ($notifiables as $notifiable) {
-            $notificationId = Uuid::uuid4()->toString();
-
             foreach ($notification->via($notifiable) as $channel) {
-                $notification = clone $original;
-
-                $notification->id = $notificationId;
-
                 $bus->dispatch(
                     (new SendQueuedNotifications($this->formatNotifiables($notifiable), $notification, [$channel]))
                             ->onConnection($notification->connection)
