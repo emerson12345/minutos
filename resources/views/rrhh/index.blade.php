@@ -70,7 +70,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Nuevo personal</h4>
+                    <h4 class="modal-title">Personal</h4>
                 </div>
                 <div class="modal-body">
                     <div class="box box-primary box-solid">
