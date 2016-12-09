@@ -32,7 +32,6 @@ class ReporteController extends Controller
     }
     public function tratamientoRealizadoPDF(Request $request)
     {
-
         $inst_id = session()->has('institucion')?session('institucion')->inst_id:0;
         $user_id = $request->user_id?:0;
         $anio = $request->anio?:date('Y');
@@ -45,7 +44,7 @@ class ReporteController extends Controller
         $list_tratamiento_realizado = DB::table('lib_formulario')
             ->join('lib_columnas', 'lib_columnas.col_id', '=', 'lib_formulario.col_id')
             ->join('lib_registro','lib_registro.for_id','lib_formulario.for_id')
-            ->where('lib_formulario.cua_id', '=', 17)
+            ->where('lib_formulario.cua_id', '=', $request->cua_id)
             ->where('lib_columnas.col_tipo', '=', 0)
             ->where('lib_registro.red_descripcion', '=', '1')
             ->where('lib_registro.lib_fecha', '>=', $fecha_ini)
@@ -54,10 +53,14 @@ class ReporteController extends Controller
             ->groupBy('lib_columnas.col_combre')
             ->get();
 
+        $nombre_cuaderno = DB::table('lib_cuadernos')
+            ->where('lib_cuadernos.cua_id','=',$request->cua_id)
+            ->first();
+
 
         ReportTemplate::printHeaderFooter();
         PDF::AddPage('L', 'Letter');
-        ReportTemplate::printTitle('TRATAMIENTO REALIZADO');
+        ReportTemplate::printTitle('TRATAMIENTO REALIZADO "'.strtoupper($nombre_cuaderno->cua_nombre).'"');
         PDF::writeHTML(view('reporte._tratamiento_realizado',["list_tratamiento_realizado"=>$list_tratamiento_realizado,'fecha_ini'=>$fecha_ini,'fecha_fin'=>$fecha_fin])->render(), true, false, true, false, '');
         PDF::lastPage();
         PDF::Output('tratamiento_realizado.pdf');

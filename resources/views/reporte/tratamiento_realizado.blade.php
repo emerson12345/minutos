@@ -8,7 +8,7 @@
     Reporte
 @stop
 @section('menu_page')
-    <h1>Agenda <small>Porcentaje de tratamientos abandonados</small></h1>
+    <h1>Reporte</h1>
 @stop
 
 @section('content')
@@ -42,6 +42,7 @@
                                 </select>
                             </div>
                         </div>
+                        <!--
                         <div class="form-group no-margin col-sm-4">
                             <?php
                             $user_list = [];
@@ -54,6 +55,21 @@
                             <label for="user_id" class="control-label col-sm-2">Usuario: </label>
                             <div class="col-sm-10">
                                 {!! Form::select('user_id',$user_list,0,['class'=>'form-control input-sm','id'=>'user_id']) !!}
+                            </div>
+                        </div>
+                        -->
+                        <div class="form-group no-margin col-sm-4">
+                            <?php
+                            $cuaderno_list = [];
+                            if(session()->has('institucion')){
+                                $cuadernos = \Sicere\Models\LibCuaderno::All();
+                                $user_list= $cuadernos->pluck('cua_nombre','cua_id');
+                                $user_list->prepend('Todos',0);
+                            }
+                            ?>
+                            <label for="user_id" class="control-label col-sm-4">Cuadernos: </label>
+                            <div class="col-sm-8">
+                                {!! Form::select('cua_id',$user_list,0,['class'=>'form-control input-sm','id'=>'cua_id']) !!}
                             </div>
                         </div>
                     </div>
