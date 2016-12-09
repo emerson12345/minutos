@@ -304,6 +304,8 @@
                                 },
                                 success: function(json) {
                                     console.log("Updated Successfully");
+                                    console.log(json);
+                                    window.location.reload();
                                 },
                                 error: function(json){
                                     console.log("Error al actualizar evento");
@@ -329,6 +331,8 @@
                                 },
                                 success: function(json) {
                                     console.log("Updated Successfully eventdrop");
+                                    console.log(json);
+                                    window.location.reload();
                                 },
                                 error: function(json){
                                     console.log("Error al actualizar eventdrop");
