@@ -8,10 +8,10 @@
     @endif
 @stop
 @section('title_page')
-    Agenda
+    Agenda de citas
 @stop
 @section('menu_page')
-    <h1>Agenda</h1>
+    <h1> Agenda de citas</h1>
 @stop
 
 @section('content')

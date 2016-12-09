@@ -4,7 +4,7 @@
     <tr>
         <th width="15%">Fecha y hora</th>
         <th width="30%">Paciente</th>
-        <th width="35%">Descripcion</th>
+        <th width="35%">Descripción</th>
         <th width="10%"></th>
     </tr>
     </thead>

@@ -54,6 +54,7 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-5">
+                    <a href="{{route('agenda.agenda')}}" class="btn btn-default" title="Administrar tu agenda" ><i class="btn btn-success"></i> Detalles</a>
                 </div>
                 <div class="col-md-4">
                     <!--- Fecha -->
@@ -66,14 +67,14 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <input type="button" value="Imprimir Agenda semanal" id="btn_imprimir_agenda" class="btn btn-success">
+                    <input type="button" value="Imprimir agenda semanal" id="btn_imprimir_agenda" class="btn btn-file fa-file-pdf-o">
                 </div>
             </div>
         </div>
     </div>
         <div class="panel panel-default">
             <!-- Content Header (Page header) -->
-            <div class="panel-heading"><h2> Calendario   </h2>  </div>
+            <div class="panel-heading"><h2> Agenda de citas   </h2>  </div>
             <div class="panel-body">
                 <!-- Main content -->
                 <section class="content">
