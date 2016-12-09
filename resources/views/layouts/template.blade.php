@@ -234,14 +234,13 @@
                     <img src="{{asset('template/dist/img/user2-160x160.png')}}" class="img-rounded" alt="User Image">
 
                 </div>
-                <div class="pull-left info">
-                    <p>@yield('user')</p>
-                    <a href="#">
+                <div class="pull-left info ">
+                        <a href="#">
                         @if(session()->has('institucion'))
-                            {{session('institucion')->inst_nombre}}
-                        @else
-                            sin institucion
-                        @endif
+                                {{session('institucion')->inst_nombre}}
+                            @else
+                                Sin institución
+                            @endif
                     </a>
                 </div>
             </div>
