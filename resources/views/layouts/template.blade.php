@@ -235,7 +235,7 @@
 
                 </div>
                 <div class="pull-left info ">
-                        <a href="#">
+                        <a href="#" class="large-text">
                         @if(session()->has('institucion'))
                                 {{session('institucion')->inst_nombre}}
                             @else
@@ -251,13 +251,13 @@
                 @if(Auth::check()&&session()->has('menu'))
                 @foreach(session('menu') as $itemMenu)
                     <li class="treeview">
-                        <a href="#">
+                        <a href="#" >
                         <i class="fa {{$itemMenu['icon']}}"></i>
                         <span>{{$itemMenu['label']}}</span>
                         </a>
                         <ul class="treeview-menu">
                             @foreach($itemMenu['items'] as $app_hijo)
-                                <li><a href="{{Route::has($app_hijo['url'])?route($app_hijo['url']):'#'}}">{{$app_hijo['label']}}</a></li>
+                                <li><a class="large-text" title="{{$app_hijo['label']}}" href="{{Route::has($app_hijo['url'])?route($app_hijo['url']):'#'}}">{{$app_hijo['label']}}</a></li>
                             @endforeach
                         </ul>
                     </li>

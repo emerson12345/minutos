@@ -116,107 +116,95 @@ function bisiesto($anio_actual){
         .td-dimencion{
             width: 200px;
         }
+        .btn_buscar{
+            width: 40px;
+            height: 27px;
+        }
+        .contenedor{
+            border: 1px solid #367fa9 !important;
+            border-radius: 10px;
+            padding: 3px;
+        }
+
     </style>
 
     {!! Form::open(['route' => 'libregistro.store' ,'class'=>'form-horizontal']) !!}
 
 
     <div class="col-md-4">
-        <div class="box">
-            <div class="box-body">
-                <input type="submit" class="btn btn-success">
-            </div>
-        </div>
-
-        <div class="box">
+        <div class="box contenedor">
             <div class="box-body">
                 <label for="">
                     <?php echo "Fecha: "; echo date("d/m/Y"); ?>
                 </label>
             </div>
-        </div>
-
-        <div class="box">
-            <div class="box-body">
+            <div class="box-body with-border">
                 <label for="">Paciente:</label><br>
-                <?php
-                if(isset($listAgendaPacientes))
-                    {
-                        ?>
-                    <input type="hidden" name="pac_id" id="tb_id_paciente" size="5" value="<?php echo $listAgendaPacientes->pac_id; ?>" readonly>
-                    <input type="text" id="tb_nombre_paciente" size="30"  value="<?php echo $listAgendaPacientes->pac_ap_prim." ".$listAgendaPacientes->pac_ap_seg." ".$listAgendaPacientes->pac_nombre;?>" required>
-                <?php
-                    }
-                    else
-                    {
-                        ?>
-                        <input type="hidden" name="pac_id" id="tb_id_paciente" size="5" readonly>
-                        <input type="text" id="tb_nombre_paciente" size="30" required>
-                <?php
-                    }
-                ?>
-               <!-- <input type="button" id="btn-paciente" class="btn btn-edit btn-xs btn-primary" value="Buscar">-->
-
-                <button type="button" id="btn-paciente" class="btn btn-edit btn-md btn-primary" value="Buscar">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-
-            </div>
-        </div>
-        <div class="box">
-            <div class="box-body" >
-                <label for="">Cuadernos</label>
                 <?php
                 if(isset($listAgendaPacientes))
                 {
                 ?>
-                    <input type="text" id="tb-cuadernos" name="tb-cuadernos" size="40" required value="<?php echo $listAgendaPacientes->cua_nombre;?>">
+                <input type="hidden" name="pac_id" id="tb_id_paciente" size="5" value="<?php echo $listAgendaPacientes->pac_id; ?>" readonly>
+                <input type="text" id="tb_nombre_paciente" size="30"  value="<?php echo $listAgendaPacientes->pac_ap_prim." ".$listAgendaPacientes->pac_ap_seg." ".$listAgendaPacientes->pac_nombre;?>" required>
                 <?php
                 }
                 else
                 {
                 ?>
-                    <input type="text" id="tb-cuadernos" name="tb-cuadernos" size="40" required>
+                <input type="hidden" name="pac_id" id="tb_id_paciente" size="5" readonly>
+                <input type="text" id="tb_nombre_paciente" size="30" required>
                 <?php
                 }
                 ?>
-                <button type="button" id="btn-cuadernos" name="btn-cuadernos" class="btn btn-edit btn-md btn-primary" value="Buscar">
+                        <!-- <input type="button" id="btn-paciente" class="btn btn-edit btn-xs btn-primary" value="Buscar">-->
+
+                <button type="button" id="btn-paciente" class="btn btn-edit btn-md btn-primary btn_buscar " value="Buscar">
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
+
             </div>
-        </div>
-
-
-
-        <div class="box">
+                <div class="box-body" >
+                    <label for="">Cuadernos</label>
+                    <?php
+                    if(isset($listAgendaPacientes))
+                    {
+                    ?>
+                    <input type="text" id="tb-cuadernos" name="tb-cuadernos" size="40" required value="<?php echo $listAgendaPacientes->cua_nombre;?>">
+                    <?php
+                    }
+                    else
+                    {
+                    ?>
+                    <input type="text" id="tb-cuadernos" name="tb-cuadernos" size="40" required>
+                    <?php
+                    }
+                    ?>
+                    <button type="button" id="btn-cuadernos" name="btn-cuadernos" class="btn btn-edit btn-md btn-primary btn_buscar" value="Buscar">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </div>
             <div class="box-body" >
                 <label for="">Referido de Establecimeinto</label>
-                <br>
                 <input type="text" id="referido_de_inst_id" name="referido_de_inst_id" size="0" value="-1"  style="visibility:hidden">
                 <input type="text" id="tb_referido_de_establecimeinto" name="tb_referido_de_establecimeinto" size="40">
-                <button type="button" id="btn_referido_de_establecimeinto" name="btn_referido_de_establecimeinto" class="btn btn-edit btn-md btn-primary" value="Buscar">
+                <button type="button" id="btn_referido_de_establecimeinto" name="btn_referido_de_establecimeinto" class="btn btn-edit btn-md btn-primary btn_buscar" value="Buscar">
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
             </div>
-        </div>
-        <div class="box">
             <div class="box-body" >
                 <label for="">Referido a Establecimeinto</label>
                 <input type="text" id="referido_a_inst_id" name="referido_a_inst_id" size="5" value="-1"  style="visibility:hidden">
                 <input type="text" id="tb_referido_a_establecimeinto" name="tb_referido_a_establecimeinto" size="40">
 
-                <button type="button" id="btn_referido_a_establecimeinto" name="btn_referido_a_establecimeinto" class="btn btn-edit btn-md btn-primary" value="Buscar">
+                <button type="button" id="btn_referido_a_establecimeinto" name="btn_referido_a_establecimeinto" class="btn btn-edit btn-md btn-primary btn_buscar" value="Buscar">
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
 
             </div>
         </div>
-
-
         <!-- PACIENTES------------------------------------------------------------------------------------------>
         <div id="myModal_pacientes" class="modal fade" role="dialog">
             <div class="modal-dialog modal-lg">
-
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
@@ -450,39 +438,39 @@ function bisiesto($anio_actual){
 
     </div>
 
-    <div class="col-md-4">
-
-        <div class="box">
+    <div class="col-md-8">
+        <div class="box contenedor">
             <div class="box-body">
-                <label for="">Personal de Salud: </label>
-                <?php echo Form::select('rrhh_id', $listRrhh, array('required'=> true)); ?>
-                <br>
-                <label for="">Tipo de Paciente: </label>
-                {!! Form::select('pact_id', array('1' => 'Institucional','2' => 'Convenio'),'default', array('id' => 'pact_id','required'=>true)) !!}
-                <div id='institucion'>
-                    <label for="">
-                        Institución:
-                    </label>
-                    {!! Form::select('conv_id', $listInstitucion)  !!}
+                <div class="col-md-3">
+                    <label for="">Personal de Salud: </label>
+                    <?php echo Form::select('rrhh_id', $listRrhh, null,array('required'=> true,'class'=>"selectpicker")); ?>
                 </div>
+                <div class="col-md-3">
+                    <label for="">Tipo de Paciente: </label>
+                    {!! Form::select('pact_id', array('1' => 'Institucional','2' => 'Convenio'),'default', array('id' => 'pact_id','required'=>true)) !!}
+                    <div id='institucion'>
+                        <label for="">
+                            Institución:
+                        </label>
+                        {!! Form::select('conv_id', $listInstitucion)  !!}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                        <label for="">Consulta nueva: </label>
+                        <input type="hidden" name='hc_consulta_nueva' value="0">
+                        {!! Form::checkbox('hc_consulta_nueva', '1',false) !!}<br>
+
+                        <label for="">Consulta dentro: </label>
+                        <input type="hidden" name='hc_consulta_dentro' value="0">
+                        {!! Form::checkbox('hc_consulta_dentro', '1',true) !!}<br>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" id="btn-save" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
+                </div>
+
             </div>
         </div>
 
-    </div>
-
-    <div class="col-md-4">
-        <div class="box">
-            <div class="box-body">
-                <label for="">Consulta nueva: </label>
-                <input type="hidden" name='hc_consulta_nueva' value="0">
-                {!! Form::checkbox('hc_consulta_nueva', '1',false) !!}<br>
-
-                <label for="">Consulta dentro: </label>
-                <input type="hidden" name='hc_consulta_dentro' value="0">
-                {!! Form::checkbox('hc_consulta_dentro', '1',true) !!}<br>
-
-            </div>
-        </div>
     </div>
 
     <div id="datos-rhh" class="col-md-8"></div>
@@ -495,7 +483,6 @@ function bisiesto($anio_actual){
     {{ Form::hidden('inst_id',session('institucion')->inst_id) }}
 
     {!! Form::close() !!}
-
 @stop
 @section('script')
     <script>

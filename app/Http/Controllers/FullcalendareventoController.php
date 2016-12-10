@@ -176,12 +176,15 @@ class FullcalendareventoController extends Controller
         }
         PDF::setHeaderCallback(function($pdf) {
             $pdf->Cell(0, 27, '', 'B', false, 'R', 0, '', 0, false, 'T', 'M');
-            $pdf->Image(asset('template/dist/img/bolivia.gif'), 15, 10, 0, 15, 'GIF', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
+            //$pdf->Image(asset('template/dist/img/bolivia.gif'), 15, 10, 0, 15, 'GIF', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
+
+            $P=base_path()."\\public\\template\\dist\\img\\bolivia.gif";
+            $pdf->Image($P, 15, 10, 0, 15, 'GIF', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
             $pdf->SetFont('helvetica', 'B', 11);
             $pdf->Text(33,22,'Sistema de centros de rehabilitación','R');
             $pdf->SetFont('helvetica', 'K', 10);
             $pdf->Text(15,27,'Establecimiento: '.session('institucion')->inst_nombre);
-            $pdf->Image(asset('template/dist/img/minsalud-logo.jpg'), 25, 12, 0, 12, 'JPG', 'http://www.tcpdf.org', '', true, 150, 'R', false, false, 0, false, false, false);
+            //$pdf->Image(asset('template/dist/img/minsalud-logo.jpg'), 25, 12, 0, 12, 'JPG', 'http://www.tcpdf.org', '', true, 150, 'R', false, false, 0, false, false, false);
         });
         PDF::setFooterCallback(function($pdf) {
             $strCodSeguridad=session('institucion')->inst_codigo . '|' . session('institucion')->inst_nombre .'|' . Auth::user()->user_id;

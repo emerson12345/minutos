@@ -9,6 +9,7 @@ use Sicere\Http\Controllers\Controller;
 use Sicere\Models\Agenda;
 use Sicere\Models\LibCuaderno;
 use Sicere\Models\ReportTemplate;
+use Sicere\Models\Setup;
 use Sicere\User;
 use PDF;
 use Auth;
@@ -112,6 +113,7 @@ class ReporteAgendaController extends Controller
     }
 
     public function postAbandonos(Request $request){
+        $setup = Setup::find('set_nro_dias_abandono');
         $user_id = $request->user_id?:0;
         $anio = $request->anio?:date('Y');
         $mes = $request->mes?:date('n');
@@ -119,7 +121,7 @@ class ReporteAgendaController extends Controller
         $fecha_ini = $fecha_temp->startOfMonth()->format('d/m/Y');
         $fecha_fin = $fecha_temp->endOfMonth()->format('d/m/Y');
         $cuadernos = $request->cuaderno?:[];
-        $data =$this->getTotalForCuadernos($fecha_ini,$fecha_fin,$user_id,$cuadernos,4);
+        $data =$this->getTotalForCuadernos($fecha_ini,$fecha_fin,$user_id,$cuadernos,$setup->set_valor);
         $totales = array_pop($data);
 
         ReportTemplate::printHeaderFooter();
