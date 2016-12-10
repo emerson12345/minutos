@@ -6,7 +6,7 @@
         font-size: 10px;
     }
 </style>
-<h1>Horario Semanal</h1>
+<h1 style="text-align: center">Horario Semanal</h1>
 <table>
     <tr>
         <td>        Usuario:<?php echo Auth::user()->user_nombre; ?></td>
@@ -17,7 +17,9 @@
 <table border="1">
 <?php
     $dias=array("0"=>"Lunes","1"=>"Martes","2"=>"Miercoles","3"=>"Jueves","4"=>"Viernes");
-        echo "<tr>";
+        ?>
+    <tr style="background-color: rgb(217, 217, 217);">
+    <?php
         foreach($dias as $D){
             echo "<th>";
             echo $D;

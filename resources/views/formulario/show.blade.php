@@ -1,5 +1,5 @@
 {{ Form::hidden('cua_id',$cua_id, array('id' => 'cua_id')) }}
-
+<link rel="stylesheet" href="{{asset('css/historial_paciente/style.css')}}">
 <style>
     thead, tbody { display: block; }
     tbody {
@@ -111,104 +111,109 @@
         cursor: pointer;
     }
 </style>
-<div class="box box-success">
-    <div class="box-body" >
-        <div class="col-md-8">
-            <div class="box-title">
-                <h3>Registro de la atencion clinica</h3>
+<div class="col-md-12">
+    <div class="box box-primary">
+        <div class="box-body" >
+            <div class="col-md-8">
+                <div class="box-title">
+                    <h3>Registro de la atencion clinica</h3>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <input type="button" name="btn-evolucion"  class="btn btn-success" value="Ver evolución" id="btn-evolucion">
-        </div>
-        <table>
-            <tbody id="tbody-formulario">
-            <tr>
-                <th>Variables</th>
-                <th>Registro</th>
-            </tr>
-            <tr>
-                <td>EVOLUCIÓN: </td>
-                <td>
-                    <textarea rows='4' cols='50' name="evolucion_descripcion"></textarea>
-                </td>
-            </tr>
-            <?php
-            foreach ($listFormularios as $flight) {
-            ?>
-            <tr id="info">
-                <!--
-                    <td><?= $flight->cua_id ?></td>
-                    <td><?= $flight->cua_nombre ?></td>
-                    <td><?= $flight->for_id ?></td>
-                    <td><?= $flight->col_id ?></td>
-                    -->
+            <div class="col-md-4">
+                <button type="button" name="btn-evolucion"  class="btn btn btn-primary" value="Ver evolución" id="btn-evolucion">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                    Ver evolución
+                </button>
+            </div>
+            <table>
+                <tbody id="tbody-formulario">
+                <tr>
+                    <th>Variables</th>
+                    <th>Registro</th>
+                </tr>
+                <tr>
+                    <td>EVOLUCIÓN: </td>
+                    <td>
+                        <textarea rows='4' cols='50' name="evolucion_descripcion"></textarea>
+                    </td>
+                </tr>
                 <?php
-                if($flight->for_id!=6 && $flight->for_id!=7)
-                {?>
-                <td><?= $flight->col_combre ?></td>
+                foreach ($listFormularios as $flight) {
+                ?>
+                <tr id="info">
+                    <!--
+                        <td><?= $flight->cua_id ?></td>
+                        <td><?= $flight->cua_nombre ?></td>
+                        <td><?= $flight->for_id ?></td>
+                        <td><?= $flight->col_id ?></td>
+                        -->
+                    <?php
+                    if($flight->for_id!=6 && $flight->for_id!=7)
+                    {?>
+                    <td><?= $flight->col_combre ?></td>
+                    <?php
+                    }
+                    ?>
+                    <td>
+                        <?php
+                        switch ($flight->col_tipo)
+                        {
+                        case 1:
+                            echo " <input type='number' name='".$flight->for_id."' class='tr-dimencion'>";
+                            break;
+                        case 3:
+                            if($flight->for_id!=6 && $flight->for_id!=7)
+                            {
+                                echo '
+                                                    <div class="list-data">
+                                                    <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
+                                                    ';
+                                echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' class='tr-dimencion' readonly>
+                                            </div>";
+                            }
+                            break;
+                        case 16:
+                            if($flight->for_id!=6 && $flight->for_id!=7)
+                            {
+                                echo '
+                                                            <div class="list-data">
+                                                            <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
+                                                            ';
+                                echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' readonly>
+                                                    </div>";
+                            }
+                            break;
+                        case 4:
+                            echo "<textarea rows='4' cols='50' name='".$flight->for_id."'></textarea>";
+                            break;
+                        case 15:
+                            if($flight->for_id!=6 && $flight->for_id!=7)
+                            {
+                                echo '
+                                            <div class="list-data">
+                                            <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
+                                            </div>';
+                                echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' class='tr-dimencion' readonly>";
+                            }
+                            break;
+                        case 0:
+                        echo "<input type='hidden' name='".$flight->for_id."' value='0'>";
+                        ?>
+                        {!! Form::checkbox($flight->for_id, '1',false) !!}
+                        <?php
+                        break;
+                        default:
+                            echo " <input type='text' name='".$flight->for_id."' class='tr-dimencion'>";
+                        }
+                        ?>
+                    </td>
+                </tr>
                 <?php
                 }
                 ?>
-                <td>
-                    <?php
-                    switch ($flight->col_tipo)
-                    {
-                    case 1:
-                        echo " <input type='number' name='".$flight->for_id."' class='tr-dimencion'>";
-                        break;
-                    case 3:
-                        if($flight->for_id!=6 && $flight->for_id!=7)
-                        {
-                            echo '
-                                                <div class="list-data">
-                                                <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
-                                                ';
-                            echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' class='tr-dimencion' readonly>
-                                        </div>";
-                        }
-                        break;
-                    case 16:
-                        if($flight->for_id!=6 && $flight->for_id!=7)
-                        {
-                            echo '
-                                                        <div class="list-data">
-                                                        <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
-                                                        ';
-                            echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' readonly>
-                                                </div>";
-                        }
-                        break;
-                    case 4:
-                        echo "<textarea rows='4' cols='50' name='".$flight->for_id."'></textarea>";
-                        break;
-                    case 15:
-                        if($flight->for_id!=6 && $flight->for_id!=7)
-                        {
-                            echo '
-                                        <div class="list-data">
-                                        <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
-                                        </div>';
-                            echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' class='tr-dimencion' readonly>";
-                        }
-                        break;
-                    case 0:
-                    echo "<input type='hidden' name='".$flight->for_id."' value='0'>";
-                    ?>
-                    {!! Form::checkbox($flight->for_id, '1',false) !!}
-                    <?php
-                    break;
-                    default:
-                        echo " <input type='text' name='".$flight->for_id."' class='tr-dimencion'>";
-                    }
-                    ?>
-                </td>
-            </tr>
-            <?php
-            }
-            ?>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
