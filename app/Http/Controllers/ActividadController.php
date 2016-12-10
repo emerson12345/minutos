@@ -127,6 +127,7 @@ class ActividadController extends Controller
         PDF::SetXY(15,105);
         PDF::SetFont('');
 
+        
         foreach ($actividades as $actividad){
             PDF::Cell(21,7,$actividad->act_nro,1,0,'C');
             PDF::Cell(21,7,date('d/m/Y',strtotime($actividad->act_fecha)),1,0,'C');

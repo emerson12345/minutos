@@ -65,7 +65,7 @@
             </div>
             <div class="box-footer">
                 <button class="btn btn-default pull-right" type="submit">
-                    <i class="fa fa-file-pdf-o"></i> PDF
+                    <i class="fa fa-file-pdf-o"></i> Imprimir
                 </button>
             </div>
             {!! Form::close() !!}

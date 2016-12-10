@@ -66,4 +66,23 @@ class ReporteController extends Controller
         PDF::Output('tratamiento_realizado.pdf');
         //dd($tratamiento_realizado);
     }
+
+    public function morbilidad(){
+        return view('reporte.morbilidad');
+    }
+
+    public function morbilidadPDF(Request $request){
+        $inst_id = session()->has('institucion')?session('institucion')->inst_id:0;
+        $anio = $request->anio?:date('Y');
+        $mes = $request->mes?:date('n');
+        $fecha_temp = Carbon::create($anio,$mes,1);
+        $fecha_ini = $fecha_temp->startOfMonth()->format('d/m/Y');
+        $fecha_fin = $fecha_temp->endOfMonth()->format('d/m/Y');
+        ReportTemplate::printHeaderFooter();
+        PDF::AddPage('P','Letter');
+        ReportTemplate::printTitle('REPORTE DE MORBILIDAD',$fecha_ini,$fecha_fin);
+        PDF::writeHTML(view('reporte._morbilidad',['fecha_ini'=>$fecha_ini,'fecha_fin'=>$fecha_fin,'inst_id'=>$inst_id])->render(),true,false,true,false,'');
+        PDF::lastPage();
+        PDF::Output('morbilidad.pdf');
+    }
 }
