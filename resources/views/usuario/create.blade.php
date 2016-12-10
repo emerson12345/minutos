@@ -1,6 +1,6 @@
 {!! Form::open(['route' => 'adm.usuario.store' ,'class'=>'form-horizontal']) !!}
 <div class="form-group">
-    {!! Form::label('rrhh_id', 'RRHH', ['class' => 'col-sm-3 control-label']) !!}
+    {!! Form::label('rrhh_id', 'RECURSO HUMANO', ['class' => 'col-sm-3 control-label']) !!}
     <div class="col-sm-9">
         {!! Form::select('rrhh_id',[],null,['class'=>'form-control','data-url'=>route('adm.usuario.rrhh')]) !!}
         {!! Form::hidden('user_nombre',null,['id'=>'user_nombre']) !!}

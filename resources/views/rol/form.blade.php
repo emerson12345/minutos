@@ -8,7 +8,7 @@
 {!! Form::model($rol,['class'=>'form-horizontal']) !!}
 
 <div class="form-group">
-    {!! Form::label('rol_codigo', 'CODIGO', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('rol_codigo', 'CÓDIGO', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
         {!! Form::text('rol_codigo',null,['class'=>'form-control']) !!}
         <span class="label label-warning"></span>

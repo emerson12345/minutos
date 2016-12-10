@@ -1,7 +1,7 @@
 {!! Form::model($usuario,['route' => ['adm.usuario.edit',$usuario->user_id] ,'class'=>'form-horizontal']) !!}
 
 <div class="form-group">
-    {!! Form::label('user_nombre', 'Apellidos y nombres', ['class' => 'col-sm-3 control-label']) !!}
+    {!! Form::label('user_nombre', 'Recurso humano', ['class' => 'col-sm-3 control-label']) !!}
     <div class="col-sm-9">
         {!! Form::text('user_nombre',null,['class'=>'form-control', 'disabled'=>'disabled']) !!}
         <span class="label label-warning"></span>
