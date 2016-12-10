@@ -17,8 +17,8 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="{{route('parametro.setup')}}" class="btn btn-default" ><i class="fa fa-circle-o"></i> Parámetros de sistema</a>
-                        <a href="{{route('cuaderno.estado')}}" class="btn btn-default" ><i class="fa fa-file-pdf-o"></i> Estado de cuadernos</a>
+                        <a href="{{route('parametro.setup')}}" class="btn btn-primary" ><i class="fa fa-circle-o"></i> Parámetros de sistema</a>
+                        <a href="{{route('cuaderno.estado')}}" class="btn btn-primary" ><i class="fa fa-book"></i> Estado de cuadernos</a>
 
                     </div>
                 </div>
