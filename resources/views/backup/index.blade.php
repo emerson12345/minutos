@@ -25,9 +25,9 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <input type="button" id="btn_backup" value="Generar copia de seguridad">
+                        <input type="button" id="btn_backup" class="btn btn-primary" value="Generar copia de seguridad">
                     </div>
-                    <div class="col-md-12" id="respuesta">
+                    <div class="col-md-12 text-green" id="respuesta">
 
                     </div>
                 </div>
