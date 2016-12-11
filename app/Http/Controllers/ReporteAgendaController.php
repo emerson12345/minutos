@@ -173,7 +173,7 @@ class ReporteAgendaController extends Controller
         PDF::SetTextColor(255,255,255);
         PDF::Cell(15,5,number_format($totales['no_abandono']*$perc,2).' %',1,0,'R',true,null,1);
         $xc=110;$yc=PDF::GetY()+40;$r=30;
-        $middle = $totales['total']==0?:($totales['abandono']*360)/$totales['total'];
+        $middle = $totales['total']==0?0:($totales['abandono']*360)/$totales['total'];
         PDF::SetFillColor(240,0,0);
         PDF::PieSector($xc, $yc, $r, 0, $middle, 'FD',false);
         PDF::SetFillColor(0,240,0);
@@ -332,7 +332,7 @@ class ReporteAgendaController extends Controller
 
     private function getTotalForCuadernos($fecha_ini, $fecha_fin, $user_id, $cua_list,$max_falta){
         $totales = [];
-        $total = 0;$abandono = 0;
+        $total = 0;$total_abandono = 0;
         foreach($cua_list as $cua){
             $cuaderno = LibCuaderno::find($cua);
             if($cuaderno){
@@ -361,10 +361,10 @@ class ReporteAgendaController extends Controller
                 }
                 $totales[$cuaderno->cua_nombre] = ['total'=>$totalTrat, 'abandono'=>$totalAban,'no_abandono'=>$totalTrat-$totalAban];
                 $total+= $totalTrat;
-                $abandono+= $totalAban;
+                $total_abandono+= $totalAban;
             }
         }
-        $totales['total']= ['total'=>$total, 'abandono' => $abandono, 'no_abandono'=>$total-$abandono];
+        $totales['total']= ['total'=>$total, 'abandono' => $total_abandono, 'no_abandono'=>$total-$total_abandono];
         return $totales;
     }
 
