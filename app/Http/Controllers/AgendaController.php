@@ -3,16 +3,15 @@
 namespace Sicere\Http\Controllers;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use DB;
+use Illuminate\Http\Request;
+use PDF;
 use Sicere\Http\Requests;
-use Sicere\Http\Controllers\Controller;
 use Sicere\Models\Agenda;
 use Sicere\Models\LibCuaderno;
 use Sicere\Models\Paciente;
+use Sicere\Models\ReportTemplate;
 use Sicere\Models\Rrhh;
-use PDF;
-use Sicere\User;
 
 class AgendaController extends Controller
 {
@@ -112,30 +111,10 @@ class AgendaController extends Controller
         $fec_fin = $request->fec_fin?:date('d/m/Y');
         $cua_id = $request->cua_id?:0;
         $cuaderno = LibCuaderno::find($cua_id);
-        PDF::setHeaderCallback(function($pdf) {
-            $pdf->Cell(0, 27, '', 'B', false, 'R', 0, '', 0, false, 'T', 'M');
-            $pdf->Image(asset('template/dist/img/bolivia.gif'), 15, 10, 0, 15, 'GIF', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
-            $pdf->SetFont('helvetica', 'B', 11);
-            $pdf->Text(33,22,'Sistema de centros de rehabilitación','R');
-            $pdf->SetFont('helvetica', 'K', 10);
-            $pdf->Text(15,27,'Establecimiento: '.session('institucion')->inst_nombre);
-            $pdf->Image(asset('template/dist/img/minsalud-logo.jpg'), 25, 12, 0, 12, 'JPG', 'http://www.tcpdf.org', '', true, 150, 'R', false, false, 0, false, false, false);
-        });
-        PDF::setFooterCallback(function($pdf) {
-            $strCodSeguridad=session('institucion')->inst_codigo . '|' . session('institucion')->inst_nombre .'|' . \Auth::user()->user_id;
-            $pdf->SetY(-15);
-            $pdf->SetFont('helvetica', 'I', 8);
-            $pdf->Cell(0, 10, 'Pagina '.$pdf->getAliasNumPage().'/'.$pdf->getAliasNbPages(), 'T', false, 'R', 0, '', 0, false, 'T', 'M');
-            //$pdf->write2DBarcode(bcrypt('Mi super codigo'), 'PDF417', 25, 275, 150, 6, null, 'N',true);
-            $pdf->write2DBarcode($strCodSeguridad, 'PDF417', 25, 275, 150, 6, null, 'N',true);
-        });
-        PDF::SetTitle('Agenda');
-        PDF::SetSubject('Reporte de sistema');
-        PDF::SetMargins(15, 35, 15);
-        PDF::SetFontSubsetting(false);
-        PDF::SetFontSize('10px');
-        PDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        ReportTemplate::printHeaderFooter();
         PDF::AddPage('P', 'Letter');
+        ReportTemplate::printTitle('CITAS PROGRAMADAS');
+        PDF::SetFont('');
         PDF::writeHTML("<b>Desde el </b> {$fec_ini} <b>hasta el</b> {$fec_fin}");
         PDF::writeHTML("<b>Servicio: </b> {$cuaderno->cua_nombre}");
         PDF::writeHTML("<b>A</b> Agendado, <b>T</b> Atendido, <b>N</b> No atendido, <b>C</b> Cancelado");
