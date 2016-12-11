@@ -181,8 +181,8 @@
             </div>
         </div>
 
+        @if($paciente->exists)
         <div class="well well-sm">
-            <h5><strong>OTROS</strong></h5>
             <div class="form-group">
                 {!! Form::label('pac_seleccionable', 'Estado') !!}<br>
                 <label for="sel_si">Activo</label>
@@ -193,6 +193,9 @@
                 <span class="label label-warning"></span>
             </div>
         </div>
+        @else
+            {!! Form::hidden('pac_seleccionable',1) !!}
+        @endif
     </div>
 </div>
 

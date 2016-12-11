@@ -69,6 +69,7 @@
             <span class="label label-warning"></span>
         </div>
 
+        @if($actividad->exists)
         <div class="form-group">
             {!! Form::label('act_seleccionable','Vigente') !!}<br>
             <label for="est_si">SI</label>
@@ -78,7 +79,9 @@
             {!! Form::radio('act_seleccionable','0',false, ['id'=>'est_no']) !!}
             <span class="label label-warning"></span>
         </div>
-
+        @else
+            {!! Form::hidden('act_seleccionable',1) !!}
+        @endif
     </div>
 </div>
 

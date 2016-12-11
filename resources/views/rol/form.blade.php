@@ -23,7 +23,7 @@
     </div>
 </div>
 
-
+@if($rol->exists)
 <div class="form-group">
     {!! Form::label('rol_seleccionable', 'ESTADO', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
@@ -34,6 +34,9 @@
         <span class="label label-warning"></span>
     </div>
 </div>
+@else
+    {!! Form::hidden('rol_seleccionable',1) !!}
+@endif
 
 <div class="form-group">
     {!! Form::label('app_list','PERMISOS',['class'=>'col-sm-2 control-label']) !!}

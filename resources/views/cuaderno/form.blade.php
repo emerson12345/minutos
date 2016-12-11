@@ -37,6 +37,7 @@
                     </div>
                 </div>
 
+                @if($cuaderno->exists)
                 <div class="form-group">
                     {!! Form::label('cua_seleccionable', 'ESTADO', ['class' => 'col-sm-2 control-label']) !!}
                     <div class="col-sm-10">
@@ -47,7 +48,9 @@
                         <span class="label label-warning"></span>
                     </div>
                 </div>
-
+                @else
+                    {!! Form::hidden('cua_seleccionable',1) !!}
+                @endif
                 <div class="btn-group">
                     <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Agregar columna</button>
                     <button type="button" id="btn-remove-row" class="btn btn-default btn-xs"><i class="fa fa-minus"></i> Eliminar columna</button>

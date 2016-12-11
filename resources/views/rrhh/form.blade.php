@@ -93,6 +93,7 @@
                 </div>
             </div>
 
+            @if($rrhh->exists)
             <div class="form-group">
                 {!! Form::label('rrhh_seleccionable', 'Estado', ['class' => 'col-sm-2 control-label']) !!}
                 <div class="col-sm-10">
@@ -103,7 +104,9 @@
                     <span class="label label-warning"></span>
                 </div>
             </div>
-
+            @else
+                {!! Form::hidden('rrhh_seleccionable',1) !!}
+            @endif
         </div>
     </div>
 </div>

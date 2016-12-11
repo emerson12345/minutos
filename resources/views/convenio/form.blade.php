@@ -16,6 +16,7 @@
     </div>
 </div>
 
+@if($convenio->exists)
 <div class="form-group">
     {!! Form::label('conv_seleccionable', 'ESTADO', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
@@ -27,6 +28,9 @@
         <span class="label label-warning"></span>
     </div>
 </div>
+@else
+    {!! Form::hidden('conv_seleccionable',1) !!}
+@endif
 
 <div class="form-group">
     {!! Form::label('conv_niv_nacional', 'A NIVEL NACIONAL', ['class' => 'col-sm-2 control-label']) !!}
