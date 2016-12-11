@@ -11,7 +11,7 @@
     Agenda
 @stop
 @section('menu_page')
-    <h1>Agenda <small>Sesiones por grupo etario</small></h1>
+    <h1>Nro. de sesiones <small>Sesiones por grupo etario</small></h1>
 @stop
 
 @section('content')

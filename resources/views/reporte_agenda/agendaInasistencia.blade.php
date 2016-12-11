@@ -11,7 +11,7 @@
     Agenda
 @stop
 @section('menu_page')
-    <h1>Agenda <small>Porcentaje de inasistencia a citas</small></h1>
+    <h1>Inasistencia <small>Porcentaje de inasistencia a citas</small></h1>
 @stop
 
 @section('content')

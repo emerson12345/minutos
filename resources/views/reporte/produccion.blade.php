@@ -11,12 +11,7 @@
     Produccion
 @stop
 @section('menu_page')
-    <h1>Reporte</h1>
-@stop
-@section('breadcrumb')
-    <ol class="breadcrumb">
-
-    </ol>
+    <h1>Informe de producción</h1>
 @stop
 
 @section('content')

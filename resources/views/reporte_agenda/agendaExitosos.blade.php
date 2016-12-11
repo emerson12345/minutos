@@ -11,7 +11,7 @@ Reporte
 Reporte
 @stop
 @section('menu_page')
-<h1>Agenda <small>Porcentaje de tratamientos concluidos con exito</small></h1>
+<h1>Tratamientos concluidos <small>Porcentaje de tratamientos concluidos con éxito</small></h1>
 @stop
 
 @section('content')

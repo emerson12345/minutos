@@ -11,7 +11,7 @@
     Reporte
 @stop
 @section('menu_page')
-    <h1>Agenda <small>Porcentaje de tratamientos abandonados</small></h1>
+    <h1>Abandonos <small>Porcentaje de tratamientos abandonados</small></h1>
 @stop
 
 @section('content')
