@@ -126,7 +126,7 @@ class AgendaController extends Controller
             ['title'=>'Usuario','width'=>30],
             ['title'=>'Est.','width'=>10],
             ['title'=>'Paciente','width'=>50],
-            ['title'=>'Descripcion','width'=>70]
+            ['title'=>'Descripción','width'=>70]
         ];
         foreach ($cabecera as $item){
             PDF::Cell($item['width'],5,$item['title'],1,0,'',1);
