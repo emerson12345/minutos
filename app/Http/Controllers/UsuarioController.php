@@ -7,6 +7,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Sicere\Models\Institucion;
 use Illuminate\Support\Facades\Hash;
+use Sicere\Models\ReportTemplate;
 use Sicere\Models\Rrhh;
 use Sicere\Models\Usuario;
 use Validator;
@@ -111,31 +112,9 @@ class UsuarioController extends Controller
     }
 
     public function report(){
-        PDF::setHeaderCallback(function($pdf) {
-            $pdf->Cell(0, 27, '', 'B', false, 'R', 0, '', 0, false, 'T', 'M');
-            $pdf->Image(asset('template/dist/img/bolivia.gif'), 15, 10, 0, 15, 'GIF', '', '', true, 150, '', false, false, 0, false, false, false);
-            $pdf->SetFont('helvetica', 'B', 11);
-            $pdf->Text(33,22,'Sistema de centros de rehabilitación','R');
-            $pdf->SetFont('helvetica', 'K', 10);
-            $pdf->Text(15,27,'Establecimiento: '.session('institucion')->inst_nombre);
-            $pdf->Image(asset('template/dist/img/minsalud-logo.jpg'), 25, 12, 0, 12, 'JPG', '', '', true, 150, 'R', false, false, 0, false, false, false);
-        });
-        PDF::setFooterCallback(function($pdf) {
-            $strCodSeguridad=session('institucion')->inst_codigo . '|' . session('institucion')->inst_nombre .'|' . Auth::user()->user_id;
-            $pdf->SetY(-15);
-            $pdf->SetFont('helvetica', 'I', 8);
-            $pdf->Cell(0, 10, 'Pagina '.$pdf->getAliasNumPage().'/'.$pdf->getAliasNbPages(), 'T', false, 'R', 0, '', 0, false, 'T', 'M');
-            //$pdf->write2DBarcode(bcrypt('Mi super codigo'), 'PDF417', 25, 275, 150, 6, null, 'N',true);
-            $pdf->write2DBarcode($strCodSeguridad, 'PDF417', 15, 283, 100, 6, null, 'N',true);
-            //$pdf->writeQR($strCodSeguridad, 'PDF417', 25, 275, 150, 6, null, 'N',true);
-        });
-        PDF::SetTitle('Usuarios');
-        PDF::SetSubject('Reporte de sistema');
-        PDF::SetMargins(15, 30, 15);
-        PDF::SetFontSubsetting(false);
-        PDF::SetFontSize('10px');
-        PDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        ReportTemplate::printHeaderFooter();
         PDF::AddPage('P', 'Letter');
+        ReportTemplate::printTitle('USUARIOS REGISTRADOS EN EL SISTEMA');
         PDF::writeHTML(view('usuario.report')->render(), true, false, true, false, '');
         PDF::lastPage();
         PDF::Output('usuario.pdf');
