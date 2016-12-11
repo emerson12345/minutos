@@ -3,17 +3,14 @@
 namespace Sicere\Http\Controllers;
 
 use Carbon\Carbon;
+use DB;
 use Illuminate\Http\Request;
-use SebastianBergmann\CodeCoverage\Report\Xml\Report;
-use Sicere\Http\Controllers\Controller;
-use Sicere\Models\Agenda;
+use PDF;
 use Sicere\Models\LibCuaderno;
 use Sicere\Models\ReportTemplate;
 use Sicere\Models\Setup;
 use Sicere\User;
-use PDF;
-use Auth;
-use DB;
+
 class ReporteAgendaController extends Controller
 {
     public function inasistencia(){
@@ -247,7 +244,7 @@ class ReporteAgendaController extends Controller
         PDF::SetTextColor(255,255,255);
         PDF::Cell(15,5,number_format($totales['no_abandono']*$perc,2).' %',1,0,'R',true,null,1);
         $xc=110;$yc=PDF::GetY()+40;$r=30;
-        $middle = $totales['total']==0?:($totales['abandono']*360)/$totales['total'];
+        $middle = $totales['total']==0?0:($totales['abandono']*360)/$totales['total'];
         PDF::SetFillColor(240,0,0);
         PDF::PieSector($xc, $yc, $r, 0, $middle, 'FD',false);
         PDF::SetFillColor(0,240,0);
