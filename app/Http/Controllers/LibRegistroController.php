@@ -19,7 +19,7 @@ class LibRegistroController extends Controller
      */
     public function index()
     {
-        echo "index libregistro";
+        //echo "index libregistro";
     }
 
 
@@ -106,23 +106,45 @@ class LibRegistroController extends Controller
             $edadPacienteHc=$edadPacienteHc[0]->pac_edad_anio;
         }
 
-
-        $hc_id=DB::table('paciente_hc')->insertGetId(
-            [
-                'pac_id' => $paciente_id,
-                'rrhh_id' => $request->input('rrhh_id'),
-                'rrhh_id2' => $request->input('rrhh_id2'),
-                'pact_id'=>$request->input('pact_id'),
-                'hc_consulta_nueva'=>$request->input('hc_consulta_nueva'),
-                'hc_consulta_dentro'=>$request->input('hc_consulta_dentro'),
-                'inst_id'=>$request->input('inst_id'),
-                'referido_de_inst_id'=>$referido_de_inst_id,
-                'referido_a_inst_id'=>$referido_a_inst_id,
-                'cua_id'=>$cua_id,
-                'pac_edad'=>$edadPacienteHc,
-                'user_id'=>Auth::user()->user_id//$request->input('user_id')
-            ],'hc_id'
-        );
+        if($request->input('pact_id')==1)
+        {
+            $hc_id=DB::table('paciente_hc')->insertGetId(
+                [
+                    'pac_id' => $paciente_id,
+                    'rrhh_id' => $request->input('rrhh_id'),
+                    'rrhh_id2' => $request->input('rrhh_id2'),
+                    'pact_id'=>$request->input('pact_id'),
+                    'hc_consulta_nueva'=>$request->input('hc_consulta_nueva'),
+                    'hc_consulta_dentro'=>$request->input('hc_consulta_dentro'),
+                    'inst_id'=>$request->input('inst_id'),
+                    'referido_de_inst_id'=>$referido_de_inst_id,
+                    'referido_a_inst_id'=>$referido_a_inst_id,
+                    'cua_id'=>$cua_id,
+                    'pac_edad'=>$edadPacienteHc,
+                    'user_id'=>Auth::user()->user_id//$request->input('user_id')
+                ],'hc_id'
+            );
+        }
+        else
+        {
+            $hc_id=DB::table('paciente_hc')->insertGetId(
+                [
+                    'pac_id' => $paciente_id,
+                    'rrhh_id' => $request->input('rrhh_id'),
+                    'rrhh_id2' => $request->input('rrhh_id2'),
+                    'pact_id'=>$request->input('pact_id'),
+                    'hc_consulta_nueva'=>$request->input('hc_consulta_nueva'),
+                    'hc_consulta_dentro'=>$request->input('hc_consulta_dentro'),
+                    'inst_id'=>$request->input('inst_id'),
+                    'conv_id'=>$request->input('conv_id'),
+                    'referido_de_inst_id'=>$referido_de_inst_id,
+                    'referido_a_inst_id'=>$referido_a_inst_id,
+                    'cua_id'=>$cua_id,
+                    'pac_edad'=>$edadPacienteHc,
+                    'user_id'=>Auth::user()->user_id//$request->input('user_id')
+                ],'hc_id'
+            );
+        }
         DB::table('evolucion')->insert(
             [
                 'hc_id'=>$hc_id,
@@ -191,22 +213,46 @@ class LibRegistroController extends Controller
         else
             $hc_consulta_dentro=1;
 
-        DB::table('paciente_hc')
-            ->where('hc_id', $hc_id)
-            ->update(
-            [
-                'rrhh_id' => $request->input('rrhh_id'),
-                'rrhh_id2' => $request->input('rrhh_id2'),
-                'pact_id'=>$request->input('pact_id'),
-                'hc_consulta_nueva'=>$hc_consulta_nueva,
-                'hc_consulta_dentro'=>$hc_consulta_dentro,
-                //'inst_id'=>$request->input('inst_id'),
-                'referido_de_inst_id'=>$referido_de_inst_id,
-                'referido_a_inst_id'=>$referido_a_inst_id,
-                'cua_id'=>$cua_id,
-                'user_id'=>Auth::user()->user_id//$request->input('user_id')
-            ]
-        );
+
+        if($request->input('pact_id')==1)
+        {
+            DB::table('paciente_hc')
+                ->where('hc_id', $hc_id)
+                ->update(
+                    [
+                        'rrhh_id' => $request->input('rrhh_id'),
+                        'rrhh_id2' => $request->input('rrhh_id2'),
+                        'pact_id'=>$request->input('pact_id'),
+                        'hc_consulta_nueva'=>$hc_consulta_nueva,
+                        'hc_consulta_dentro'=>$hc_consulta_dentro,
+                        //'inst_id'=>$request->input('inst_id'),
+                        'referido_de_inst_id'=>$referido_de_inst_id,
+                        'referido_a_inst_id'=>$referido_a_inst_id,
+                        'cua_id'=>$cua_id,
+                        'user_id'=>Auth::user()->user_id//$request->input('user_id')
+                    ]
+                );
+        }
+        else
+        {
+            DB::table('paciente_hc')
+                ->where('hc_id', $hc_id)
+                ->update(
+                    [
+                        'rrhh_id' => $request->input('rrhh_id'),
+                        'rrhh_id2' => $request->input('rrhh_id2'),
+                        'pact_id'=>$request->input('pact_id'),
+                        'hc_consulta_nueva'=>$hc_consulta_nueva,
+                        'conv_id'=>$request->input('conv_id'),
+                        'hc_consulta_dentro'=>$hc_consulta_dentro,
+                        //'inst_id'=>$request->input('inst_id'),
+                        'referido_de_inst_id'=>$referido_de_inst_id,
+                        'referido_a_inst_id'=>$referido_a_inst_id,
+                        'cua_id'=>$cua_id,
+                        'user_id'=>Auth::user()->user_id//$request->input('user_id')
+                    ]
+                );
+        }
         foreach($listFormularios as $f){
             $data=$request->input($f->for_id);
             if(isset($data)==false)

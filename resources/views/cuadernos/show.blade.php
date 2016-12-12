@@ -125,6 +125,15 @@ function bisiesto($anio_actual){
             border-radius: 10px;
             padding: 3px;
         }
+        SELECT {
+            font-size: 10px;
+            font-family : verdana,arial,helvetica;
+        }
+        OPTION
+        {
+            font-size: 10px;
+            font-family : verdana,arial,helvetica;
+        }
 
     </style>
 
@@ -184,7 +193,7 @@ function bisiesto($anio_actual){
                     </button>
                 </div>
             <div class="box-body" >
-                <label for="">Referido de Establecimeinto</label>
+                <label for="">Referido de Establecimiento</label>
                 <input type="text" id="referido_de_inst_id" name="referido_de_inst_id" size="0" value="-1"  style="visibility:hidden">
                 <input type="text" id="tb_referido_de_establecimeinto" name="tb_referido_de_establecimeinto" size="40">
                 <button type="button" id="btn_referido_de_establecimeinto" name="btn_referido_de_establecimeinto" class="btn btn-edit btn-md btn-primary btn_buscar" value="Buscar">
@@ -192,7 +201,7 @@ function bisiesto($anio_actual){
                 </button>
             </div>
             <div class="box-body" >
-                <label for="">Referido a Establecimeinto</label>
+                <label for="">Referido a Establecimiento</label>
                 <input type="text" id="referido_a_inst_id" name="referido_a_inst_id" size="5" value="-1"  style="visibility:hidden">
                 <input type="text" id="tb_referido_a_establecimeinto" name="tb_referido_a_establecimeinto" size="40">
 
@@ -235,7 +244,16 @@ function bisiesto($anio_actual){
                                         </thead>
                                         <tbody>
                                         <?php
-                                        foreach ($listPacientes as $value) {
+                                        $estado_pac_id=true;
+                                        $default_pac_id=-1;
+                                        foreach ($listPacientes as $value)
+                                        {
+                                            if ($estado_pac_id)
+                                            {
+                                                $default_pac_id=$value->pac_id;
+                                                $estado_pac_id=false;
+                                                echo '<input type="hidden" name="default_pac_id" id="default_pac_id" value='.$default_pac_id.'>';
+                                            }
                                         ?>
                                         <tr role="row">
                                             <td class="tr-cuadernos tr-nro"
@@ -300,7 +318,21 @@ function bisiesto($anio_actual){
                                         </thead>
                                         <tbody>
                                         <?php
-                                        foreach ($listCuadernos as $value) {
+                                                $default_cua_id=-1;
+                                                $estado_cua_id=true;
+                                                $default_pac_id=-1;
+                                                $default_cua_nombre="";
+                                                $nro_cuadernos=0;
+                                            foreach ($listCuadernos as $value)
+                                            {
+                                                $nro_cuadernos++;
+                                                if ($estado_cua_id)
+                                                {
+                                                    $default_cua_id=$value->cua_id;
+                                                    $estado_cua_id=false;
+                                                    echo '<input type="hidden" name="default_cua_id" id="default_cua_id" value='.$default_cua_id.'>';
+                                                    echo '<input type="hidden" name="default_cua_nombre" id="default_cua_nombre" value='.$value->cua_nombre.'>';
+                                                }
                                         ?>
                                         <tr role="row">
                                             <td class="tr-cuadernos tr-dimencion" id="<?= $value->cua_id; ?>-<?= $value->cua_nombre; ?>"
@@ -313,6 +345,7 @@ function bisiesto($anio_actual){
                                         </tr>
                                         <?php
                                         }
+                                            echo '<input type="hidden" name="nro_cuadernos" id="nro_cuadernos" value='.$nro_cuadernos.'>';
                                         ?>
                                         </tbody>
                                     </table>
@@ -441,9 +474,9 @@ function bisiesto($anio_actual){
     <div class="col-md-8">
         <div class="box contenedor">
             <div class="box-body">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label for="">Personal de Salud: </label>
-                    <?php echo Form::select('rrhh_id', $listRrhh, null,array('required'=> true,'class'=>"selectpicker")); ?>
+                    <?php echo Form::select('rrhh_id', $listRrhh, $usuarioRrhh,array('required'=> true,'class'=>"selectpicker")); ?>
                 </div>
                 <div class="col-md-3">
                     <label for="">Tipo de Paciente: </label>
@@ -455,7 +488,7 @@ function bisiesto($anio_actual){
                         {!! Form::select('conv_id', $listInstitucion)  !!}
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                         <label for="">Consulta nueva: </label>
                         <input type="hidden" name='hc_consulta_nueva' value="0">
                         {!! Form::checkbox('hc_consulta_nueva', '1',false) !!}<br>
@@ -490,11 +523,24 @@ function bisiesto($anio_actual){
         var url_cuaderno_peticion_hc ='{{$url_cuaderno_peticion_hc}}';
         var estado_agenda='{{$estadoAgenda}}';
         var fila_seleccinable,fila_seleccinable_cuadernos,fila_seleccinable_instituciones_r;
+        var default_cua_id=$("#default_cua_id").val();
+        var default_pac_id=$("#default_pac_id").val();
+        var default_cua_nombre=$("#default_cua_nombre").val();
+        var nro_cuadernos=$("#nro_cuadernos").val();
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $(document).ready(
                 function(){
+                            if(default_cua_id!=-1)
+                            {
+                                if(nro_cuadernos==1)
+                                {
+                                    ajax_cuaderno2(url_cuaderno_peticion_hc,"#t_cuadernos","#cuaderno",'click',"GET",default_cua_id,default_pac_id);
+                                    $("#tb-cuadernos").val(default_cua_nombre);
+                                }
+                            }
                             if(estado_agenda==true)
                                 ajax_cuaderno2(url_cuaderno_peticion_hc,"#t_cuadernos","#cuaderno",'click',"GET",'{{$AgendaPacidentesCuaId}}','{{$AgendaPacidentesPacId}}');
+
                 }
         );
         /////////////////////////////////////////////////////

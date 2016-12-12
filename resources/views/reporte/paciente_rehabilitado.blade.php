@@ -64,7 +64,8 @@
                             if(session()->has('institucion')){
                                 $cuadernos = \Sicere\Models\LibCuaderno::All();
                                 $user_list= $cuadernos->pluck('cua_nombre','cua_id');
-                                $user_list->prepend('Todos',0);
+                                //$user_list->prepend('Todos',0);
+                                dd($user_list);
                             }
                             ?>
                             <label for="user_id" class="control-label col-sm-4">Cuadernos: </label>
