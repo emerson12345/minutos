@@ -224,6 +224,15 @@ Route::group(['prefix'=>'reporte','middleware'=>['auth','access','log']],functio
     Route::post('reporte/exitosos','ReporteAgendaController@postTratamientosExitosos')->name('reporte.agenda.exitosos.post');
     Route::get('reporte/etario','ReporteAgendaController@grupoEtario')->name('reporte.agenda.etario');
     Route::post('reporte/etario','ReporteAgendaController@postgrupoEtario')->name('reporte.agenda.etario.post');
+    Route::get('reporte/morbilidad','ReporteController@morbilidad')->name('reporte.morbilidad') ;
+    Route::post('reporte/morbilidad','ReporteController@morbilidadPDF')->name('reporte.morbilidad.post') ;
+    /*Reporte Tratamiendo realizado por Percy*/
+    Route::get('reporte/tratamiento_realizado','Reportecontroller@tratamientoRealizado')->name('reporte.tratamiento_realizado');
+    Route::post('reporte/tratamiento_realizado','Reportecontroller@tratamientoRealizadoPDF')->name('reporte.tratamiento_realizado.post');
+
+    /*Reporte Paciente rehabilitado por Percy*/
+    Route::get('reporte/paciente_rehabilitado','Reportecontroller@pacienteRehabilitado')->name('reporte.pacienteRehabilitado');
+    Route::post('reporte/paciente_rehabilitado','Reportecontroller@pacienteRehabilitadoPDF')->name('reporte.paciente_rehabilitado.post');
 });
 
 /****De uso general para cargar cuadernos asignados a usuario***/
