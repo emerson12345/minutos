@@ -32,7 +32,7 @@
                 <div class="form-group">
                     {!! Form::label('cua_nombre', 'NOMBRE DE CUADERNO', ['class' => 'col-sm-2 control-label']) !!}
                     <div class="col-sm-10">
-                        {!! Form::text('cua_nombre',null,['class'=>'form-control']) !!}
+                        {!! Form::text('cua_nombre',null,['class'=>'form-control','maxlength'=>100]) !!}
                         <span class="label label-warning"></span>
                     </div>
                 </div>

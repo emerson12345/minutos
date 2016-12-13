@@ -27,7 +27,7 @@ function eventHandlers(){
     });
     $("#duracion").TouchSpin({
         verticalbuttons:true,
-        min:15,
+        min:5,
         step:5
     });
     $("#pac_id").select2({
@@ -44,7 +44,6 @@ function eventHandlers(){
                 };
             },
             processResults: function (data, page) {
-                console.log(data);
                 return {
                     results: data
                 };

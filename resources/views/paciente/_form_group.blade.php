@@ -19,7 +19,7 @@
 <div class="form-group">
     {!! Form::label('gru_fam_nro_ci', 'C.I.', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('gru_fam_nro_ci',null,['class'=>'form-control']) !!}
+        {!! Form::text('gru_fam_nro_ci',null,['class'=>'form-control','maxlength'=>10]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
@@ -27,7 +27,7 @@
 <div class="form-group">
     {!! Form::label('gru_fam_ap_prim', 'Primer apellido', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('gru_fam_ap_prim',null,['class'=>'form-control']) !!}
+        {!! Form::text('gru_fam_ap_prim',null,['class'=>'form-control','maxlength'=>100]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
@@ -35,7 +35,7 @@
 <div class="form-group">
     {!! Form::label('gru_fam_ap_seg', 'Segundo apellido', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('gru_fam_ap_seg',null,['class'=>'form-control']) !!}
+        {!! Form::text('gru_fam_ap_seg',null,['class'=>'form-control','maxlength'=>100]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
@@ -43,7 +43,7 @@
 <div class="form-group">
     {!! Form::label('gru_fam_nombre', 'Nombres', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('gru_fam_nombre',null,['class'=>'form-control']) !!}
+        {!! Form::text('gru_fam_nombre',null,['class'=>'form-control','maxlength'=>100]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
@@ -63,7 +63,7 @@
 <div class="form-group">
     {!! Form::label('gru_fam_telf', 'Teléfono', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('gru_fam_telf',null,['class'=>'form-control']) !!}
+        {!! Form::text('gru_fam_telf',null,['class'=>'form-control','maxlength'=>30]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
@@ -71,7 +71,7 @@
 <div class="form-group">
     {!! Form::label('gru_fam_direccion', 'Dirección', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('gru_fam_direccion',null,['class'=>'form-control']) !!}
+        {!! Form::text('gru_fam_direccion',null,['class'=>'form-control','maxlength'=>150]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
