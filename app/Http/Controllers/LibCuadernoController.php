@@ -85,7 +85,19 @@ class LibCuadernoController extends Controller
 
 
         $listPacientes = Paciente::all();
-        $listRrhh=  Rrhh::all()->where('inst_id','=',$inst_id)->pluck('rrhh_nombre','rrhh_id');
+        $listRrhh=  Rrhh::all()
+            ->where('inst_id','=',$inst_id)
+            ->pluck('nombreCompleto','rrhh_id');
+            //->pluck('rrhh.rrhh_id')
+            //->first();
+
+        $usuarioRrhh=DB::table('rrhh')
+            ->join('usuario_rrhh','usuario_rrhh.rrhh_id','=','rrhh.rrhh_id')
+            ->where('usuario_rrhh.user_id','=',\Auth::user()->user_id)
+            ->pluck('rrhh.rrhh_id')
+            ->first();
+        //dd(\Auth::user()->user_id);
+
 
 
 
@@ -95,6 +107,7 @@ class LibCuadernoController extends Controller
                 'listCuadernos' => $listCuadernos,
                 'listPacientes' => $listPacientes,
                 'listRrhh' => $listRrhh,
+                'usuarioRrhh' => $usuarioRrhh,
                 'listInstitucion'=>$listInstitucion,
                 'listInstitucionAll2'=>$listInstitucionAll2,
                 'listAgendaPacientes'=>$listAgendaPacientes

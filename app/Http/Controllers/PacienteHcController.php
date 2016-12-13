@@ -113,6 +113,7 @@ class PacienteHcController extends Controller
                 paciente_hc.cua_id,
                 lib_cuadernos.cua_nombre,
                 paciente_hc.pact_id,
+                paciente_hc.conv_id,
                 paciente_tipo.pact_nombre,
                 paciente_hc.hc_consulta_nueva,paciente_hc.hc_consulta_dentro,
                 paciente_hc.referido_a_inst_id,
@@ -210,7 +211,7 @@ class PacienteHcController extends Controller
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        $listRrhh=  Rrhh::all()->where('inst_id','=',$inst_id)->pluck('rrhh_nombre','rrhh_id');
+        $listRrhh=  Rrhh::all()->where('inst_id','=',$inst_id)->pluck('nombreCompleto','rrhh_id');
 
         return view('PacienteHc.listAtencionHc',
             [

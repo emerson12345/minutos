@@ -158,7 +158,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            {!! Form::label('tb_libro_atencion', 'Libro de atención') !!}
+                            {!! Form::label('tb_libro_atencion', 'Cuaderno') !!}
                             {!! Form::select('tb_listCuadernos_search', $listCuadernosSearch,null,array('id'=>'tb_listCuadernos_search')) !!}
                         </div>
                     </div>

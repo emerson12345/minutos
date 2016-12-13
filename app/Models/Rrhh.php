@@ -39,5 +39,9 @@ class Rrhh extends Model
     public function usuario(){
         return $this->belongsToMany('Sicere\User','usuario_rrhh','rrhh_id','user_id');
     }
+    public function getNombreCompletoAttribute()
+    {
+        return $this->rrhh_ap_prim.' '.$this->rrhh_ap_seg.' '.$this->rrhh_nombre;
+    }
         
 }

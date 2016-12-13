@@ -79,9 +79,7 @@
             <div class="col-md-4">
                 <label for="">Personal de Salud: </label>
                 <?php echo Form::select('rrhh_id', $listRrhh,$listDatosHc->rrhh_id); ?>
-                <br>
-                <label for="">Personal de Salud2: </label>
-                <?php echo Form::select('rrhh_id2', $listRrhh,$listDatosHc->rrhh_id2); ?>
+                <input type="hidden" value="0" name="rrhh_id2">
             </div>
             <div class="col-md-5">
                 <label for="">Tipo de Paciente: </label>
@@ -90,14 +88,14 @@
                     <label for="">
                         Institucion:
                     </label>
-                    {!! Form::select('conv_id', $listInstitucion)  !!}
+                    {!! Form::select('conv_id', $listInstitucion,$listDatosHc->conv_id, array('id' => 'conv_id'))  !!}
                 </div>
             </div>
         </div>
         <br>
         <div class="row">
             <div class="col-md-5">
-                <label for="">Referido de Establecimeinto</label>
+                <label for="">Referido de Establecimiento</label>
                 <input type="text" id="referido_de_inst_id" name="referido_de_inst_id" size="1" value="<?= $listDatosHc->referido_a_inst_id; ?>"  style="visibility:hidden">
                 <input type="text" id="tb_referido_de_establecimeinto" name="tb_referido_de_establecimeinto" size="25" value="<?= $listDatosHc->referido_d; ?>">
                 <?= $btn_referido_de_establecimeinto;?>
@@ -107,7 +105,7 @@
 
             </div>
             <div class="col-md-5">
-                <label for="">Referido a Establecimeinto</label>
+                <label for="">Referido a Establecimiento</label>
                 <input type="text" id="referido_a_inst_id" name="referido_a_inst_id" size="1" value="<?= $listDatosHc->referido_a_inst_id; ?>"  style="visibility:hidden">
                 <input type="text" id="tb_referido_a_establecimeinto" name="tb_referido_a_establecimeinto" size="25" value="<?= $listDatosHc->referido_a; ?>">
                 <!--<input type="button" value="..." id="btn_referido_a_establecimeinto" name="btn_referido_a_establecimeinto">-->
@@ -392,5 +390,13 @@
             }
         });
         //console.log(url_data+"/"+col_id+"/"+for_id+"/"+col_tipo);
+    });
+    if($("#pact_id").val()==1)
+    {
+        $("#institucion").hide();
+
+    }
+    $("#pact_id").on('change',function(e){
+        $("#institucion").toggle();
     });
 </script>
