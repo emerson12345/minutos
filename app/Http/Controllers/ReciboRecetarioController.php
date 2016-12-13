@@ -177,7 +177,6 @@ class ReciboRecetarioController extends Controller
             ->select('paciente_hc_receta.rec_fec_alta','paciente.pac_ap_prim','paciente.pac_sexo','paciente.pac_ap_seg','paciente.pac_nombre','paciente_hc.hc_id',
                 'paciente.pac_direccion')
             ->first();
-
         $y=50;
         $x=16;
 
@@ -202,7 +201,17 @@ class ReciboRecetarioController extends Controller
         PDF::Text(120,49,'Historia Clinica: '.$listDatosPaciente->hc_id);
         //PDF::Text(120,54,'Medico Responsable: '.Auth::user()->user_nombre);
         PDF::Text(120,54,'Fecha de Consulta: '.$dia."/".$mes."/".$anio);
-        PDF::Image(asset('template/dist/img/minsalud-logo.jpg'), 25, 12, 0, 12, 'JPG', 'http://www.tcpdf.org', '', true, 150, 'R', false, false, 0, false, false, false);
+        $y=$y+5;
+        PDF::Text($x,$y,'Diagnóstico: '.DB::select("
+      SELECT lib_registro.red_descripcion
+      FROM lib_registro
+         INNER JOIN lib_formulario ON (lib_registro.for_id = lib_formulario.for_id)
+         INNER JOIN paciente_hc ON (lib_registro.pac_id = paciente_hc.pac_id)  AND (lib_registro.hc_id = paciente_hc.hc_id)
+       WHERE
+         (lib_formulario.col_id = 10 OR
+         lib_formulario.col_id = 521) and paciente_hc.hc_id=".$hc_id." limit 1")[0]->red_descripcion);
+
+        PDF::Image(asset('template/dist/img/minsalud-logo.jpg'), 25, 12, 0, 12, 'JPG', '', '', true, 150, 'R', false, false, 0, false, false, false);
         PDF::SetTitle('My Report');
         PDF::SetSubject('Reporte de sistema');
         PDF::SetMargins(15, 50, 15);
