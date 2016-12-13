@@ -238,9 +238,9 @@
                         <a href="#" class="large-text">
                         @if(session()->has('institucion'))
                                 {{session('institucion')->inst_nombre}}
-                            @else
-                                Sin institución
-                            @endif
+                        @else
+                            Sin institución
+                        @endif
                     </a>
                 </div>
             </div>

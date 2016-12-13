@@ -28,9 +28,9 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('agenda_descripcion', 'Descripción', ['class' => 'col-sm-2 control-label']) !!}
+    {!! Form::label('agenda_descripcion', 'Pauta de tratamiento', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('agenda_descripcion',null,['class'=>'form-control']) !!}
+        {!! Form::text('agenda_descripcion',null,['class'=>'form-control','maxlength'=>50]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
@@ -38,7 +38,7 @@
 <div class="form-group">
     {!! Form::label('duracion', 'Duración (min)', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('duracion',15,['class'=>'form-control','id'=>'duracion']) !!}
+        {!! Form::text('duracion',35,['class'=>'form-control','id'=>'duracion']) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
@@ -63,7 +63,11 @@
         <label for="dia-jue">Jue.</label>
         <input type="checkbox" name="dia[]" value="4" id="dia-jue" class="week-day">&nbsp;&nbsp;&nbsp;&nbsp;
         <label for="dia-vie">Vie.</label>
-        <input type="checkbox" name="dia[]" value="5" id="dia-vie" class="week-day">&nbsp;&nbsp;&nbsp;&nbsp;<br>
+        <input type="checkbox" name="dia[]" value="5" id="dia-vie" class="week-day">&nbsp;&nbsp;&nbsp;&nbsp;
+        <label for="dia-sab">Sab.</label>
+        <input type="checkbox" name="dia[]" value="6" id="dia-sab" class="week-day">&nbsp;&nbsp;&nbsp;&nbsp;
+        <label for="dia-dom">Dom.</label>
+        <input type="checkbox" name="dia[]" value="0" id="dia-dom" class="week-day">&nbsp;&nbsp;&nbsp;&nbsp;<br>
         <span class="label label-warning"></span>
     </div>
 </div>

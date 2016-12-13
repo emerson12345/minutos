@@ -3,7 +3,7 @@
 <div class="form-group">
     {!! Form::label('inst_codigo', 'CÓDIGO', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('inst_codigo',null,['class'=>'form-control']) !!}
+        {!! Form::text('inst_codigo',null,['class'=>'form-control','maxlength'=>10]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
@@ -11,7 +11,7 @@
 <div class="form-group">
     {!! Form::label('inst_nombre', 'NOMBRE', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('inst_nombre',null,['class'=>'form-control']) !!}
+        {!! Form::text('inst_nombre',null,['class'=>'form-control','maxlength'=>100]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
@@ -19,7 +19,7 @@
 <div class="form-group">
     {!! Form::label('inst_telf1', 'TELÉFONO', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('inst_telf1',null,['class'=>'form-control']) !!}
+        {!! Form::text('inst_telf1',null,['class'=>'form-control','maxlength'=>15]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
@@ -27,7 +27,7 @@
 <div class="form-group">
     {!! Form::label('inst_telf2', 'TELÉFONO DOS', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('inst_telf2',null,['class'=>'form-control']) !!}
+        {!! Form::text('inst_telf2',null,['class'=>'form-control','maxlength'=>15]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
@@ -35,7 +35,7 @@
 <div class="form-group">
     {!! Form::label('inst_fax', 'FAX', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('inst_fax',null,['class'=>'form-control','require']) !!}
+        {!! Form::text('inst_fax',null,['class'=>'form-control','require','maxlength'=>15]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
@@ -43,7 +43,7 @@
 <div class="form-group">
     {!! Form::label('inst_email', 'EMAIL', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::email('inst_email',null,['class'=>'form-control']) !!}
+        {!! Form::email('inst_email',null,['class'=>'form-control','maxlength'=>100]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
@@ -51,7 +51,7 @@
 <div class="form-group">
     {!! Form::label('inst_responsable', 'RESPONSABLE', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('inst_responsable',null,['class'=>'form-control']) !!}
+        {!! Form::text('inst_responsable',null,['class'=>'form-control','maxlength'=>100]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
@@ -108,7 +108,7 @@
 <div class="form-group">
     {!! Form::label('inst_localidad', 'LOCALIDAD', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('inst_localidad',null,['class'=>'form-control']) !!}
+        {!! Form::text('inst_localidad',null,['class'=>'form-control','maxlength'=>120]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
@@ -116,7 +116,7 @@
 <div class="form-group">
     {!! Form::label('inst_direccion_zona', 'ZONA', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('inst_direccion_zona',null,['class'=>'form-control']) !!}
+        {!! Form::text('inst_direccion_zona',null,['class'=>'form-control','maxlength'=>50]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
@@ -124,7 +124,7 @@
 <div class="form-group">
     {!! Form::label('inst_direccion_calle', 'DIRECCIÓN', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('inst_direccion_calle',null,['class'=>'form-control']) !!}
+        {!! Form::text('inst_direccion_calle',null,['class'=>'form-control','maxlength'=>100]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>

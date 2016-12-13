@@ -13,7 +13,7 @@
                 <div class="col-md-8">
                     <div class="form-group">
                         {!! Form::label('pac_nro_ci', 'C.I.:') !!}
-                        {!! Form::text('pac_nro_ci',null,['class'=>'form-control input-sm']) !!}
+                        {!! Form::text('pac_nro_ci',null,['class'=>'form-control input-sm','maxlength'=>10]) !!}
                         <span class="label label-warning"></span>
                     </div>
                 </div>
@@ -28,19 +28,19 @@
 
             <div class="form-group">
                 {!! Form::label('pac_ap_prim', 'Primer Apellido') !!}
-                {!! Form::text('pac_ap_prim',null,['class'=>'form-control input-sm']) !!}
+                {!! Form::text('pac_ap_prim',null,['class'=>'form-control input-sm','maxlength'=>100]) !!}
                 <span class="label label-warning"></span>
             </div>
 
             <div class="form-group">
                 {!! Form::label('pac_ap_seg', 'Segundo Apellido') !!}
-                {!! Form::text('pac_ap_seg',null,['class'=>'form-control input-sm']) !!}
+                {!! Form::text('pac_ap_seg',null,['class'=>'form-control input-sm','maxlength'=>100]) !!}
                 <span class="label label-warning"></span>
             </div>
 
             <div class="form-group">
                 {!! Form::label('pac_nombre', 'Nombres') !!}
-                {!! Form::text('pac_nombre',null,['class'=>'form-control input-sm']) !!}
+                {!! Form::text('pac_nombre',null,['class'=>'form-control input-sm','maxlength'=>100]) !!}
                 <span class="label label-warning"></span>
             </div>
 
@@ -85,7 +85,7 @@
             </div>
             <div class="form-group">
                 {!! Form::label('pac_ocupacion', 'Ocupación') !!}
-                {!! Form::text('pac_ocupacion',null,['class'=>'form-control input-sm']) !!}
+                {!! Form::text('pac_ocupacion',null,['class'=>'form-control input-sm','maxlength'=>120]) !!}
                 <span class="label label-warning"></span>
             </div>
         </div>
@@ -159,7 +159,7 @@
 
             <div class="form-group">
                 {!! Form::label('pac_comunidad', 'Comunidad') !!}
-                {!! Form::text('pac_comunidad',null,['class'=>'form-control input-sm']) !!}
+                {!! Form::text('pac_comunidad',null,['class'=>'form-control input-sm','maxlength'=>120]) !!}
                 <span class="label label-warning"></span>
             </div>
 
@@ -167,14 +167,14 @@
                 <div class="col-md-8">
                     <div class="form-group">
                         {!! Form::label('pac_direccion', 'Dirección') !!}
-                        {!! Form::text('pac_direccion',null,['class'=>'form-control input-sm']) !!}
+                        {!! Form::text('pac_direccion',null,['class'=>'form-control input-sm','maxlength'=>120]) !!}
                         <span class="label label-warning"></span>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         {!! Form::label('pac_nro_telf', 'Teléfono') !!}
-                        {!! Form::text('pac_nro_telf',null,['class'=>'form-control input-sm']) !!}
+                        {!! Form::text('pac_nro_telf',null,['class'=>'form-control input-sm','maxlength'=>30]) !!}
                         <span class="label label-warning"></span>
                     </div>
                 </div>

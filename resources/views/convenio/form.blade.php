@@ -3,7 +3,7 @@
 <div class="form-group">
     {!! Form::label('conv_codigo', 'CODIGO', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('conv_codigo',null,['class'=>'form-control']) !!}
+        {!! Form::text('conv_codigo',null,['class'=>'form-control','maxlength'=>15]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>

@@ -11,7 +11,7 @@
 <div class="form-group">
     {!! Form::label('user_codigo', 'Nombre de usuario', ['class' => 'col-sm-3 control-label']) !!}
     <div class="col-sm-9">
-        {!! Form::text('user_codigo',null,['class'=>'form-control']) !!}
+        {!! Form::text('user_codigo',null,['class'=>'form-control','maxlength'=>20]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
@@ -35,7 +35,7 @@
 <div class="form-group">
     {!! Form::label('user_email', 'Email', ['class' => 'col-sm-3 control-label']) !!}
     <div class="col-sm-9">
-        {!! Form::email('user_email',null,['class'=>'form-control']) !!}
+        {!! Form::email('user_email',null,['class'=>'form-control','maxlength'=>150]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
