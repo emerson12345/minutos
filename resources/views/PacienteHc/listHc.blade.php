@@ -17,10 +17,10 @@
                         <?= $flight->cua_nombre ?>
                         <input type="hidden" name="hc_id" value="<?= $flight->hc_id ?>">
                     </td>
-                    <td id="<?= $flight->cua_id ?>_<?= $flight->pac_id ?>_<?= $flight->hc_fecha ?>">
+                    <td id="<?= $flight->cua_id ?>_<?= $flight->pac_id ?>_<?= $flight->hc_id ?>_<?= $flight->hc_fecha ?>">
                         <?= $flight->hc_fecha ?>
                     </td>
-                    <td id="<?= $flight->cua_id ?>_<?= $flight->pac_id ?>_<?= $flight->hc_fecha ?>">
+                    <td id="<?= $flight->cua_id ?>_<?= $flight->pac_id ?>_<?= $flight->hc_id ?>_<?= $flight->hc_fecha ?>">
                         <?= $flight->inst_nombre ?>
                     </td>
 
