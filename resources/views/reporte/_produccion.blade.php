@@ -34,7 +34,6 @@ if($cuadernos){
         PDF::Cell(85,5,$cuaderno->cua_nombre,'TBL',0,'L',true,null,1);
         $edades = [ [0,4],[5,9],[10,20],[21,59],[60,200] ];
         $total = 0;
-
         foreach ($edades as $i=>$edad){
             $datos = $cuaderno->report($fec_ini,$fec_fin,$edad[0],$edad[1],$institucion->inst_id);
             $total += $datos->total;
