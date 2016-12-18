@@ -18,7 +18,7 @@
     </ol>
 @stop
 @section('content')
-    {!! Form::open(['route' => 'libregistro.edit' ,'class'=>'form-horizontal']) !!}
+    {!! Form::open(['route' => 'libregistro.edit' ,'class'=>'form-horizontal','name'=>'form_pacienteHc_editar']) !!}
     <style>
         thead, tbody { display: block; }
         tbody {
@@ -196,6 +196,7 @@
     <link rel="stylesheet" href="{{asset('template/plugins/bootstrap-daterangepicker/css/daterangepicker.css')}}">
     <script src="{{asset('template/plugins/bootstrap-daterangepicker/js/moment.min.js')}}"></script>
     <script src="{{asset('template/plugins/bootstrap-daterangepicker/js/daterangepicker.js')}}"></script>
+
     <script>
         //PacienteHc/historial_clinico/
         var url_data_hc='{{$url_paciente}}';

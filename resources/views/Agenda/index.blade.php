@@ -90,6 +90,9 @@
                                             Agendar
                                         </button>
                                     </div>
+                                    <div id="select-date">
+
+                                    </div>
                                 </div>
                                 <!-- /.box-body -->
                             </div>
@@ -137,6 +140,8 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+    <input type="hidden" id="url_agenda_cuaderno" value={{asset("cuaderno/index/")}}>
 
         @stop
         @section('script')
@@ -267,6 +272,7 @@
                             var back=copiedEventObject.backgroundColor;
 
                             crsfToken = document.getElementsByName("_token")[0].value;
+
                             $.ajax({
                                 url: 'guardaEventos',
                                 data: 'title='+ title+'&start='+ start+'&allday='+allDay+'&background='+back,
@@ -295,22 +301,24 @@
                             }else{var end="NULL";
                             }
                             crsfToken = document.getElementsByName("_token")[0].value;
-                            $.ajax({
-                                url: 'actualizaEventos',
-                                data: 'title='+ event.title+'&start='+ start +'&end='+ end +'&id='+ event.id+'&background='+back+'&allday='+allDay,
-                                type: "POST",
-                                headers: {
-                                    "X-CSRF-TOKEN": crsfToken
-                                },
-                                success: function(json) {
-                                    console.log("Updated Successfully");
-                                    console.log(json);
-                                    window.location.reload();
-                                },
-                                error: function(json){
-                                    console.log("Error al actualizar evento");
-                                }
-                            });
+                            if (confirm('¿Estas seguro de actulizar los datos?')){
+                                $.ajax({
+                                    url: 'actualizaEventos',
+                                    data: 'title='+ event.title+'&start='+ start +'&end='+ end +'&id='+ event.id+'&background='+back+'&allday='+allDay,
+                                    type: "POST",
+                                    headers: {
+                                        "X-CSRF-TOKEN": crsfToken
+                                    },
+                                    success: function(json) {
+                                        console.log("Updated Successfully");
+                                        console.log(json);
+                                        window.location.reload();
+                                    },
+                                    error: function(json){
+                                        console.log("Error al actualizar evento");
+                                    }
+                                });
+                            }
                         },
                         eventDrop: function(event, delta) {
                             var start = event.start.format("YYYY-MM-DD HH:mm");
@@ -321,30 +329,33 @@
                             var back=event.backgroundColor;
                             var allDay=event.allDay;
                             crsfToken = document.getElementsByName("_token")[0].value;
+                            if (confirm('¿Estas seguro de actulizar los datos?')) {
+                                $.ajax({
+                                    url: 'actualizaEventos',
+                                    data: 'title=' + event.title + '&start=' + start + '&end=' + end + '&id=' + event.id + '&background=' + back + '&allday=' + allDay,
+                                    type: "POST",
+                                    headers: {
+                                        "X-CSRF-TOKEN": crsfToken
+                                    },
+                                    success: function (json) {
+                                        console.log("Updated Successfully eventdrop");
+                                        console.log(json);
+                                        window.location.reload();
+                                    },
+                                    error: function (json) {
+                                        console.log("Error al actualizar eventdrop");
+                                    }
+                                });
+                            }
 
-                            $.ajax({
-                                url: 'actualizaEventos',
-                                data: 'title='+ event.title+'&start='+ start +'&end='+ end+'&id='+ event.id+'&background='+back+'&allday='+allDay ,
-                                type: "POST",
-                                headers: {
-                                    "X-CSRF-TOKEN": crsfToken
-                                },
-                                success: function(json) {
-                                    console.log("Updated Successfully eventdrop");
-                                    console.log(json);
-                                    window.location.reload();
-                                },
-                                error: function(json){
-                                    console.log("Error al actualizar eventdrop");
-                                }
-                            });
                         },
                         eventClick: function (event, jsEvent, view) {
                             //$('#myModal_instituciones_r').modal('show');
 
                             crsfToken = document.getElementsByName("_token")[0].value;
                             //alert(event.id);
-                            window.location="http://localhost/SICEREP6/public/cuaderno/index/"+event.id;
+                            window.location=$("#url_agenda_cuaderno").val()+"/"+event.id;
+//                            window.location="http://localhost/SICEREP6/public/cuaderno/index/"+event.id;
                             //var con=confirm("Esta seguro que desea eliminar el evento");
                             //if(con){
                                 /*
@@ -454,7 +465,6 @@
                      });
                      */
                 });
-
 
             </script>
         @stop
