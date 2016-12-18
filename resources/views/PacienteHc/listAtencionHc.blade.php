@@ -47,7 +47,7 @@
                     {
                     ?>
                     <div class="col-md-8">
-                        <input type="submit" value="Modificar" class="btn btn-edit btn-md btn-primary">
+                        <input type="button" value="Modificar" class="btn btn-edit btn-md btn-primary" id="btn-editar-modificar">
                     </div>
                     <div class="col-md-4">
                         <input type="button" value="Examen complementario" id="btn_examen_complementario" class="btn btn-edit btn-md btn-primary">
@@ -399,4 +399,20 @@
     $("#pact_id").on('change',function(e){
         $("#institucion").toggle();
     });
+    $("#pact_id").on('change',function(e){
+        $("#institucion").toggle();
+    });
+
+    $("#btn-editar-modificar").on('click',function(e){
+        if (confirm('¿Estas seguro de actulizar los datos?')){
+            document.form_pacienteHc_editar.submit()
+        }
+        else
+            return false;
+    });/*
+    function pregunta(){
+        if (confirm('¿Estas seguro de actulizar los datos?')){
+            document.form_pacienteHc_editar.submit()
+        }
+    }*/
 </script>
