@@ -312,6 +312,7 @@
                                     success: function(json) {
                                         console.log("Updated Successfully");
                                         console.log(json);
+                                        //Renderizar
                                         window.location.reload();
                                     },
                                     error: function(json){
@@ -340,6 +341,7 @@
                                     success: function (json) {
                                         console.log("Updated Successfully eventdrop");
                                         console.log(json);
+                                        //Renderizar
                                         window.location.reload();
                                     },
                                     error: function (json) {
