@@ -30,7 +30,7 @@
 <div class="form-group">
     {!! Form::label('agenda_descripcion', 'Pauta de tratamiento', ['class' => 'col-sm-2 control-label']) !!}
     <div class="col-sm-10">
-        {!! Form::text('agenda_descripcion',null,['class'=>'form-control','maxlength'=>50]) !!}
+        {!! Form::text('agenda_descripcion',null,['class'=>'form-control','maxlength'=>200]) !!}
         <span class="label label-warning"></span>
     </div>
 </div>
