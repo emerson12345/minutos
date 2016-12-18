@@ -1,4 +1,9 @@
-$("#select-date").datepicker({language:'es',todayHighlight:true});
+$("#select-date").datepicker({language:'es',todayHighlight:true})
+    .on("changeDate",function(e){
+        var currentDate = new moment(e.date);
+        $("#calendar").fullCalendar('gotoDate',currentDate);
+    });
+
 $("#new-cita").on("click",function () {
     var url=$(this).data('url');
     $.ajax({
@@ -33,11 +38,11 @@ function eventHandlers(){
     $("#pac_id").select2({
         language:'es',
         placeholder:'Buscar paciente',
-        minimumInputLength:3,
+        minimumInputLength:1,
         ajax:{
             url:$("#pac_id").data('url'),
             dataType:'json',
-            delay:250,
+            delay:1000,
             data:function (params) {
                 return {
                     query: params.term,

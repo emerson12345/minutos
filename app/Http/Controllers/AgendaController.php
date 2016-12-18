@@ -87,7 +87,8 @@ class AgendaController extends Controller
 
         $lista = Paciente::select('pac_id as id','pac_nro_hc as nro_hc','pac_edad_anio as edad','pac_nro_ci as nro_ci',DB::raw("ltrim(concat_ws(' ',pac_ap_prim,pac_ap_seg,pac_nombre)) as text"))
             ->whereRaw('upper(ltrim(concat_ws(\' \',pac_ap_prim,pac_ap_seg,pac_nombre))) like upper(?)',$query)
-            ->orWhere('pac_nro_ci','like',$query)->get();
+            ->orWhere('pac_nro_ci','like',$query)
+            ->orWhere('pac_nro_hc','=',($query+0))->get();
         return response()->json($lista);
     }
 
