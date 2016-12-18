@@ -24,7 +24,7 @@
                     ?>
                     <tr role="row" id="<?= $value->rec_id; ?>">
                          <td class="tr-cuadernos tr-dimencion">
-                            <?= $value->rec_med_nombre; ?>
+                            <?= str_replace("-","/",$value->rec_med_nombre); ?>
                         </td>
                         <td class="tr-cuadernos tr-dimencion">
                             <?= $value->rec_indicaciones; ?>
