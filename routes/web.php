@@ -203,13 +203,15 @@ Route::group(['prefix'=>'Agenda','middleware'=>['auth','access','log']],function
 
 
 /***Poner estas rutas dentro de auth**/
-Route::get('/provincia/getprovincia', ['uses' => 'LugarProvinciaController@getprovincia','as' => 'provincia.getprovincia']);
-Route::get('/municipio/getmunicipio', ['uses' => 'LugarMunicipioController@getmunicipio','as' => 'municipio.getmunicipio']);
-Route::get('/area/getarea', ['uses' => 'LugarAreaController@getarea','as' => 'area.getarea']);
-Route::post('municipios','PacienteController@getMunicipios')->name('get.municipios');
-
-
-
+Route::group(['middleware'=>['auth','log']],function (){
+    Route::get('/provincia/getprovincia', ['uses' => 'LugarProvinciaController@getprovincia','as' => 'provincia.getprovincia']);
+    Route::get('/municipio/getmunicipio', ['uses' => 'LugarMunicipioController@getmunicipio','as' => 'municipio.getmunicipio']);
+    Route::get('/area/getarea', ['uses' => 'LugarAreaController@getarea','as' => 'area.getarea']);
+    Route::post('municipios','PacienteController@getMunicipios')->name('get.municipios');
+    Route::post('getMunicipios','UsuarioController@getMunicipios')->name('adm.permiso.municipios');
+    Route::post('getAreas','UsuarioController@getAreas')->name('adm.permiso.areas');
+    Route::post('getEstablecimientos','UsuarioController@getEstablecimientos')->name('adm.permiso.establecimientos');
+});
 
 
 /********Rutas para reportes**********/
