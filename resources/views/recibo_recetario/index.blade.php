@@ -228,7 +228,7 @@
             });
             var urlReciboRecetario='{{$urlreciboRecetario}}';
             ins_med_cod="B";
-            ajaxGET("#Resultado",urlReciboRecetario+'/'+ins_med_cod+"/"+rec_indicaciones+"/"+rec_cantidad+"/"+rec_med_nombre);
+            ajaxGET("#Resultado",urlReciboRecetario+'/'+ins_med_cod.replace("/","-")+"/"+rec_indicaciones.replace("/","-")+"/"+rec_cantidad+"/"+rec_med_nombre.replace("/","-"));
         });
         $("#btn_ec").on('click',function(e)
         {

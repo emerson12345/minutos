@@ -37,8 +37,8 @@
                     //$id_persona=0;
                     foreach ($nombre_campos_tabla as $value){
                         if($fila->$value=="cod")
-                            echo "<input type='hidden' id=".$fila->$value.">";
-                        echo "<td class='td_seleccionable' id=".$fila->cod.">"."       ".$fila->$value."</td>";
+                            echo "<input type='hidden' id=".str_replace("-","/",$fila->$value).">";
+                        echo "<td class='td_seleccionable' id=".$fila->cod.">"."       ".str_replace("-","/",$fila->$value)."</td>";
                         //$id_persona=$fila[$value];
 
                     }
