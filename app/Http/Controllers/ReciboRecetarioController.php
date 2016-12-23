@@ -202,14 +202,28 @@ class ReciboRecetarioController extends Controller
         //PDF::Text(120,54,'Medico Responsable: '.Auth::user()->user_nombre);
         PDF::Text(120,54,'Fecha de Consulta: '.$dia."/".$mes."/".$anio);
         $y=$y+5;
-        PDF::Text($x,$y,'Diagnóstico: '.DB::select("
+        $strDiagnostico=DB::select("
       SELECT lib_registro.red_descripcion
       FROM lib_registro
          INNER JOIN lib_formulario ON (lib_registro.for_id = lib_formulario.for_id)
          INNER JOIN paciente_hc ON (lib_registro.pac_id = paciente_hc.pac_id)  AND (lib_registro.hc_id = paciente_hc.hc_id)
        WHERE
          (lib_formulario.col_id = 10 OR
-         lib_formulario.col_id = 521) and paciente_hc.hc_id=".$hc_id." limit 1")[0]->red_descripcion);
+         lib_formulario.col_id = 521) and paciente_hc.hc_id=".$hc_id." limit 1");/**/
+        if(empty($strDiagnostico))
+            $strNomDiagnostico= '';
+        else{
+            $strNomDiagnostico=DB::select("
+      SELECT lib_registro.red_descripcion
+      FROM lib_registro
+         INNER JOIN lib_formulario ON (lib_registro.for_id = lib_formulario.for_id)
+         INNER JOIN paciente_hc ON (lib_registro.pac_id = paciente_hc.pac_id)  AND (lib_registro.hc_id = paciente_hc.hc_id)
+       WHERE
+         (lib_formulario.col_id = 10 OR
+         lib_formulario.col_id = 521) and paciente_hc.hc_id=".$hc_id." limit 1")[0]->red_descripcion;
+        }
+        
+        PDF::Text($x,$y,'Diagnóstico: '.$strNomDiagnostico);
 
         PDF::Image(asset('template/dist/img/minsalud-logo.jpg'), 25, 12, 0, 12, 'JPG', '', '', true, 150, 'R', false, false, 0, false, false, false);
         PDF::SetTitle('My Report');
