@@ -44,4 +44,8 @@ class LugarMunicipio extends Model
     public function provincia(){
         return $this->belongsTo('Sicere\Models\LugarProvincia','prov_id','prov_id');
     }
+
+    public function areas(){
+        return $this->belongsToMany('Sicere\Models\LugarArea','lugar_municipio_area','mun_id','area_id')->distinct();
+    }
 }

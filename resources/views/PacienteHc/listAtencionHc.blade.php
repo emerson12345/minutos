@@ -138,6 +138,12 @@
                                     <th class="tr-dimencion">
                                         NOMBRE
                                     </th>
+                                    <th class="tr-dimencion">
+                                        DEPARTAMENTO
+                                    </th>
+                                    <th class="tr-dimencion">
+                                        MUNICIPIO
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -150,6 +156,12 @@
                                     </td>
                                     <td id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:345px;">
                                         <?= $value->inst_nombre; ?>
+                                    </td>
+                                    <td id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:345px;">
+                                        <?= $value->departamento->dep_nombre;?>
+                                    </td>
+                                    <td id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:345px;">
+                                        <?= $value->municipio->mun_nombre;?>
                                     </td>
                                 </tr>
                                 <?php
@@ -193,6 +205,12 @@
                                     <th class="tr-dimencion">
                                         NOMBRE
                                     </th>
+                                    <th>
+                                        DEPARTAMENTO
+                                    </th>
+                                    <th>
+                                        MUNICIPIO
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -205,6 +223,12 @@
                                     </td>
                                     <td class="tr-cuadernos"   id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:345px;">
                                         <?= $value->inst_nombre; ?>
+                                    </td>
+                                    <td class="tr-cuadernos"   id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:345px;">
+                                        <?= $value->departamento->dep_nombre;?>
+                                    </td>
+                                    <td class="tr-cuadernos"   id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:345px;">
+                                        <?= $value->municipio->mun_nombre;?>
                                     </td>
                                 </tr>
                                 <?php
