@@ -2,20 +2,23 @@
 
 namespace Sicere\Http\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
-use Sicere\Models\Institucion;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+use PDF;
+use Sicere\Http\Requests;
+use Sicere\Models\Institucion;
+use Sicere\Models\LugarDepartamento;
+use Sicere\Models\LugarMunicipio;
 use Sicere\Models\ReportTemplate;
 use Sicere\Models\Rrhh;
 use Sicere\Models\Usuario;
-use Validator;
-use Sicere\Http\Requests;
 use Sicere\User;
+use Validator;
 use Yajra\Datatables\Datatables;
-use PDF;
-use DB;
+
 class UsuarioController extends Controller
 {
     public function index(){
@@ -220,5 +223,33 @@ class UsuarioController extends Controller
         if(!is_array($listInstitucion))
             $listInstitucion=[];
         $user->instituciones()->sync($listInstitucion);
+    }
+
+    public function getMunicipios(Request $request){
+        $dep_id = $request->dep_id?:0;
+        $departamento = LugarDepartamento::find($dep_id);
+        $municipios = [];
+        if($departamento)
+            $municipios = $departamento->municipios;
+        return response()->json($municipios);
+    }
+
+    public function getAreas(Request $request){
+        $mun_id = $request->mun_id?:0;
+        $municipio = LugarMunicipio::find($mun_id);
+        $areas = [];
+        if($municipio)
+            $areas = $municipio->areas;
+        return response()->json($areas);
+    }
+
+    public function getEstablecimientos(Request $request){
+        $dep_id = $request->dep_id?:0;
+        $mun_id = $request->mun_id?:0;
+        $area_id = $request->area_id?:0;
+        $establecimientos = Institucion::where('dep_id',$dep_id==0?'<>':'=',$dep_id)
+        ->where('mun_id',$mun_id==0?'<>':'=',$mun_id)
+        ->where('area_id',$area_id==0?'<>':'=',$area_id)->get();
+        return response()->json($establecimientos);
     }
 }

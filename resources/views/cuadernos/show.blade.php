@@ -385,6 +385,12 @@ function bisiesto($anio_actual){
                                             <th class="tr-dimencion">
                                                 Nombre
                                             </th>
+                                            <th>
+                                                Departamento
+                                            </th>
+                                            <th>
+                                                Municipio
+                                            </th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -397,6 +403,12 @@ function bisiesto($anio_actual){
                                             </td>
                                             <td class="tr-cuadernos"   id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:345px">
                                                 <?= $value->inst_nombre; ?>
+                                            </td>
+                                            <td class="tr-cuadernos"   id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:345px">
+                                                <?= $value->departamento->dep_nombre;?>
+                                            </td>
+                                            <td class="tr-cuadernos"   id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:345px">
+                                                <?= $value->municipio->mun_nombre;?>
                                             </td>
                                         </tr>
                                         <?php
@@ -439,6 +451,12 @@ function bisiesto($anio_actual){
                                             <th class="tr-dimencion">
                                                 Nombre
                                             </th>
+                                            <th class="tr-dimencion">
+                                                Departamento
+                                            </th>
+                                            <th class="tr-dimencion">
+                                                Municipio
+                                            </th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -451,6 +469,12 @@ function bisiesto($anio_actual){
                                             </td>
                                             <td class="tr-cuadernos tr-dimencion"   id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:345px">
                                                 <?= $value->inst_nombre; ?>
+                                            </td>
+                                            <td class="tr-cuadernos tr-dimencion"   id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:345px">
+                                                <?= $value->departamento->dep_nombre;?>
+                                            </td>
+                                            <td class="tr-cuadernos tr-dimencion"   id="<?= $value->inst_id; ?>-<?= $value->inst_nombre; ?>" style="width:345px">
+                                                <?= $value->municipio->mun_nombre;?>
                                             </td>
                                         </tr>
                                         <?php

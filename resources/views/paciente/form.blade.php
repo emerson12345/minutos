@@ -94,7 +94,7 @@
         <div class="well well-sm">
             <h5><strong>INFORMACIÓN DE DISCAPACIDAD</strong></h5>
             <div class="form-group">
-                {!! Form::label('pac_con_discapaci', 'Con discapacidad permanente') !!}<br>
+                {!! Form::label('pac_con_discapaci', 'Con discapacidad') !!}<br>
                 <label for="disc_si">SI</label>
                 {!! Form::radio('pac_con_discapaci','1',false,['id'=>'disc_si']) !!}
                 &nbsp;&nbsp;&nbsp;&nbsp;

@@ -89,6 +89,7 @@ function handleEvent(){
                 var fullname = $("#rrhh_id").select2('data')[0].text;
                 $("#user_nombre").val(fullname);
             });
+            filterEventHandler();
         },
         complete:function () {
             $("#myModal").find(".overlay").remove();
@@ -123,3 +124,76 @@ $("#btn-save").on("click",function(){
         }
     });
 });
+
+function filterEventHandler(){
+    $("[name=departamento]").on('change',function(){
+        var dep_id = $(this).val();
+        var url = $(this).data('url');
+        var token = $(this).data('token');
+        $.ajax({
+            url:url,
+            method:'post',
+            data:{dep_id:dep_id,_token:token},
+            success:function(data){
+                var $opt = $("<option>",{value:0,text:'TODO'});
+                $("[name=municipio]").html($opt);
+                for(item in data){
+                    $opt = $("<option>",{value:data[item].mun_id,text:data[item].mun_nombre});
+                    $("[name=municipio]").append($opt);
+                }
+            },
+            complete:function(){
+                $("[name=municipio]").val(0);
+                $("[name=area]").val(0);
+                setEstablecimientos();
+            }
+        });
+    });
+
+    $("[name=municipio]").on('change',function(){
+        var mun_id = $(this).val();
+        var url = $(this).data('url');
+        var token = $(this).data('token');
+        $.ajax({
+            url:url,
+            method:'post',
+            data:{mun_id:mun_id,_token:token},
+            success:function(data){
+                var $opt = $("<option>",{value:0,text:'TODO'});
+                $("[name=area]").html($opt);
+                for(item in data){
+                    $opt = $("<option>",{value:data[item].area_id,text:data[item].area_nombre});
+                    $("[name=area]").append($opt);
+                }
+            },
+            complete:function(){
+                $("[name=area]").val(0);
+                setEstablecimientos();
+            }
+        });
+    });
+
+    $("[name=area]").on('change',setEstablecimientos);
+}
+
+function setEstablecimientos(){
+    var dep_id = $('[name=departamento]').eq(0).val(),
+        mun_id = $('[name=municipio]').eq(0).val(),
+        area_id = $('[name=area]').eq(0).val();
+    console.log(dep_id+" "+mun_id+" "+area_id);
+    var url = $("#institucion_list").data('url');
+    var token = $('[name=departamento]').eq(0).data('token');
+    $.ajax({
+        url:url,
+        method:'post',
+        data:{dep_id:dep_id,mun_id:mun_id,area_id:area_id,_token:token},
+        success:function(data){
+            $("#institucion_list").find("option:not(:selected)").remove();
+            $.each(data,function(i,v){
+                if($("#institucion_list").find("option[value="+v.inst_id+"]").length==0)
+                    $("#institucion_list").append($("<option>",{value:v.inst_id,text:v.inst_nombre}));
+            });
+            $("#institucion_list").bootstrapDualListbox('refresh');
+        }
+    });
+}
