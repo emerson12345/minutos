@@ -435,7 +435,7 @@ function bisiesto($anio_actual){
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Cuadernos</h4>
+                        <h4 class="modal-title">Establecimiento</h4>
                     </div>
                     <div class="modal-body">
                         <div class="col-md-10">
@@ -446,16 +446,16 @@ function bisiesto($anio_actual){
                                         <thead>
                                         <tr role="row">
                                             <th class="tr-dimencion">
-                                                Codigo
+                                                CODIGO
                                             </th>
                                             <th class="tr-dimencion">
-                                                Nombre
+                                                NOMBRE
                                             </th>
                                             <th class="tr-dimencion">
-                                                Departamento
+                                                DEPARTAMENTO
                                             </th>
                                             <th class="tr-dimencion">
-                                                Municipio
+                                                MUNICIPIO
                                             </th>
                                         </tr>
                                         </thead>
