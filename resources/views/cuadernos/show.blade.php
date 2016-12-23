@@ -211,6 +211,10 @@ function bisiesto($anio_actual){
 
             </div>
         </div>
+        <button type="button" id="btn-plan-domiciliario" class="btn btn-primary">Plan Domiciliario</button>
+        </div>
+
+
         <!-- PACIENTES------------------------------------------------------------------------------------------>
         <div id="myModal_pacientes" class="modal fade" role="dialog">
             <div class="modal-dialog modal-lg">
@@ -361,6 +365,63 @@ function bisiesto($anio_actual){
         </div>
         <!--- END CUADERNOS -->
 
+
+
+
+
+
+        <!-- PLAN DOMICILIARIO------------------------------------------------------------------------------------------>
+        <div id="myModal_plan_domiciliario" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">PLAN DOMICILIARIO - PLAN DE REHABILITACIÓN PARA LA CASA</h4>
+                        Paciente: <label id="plan_domiciliario_tb_nombre_paciente"></label><br>
+                        Especialidad: <label id="plan_domiciliario_tb_cuadernos"></label>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div class="col-md-9">
+                                <table class="table">
+                                    <tr>
+                                        <th>Area de trabajo</th>
+                                        <th>Que(Objetivo)</th>
+                                        <th>Como</th>
+                                        <th>Quien</th>
+                                        <th>Tiempo</th>
+                                        <th>Logros</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td><textarea name="txtarea-area-trabajo" id="txtarea-area-trabajo" cols="15" rows="2"></textarea></td>
+                                        <td><textarea name="txtarea-area-que" id="txtarea-area-que" cols="15" rows="2"></textarea></td>
+                                        <td><textarea name="txtarea-area-como" id="txtarea-area-como" cols="15" rows="2"></textarea></td>
+                                        <td><textarea name="txtarea-area-quien" id="txtarea-area-quien" cols="15" rows="2"></textarea></td>
+                                        <td><textarea name="txtarea-area-tiempo" id="txtarea-area-tiempo" cols="15" rows="2"></textarea></td>
+                                        <td><textarea name="txtarea-area-logros" id="txtarea-area-logros" cols="15" rows="2"></textarea></td>
+                                        <td>
+                                            <input type="button" value="Agregar" id="btn-agregar-plan" class="btn btn-primary">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row" id="resultado_plan_domiciliario">
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" class="btn btn-primary">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--- END CUADERNOS -->
+
         <!----- INSTITUCIONES -->
         <div id="myModal_instituciones_r" class="modal fade" role="dialog">
             <div class="modal-dialog modal-lg">
@@ -375,6 +436,8 @@ function bisiesto($anio_actual){
                         <div class="col-md-10">
                             <div class="box">
                                 <div class="box-body" >
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-10">
 
                                     <table id="table_instituciones_r" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
                                         <thead>
@@ -446,10 +509,10 @@ function bisiesto($anio_actual){
                                         <thead>
                                         <tr role="row">
                                             <th class="tr-dimencion">
-                                                CODIGO
+                                                Codigo
                                             </th>
                                             <th class="tr-dimencion">
-                                                NOMBRE
+                                                Nombre
                                             </th>
                                             <th class="tr-dimencion">
                                                 DEPARTAMENTO
@@ -540,8 +603,13 @@ function bisiesto($anio_actual){
     {{ Form::hidden('inst_id',session('institucion')->inst_id) }}
 
     {!! Form::close() !!}
+    <input type="hidden" id="url_create_plan_domiciliario" value="{{asset("plan_domiciliario/create/")}}">
+    <input type="hidden" id="url_show_plan_domiciliario" value="{{asset("plan_domiciliario/show/")}}">
+    <input type="hidden" id="url_pdf_plan_domiciliario" value="{{asset("plan_domiciliario/pdf/")}}">
+    <input type="hidden" id="hidden-cua_id" value="0">
 @stop
 @section('script')
+    <script src="{{asset('js/ajax/ajax.js')}}"></script>
     <script>
         var url_data='{{$url_cuaderno}}';
         var url_cuaderno_peticion_hc ='{{$url_cuaderno_peticion_hc}}';
@@ -709,6 +777,62 @@ function bisiesto($anio_actual){
         });
         $("#tb_referido_a_establecimeinto").on('keypress', function(e){
             e.preventDefault();
+        });
+        $("#btn-plan-domiciliario").on('click', function(e){
+            url_data=$("#url_show_plan_domiciliario").val();
+            tb_id_paciente=$("#tb_id_paciente").val();
+            cua_id=$("#hidden-cua_id").val();
+            url_data=url_data+"/"+tb_id_paciente+"/"+cua_id;
+            console.log(url_data);
+            $("#plan_domiciliario_tb_nombre_paciente").text($("#tb_nombre_paciente").val());
+            $("#plan_domiciliario_tb_cuadernos").text($("#tb-cuadernos").val());
+            ajaxGET("#resultado_plan_domiciliario",url_data);
+            $('#myModal_plan_domiciliario').modal('show');
+        });
+
+
+        $("#btn-pdf-plan").on('click', function(e){
+            url_data=$("#url_pdf_plan_domiciliario").val();
+            tb_id_paciente=$("#tb_id_paciente").val();
+            cua_id=$("#hidden-cua_id").val();
+            url_data=url_data+"/"+tb_id_paciente+"/"+cua_id;
+
+            $(this).attr('href',url_data);
+            console.log(url_data);
+            /*
+            $("#plan_domiciliario_tb_nombre_paciente").text($("#tb_nombre_paciente").val());
+            $("#plan_domiciliario_tb_cuadernos").text($("#tb-cuadernos").val());
+            ajaxGET("#resultado_plan_domiciliario",url_data);
+            $('#myModal_plan_domiciliario').modal('show');*/
+        });
+
+
+        $("#btn-agregar-plan").on('click',function(e){
+            txt_area_trabajo=$("#txtarea-area-trabajo").val();
+            txt_area_que=$("#txtarea-area-que").val();
+            txt_area_como=$("#txtarea-area-como").val();
+            txt_area_quien=$("#txtarea-area-quien").val();
+            txt_area_tiempo=$("#txtarea-area-tiempo").val();
+            txt_area_logros=$("#txtarea-area-logros").val();
+            url_data=$("#url_create_plan_domiciliario").val();
+            tb_id_paciente=$("#tb_id_paciente").val();
+            cua_id=$("#hidden-cua_id").val();
+
+
+
+            $("#txtarea-area-trabajo").val("");
+            $("#txtarea-area-que").val("");
+            $("#txtarea-area-como").val("");
+            $("#txtarea-area-quien").val("");
+            $("#txtarea-area-tiempo").val("");
+            $("#txtarea-area-logros").val("");
+
+
+            familiar_seg_id="Familiar1";
+            persona_ref_id="PersonaReg1";
+            url_data=url_data+"/"+tb_id_paciente+"/"+"23-12-2016/"+familiar_seg_id+"/"+persona_ref_id+"/"+txt_area_trabajo+"/"+txt_area_que+"/"+txt_area_como+"/"+txt_area_quien+"/"+txt_area_tiempo+"/"+txt_area_logros+"/"+cua_id;
+            console.log(url_data);
+            ajaxGET("#resultado_plan_domiciliario",url_data);
         });
     </script>
 @stop

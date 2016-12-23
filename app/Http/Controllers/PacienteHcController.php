@@ -183,6 +183,12 @@ class PacienteHcController extends Controller
         //$listCuadernos = LibCuaderno::all()->pluck('cua_nombre','cua_id');
         $listInstitucionAll=Institucion::all()->pluck('inst_nombre','inst_id');
         $listInstitucionAll2=Institucion::all();
+        /*$listInstitucionAll2=DB::table("institucion")
+            ->join("lugar_departamento","lugar_departamento.dep_id","=","institucion.dep_id")
+            ->join("lugar_area","lugar_area.dep_id","=","institucion.dep_id")
+            ->select("*")
+            //->select("lugar_departamento.dep_nombre","lugar_area.area_nombre","institucion.inst_nombre","institucion.inst_id")
+            ->get();*/
 
         //$listCuadernos = LibCuaderno::all();
         $listCuadernos = DB::table('lib_cuadernos')

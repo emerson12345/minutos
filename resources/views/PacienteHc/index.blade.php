@@ -107,7 +107,7 @@
                                             <?= $value->rrhh_id; ?>
                                         </td>
                                         <td class="tr-cuadernos tr-dimencion"
-                                            id="<?= $value->rrhh_id; ?>-<?= $value->rrhh_nombre; ?>">
+                                            id="<?= $value->rrhh_id; ?>-<?= $value->rrhh_ap_prim." ".$value->rrhh_ap_seg." ".$value->rrhh_nombre; ?>">
                                             <?= $value->rrhh_nombre; ?><?= " "; ?><?= $value->rrhh_ap_prim; ?><?= " "; ?><?= $value->rrhh_ap_seg; ?>
                                         </td>
                                         <td class="tr-cuadernos tr-dimencion"
@@ -167,7 +167,7 @@
                             <!--- Personal search -->
                             {!! Form::label('tb_personal_atencion', 'Personal') !!}
                             <input type="text" name="tb_personal_atencion_id" id="tb_personal_atencion_id" style="visibility:hidden">
-                            <input type="text" name="tb_personal_atencion" id="tb_personal_atencion">
+                            <input type="text" name="tb_personal_atencion" id="tb_personal_atencion" size="35%">
                             <!--<input type="button" name="btn_personal_search" id="btn_personal_search" value="..."> -->
                             <?= $btn_personal_search ?>
 

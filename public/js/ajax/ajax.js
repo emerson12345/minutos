@@ -11,7 +11,6 @@ function ajaxGET(divContainer,urlData)
         success: function(info){
             //console.log(info);
             $(divContainer).html(info);
-
         },
         error:function(jqXHR,estado,error){
             console.log("error");

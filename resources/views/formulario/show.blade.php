@@ -148,11 +148,11 @@
                         <td><?= $flight->col_id ?></td>
                         -->
                     <?php
-                    if($flight->for_id!=6 && $flight->for_id!=7)
-                    {?>
+                    //if($flight->for_id!=6 && $flight->for_id!=7)
+                    //{?>
                     <td><?= $flight->col_combre ?></td>
                     <?php
-                    }
+                    //}
                     ?>
                     <td>
                         <?php
@@ -162,26 +162,28 @@
                             echo " <input type='number' name='".$flight->for_id."' class='tr-dimencion'>";
                             break;
                         case 3:
-                            if($flight->for_id!=6 && $flight->for_id!=7)
-                            {
+                            //if($flight->for_id!=6 && $flight->for_id!=7)
+                            //{
                                 echo '
                                                     <div class="list-data">
                                                     <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
-                                                    ';
-                                echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' class='tr-dimencion' readonly>
+                                                    ';echo "<br>";
+                                echo " <textarea rows='3' cols='50' name='".$flight->for_id."' id='".$flight->for_id."' class='tr-dimencion' readonly></textarea>
                                             </div>";
-                            }
+                            //}
                             break;
                         case 16:
-                            if($flight->for_id!=6 && $flight->for_id!=7)
-                            {
+                            //if($flight->for_id!=6 && $flight->for_id!=7)
+                            //{
                                 echo '
                                                             <div class="list-data">
                                                             <a id="'.$flight->col_id.'-'.$flight->for_id.'-'.$flight->col_tipo.'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Cargar</a>
-                                                            ';
-                                echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' readonly>
-                                                    </div>";
-                            }
+                                                            ';echo "<br>";
+                                //echo " <input type='text' name='".$flight->for_id."' id='".$flight->for_id."' readonly>
+                                  //                  </div>";
+                                echo "<textarea rows='3' cols='50' name='".$flight->for_id."' id='".$flight->for_id."' readonly></textarea>
+                                </div>";
+                            //  }
                             break;
                         case 4:
                             echo "<textarea rows='4' cols='50' name='".$flight->for_id."'></textarea>";
@@ -220,6 +222,7 @@
 <div id="listas">
 
 </div>
+<script src="{{asset('ajax/ajax.js')}}"></script>
 <script>
     //URL=cuaderno/peticion_listas/
     var url_data='{{$url_cuaderno}}';

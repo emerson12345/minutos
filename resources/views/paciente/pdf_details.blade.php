@@ -1,13 +1,5 @@
-
-<a class="btn btn-default pull-right" href="{{route("adm.paciente.report",["pac_id"=>$paciente->pac_id])}}"><i class="fa fa-file-pdf-o"></i>Imprimir</a>
-
 <table class="table table-bordered table-hover table-striped table-condensed">
     <thead>
-    <tr>
-        <th colspan="2" style="text-align: center">
-            DETALLE DEL PACIENTE
-        </th>
-    </tr>
     </thead>
     <tbody>
     <tr>
@@ -98,12 +90,12 @@
     </tr>
     </tbody>
 </table>
-
+<br>
 @if(count($paciente->grupoFamiliar))
-    <table class="table table-hover table-bordered table-striped table-condensed">
+    <table class="table table-hover table-bordered table-striped table-condensed" border="1">
         <thead>
         <tr>
-            <th colspan="7" style="text-align: center">GRUPO FAMILIAR</th>
+            <th colspan="6" style="text-align: center">GRUPO FAMILIAR</th>
         </tr>
         <tr>
             <th>Parentestco</th>

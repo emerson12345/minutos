@@ -11,6 +11,7 @@ use Sicere\Http\Controllers\Controller;
 use Sicere\Models\LugarDepartamento;
 use Sicere\Models\Paciente;
 use Sicere\Models\PacienteGrupoFamilium;
+use Sicere\Models\ReportTemplate;
 use Yajra\Datatables\Datatables;
 use PDF;
 use DB;
@@ -131,6 +132,10 @@ class PacienteController extends Controller
     }
     public function report($pac_id){
         $paciente = Paciente::find($pac_id);
+        ReportTemplate::printHeaderFooter();
+
+
+/*
         PDF::setHeaderCallback(function($pdf) {
             $pdf->Cell(0, 27, '', 'B', false, 'R', 0, '', 0, false, 'T', 'M');
             $pdf->Image(asset('template/dist/img/bolivia.gif'), 15, 10, 0, 15, 'GIF', 'http://www.tcpdf.org', '', true, 150, '', false, false, 0, false, false, false);
@@ -148,15 +153,19 @@ class PacienteController extends Controller
             //$pdf->write2DBarcode(bcrypt('Mi super codigo'), 'PDF417', 25, 275, 150, 6, null, 'N',true);
             $pdf->write2DBarcode($strCodSeguridad, 'PDF417', 25, 275, 150, 6, null, 'N',true);
         });
+
         PDF::SetTitle('My Report');
         PDF::SetSubject('Reporte de sistema');
         PDF::SetMargins(15, 30, 15);
         PDF::SetFontSubsetting(false);
         PDF::SetFontSize('10px');
-        PDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        PDF::SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);*/
+
         PDF::AddPage('P', 'Letter');
-        PDF::writeHTML(view('paciente.detail',['paciente'=>$paciente])->render(), true, false, true, false, '');
+        ReportTemplate::printTitle("DETALLE DEL PACIENTE");
+        PDF::SetFont('');
+        PDF::writeHTML(view('paciente.pdf_details',['paciente'=>$paciente])->render(), true, false, true, false, '');
         PDF::lastPage();
-        PDF::Output('usuario.pdf');
+        PDF::Output('paciente.pdf',"D");
     }
 }
