@@ -250,3 +250,11 @@ Route::group(['prefix'=>'actividad','middleware'=>['auth','access','log']],funct
     Route::post('update/{act_id}','ActividadController@store')->name('actividad.edit');
     Route::get('report','ActividadController@report')->name('actividad.report');
 });
+
+
+Route::group(['prefix'=>'plan_domiciliario'],function(){
+    Route::get('create/{pac_id}/{familiar_seg_id}/{persona_ref_id}/{areas_trabajo}/{que}/{como}/{quien}/{tiempo}/{logros_fecha}/{cua_id}/',"PlanDomiciliarioController@create")->name('plan_domiciliario.index');
+    Route::get('show/{pac_id}/{cua_id}/',"PlanDomiciliarioController@show")->name('plan_domiciliario.show');
+    Route::get('pdf/{pac_id}/{cua_id}/',"PlanDomiciliarioController@pdf")->name('plan_domiciliario.report');
+    Route::get('pdf_plan/{id}/',"PlanDomiciliarioController@pdf_plan")->name('plan_domiciliario_pdf_plan.report');
+});

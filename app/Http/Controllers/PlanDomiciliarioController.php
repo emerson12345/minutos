@@ -28,13 +28,12 @@ class PlanDomiciliarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public  function create($pac_id,$fecha_revision,$familiar_seg_id,$persona_ref_id,$areas_trabajo,$que,$como,$quien,$tiempo,$logros_fecha,$cua_id)
+    public  function create($pac_id,$familiar_seg_id,$persona_ref_id,$areas_trabajo,$que,$como,$quien,$tiempo,$logros_fecha,$cua_id)
     {
 
         DB::table('plan_domiciliario')->insert(
             [
                 "pac_id"=>$pac_id,
-                "fecha_revision"=>$fecha_revision,
                 "familiar_seg_id"=>$familiar_seg_id,
                 "persona_ref_id"=>$persona_ref_id,
                 "areas_trabajo"=>$areas_trabajo,
@@ -71,26 +70,6 @@ class PlanDomiciliarioController extends Controller
         ReportTemplate::printTitle('PLAN DOMICILIARIO - PLAN DE REHABILITACIÓN PARA LA CASA');
         PDF::SetFont('','');
 
-        /*
-        PDF::Text($x,$y,'Paciente: '.$listDatosPaciente->pac_ap_prim." ".$listDatosPaciente->pac_ap_seg." ".$listDatosPaciente->pac_nombre);
-        $y=$y+5;
-        PDF::Text($x,$y,'Domicilio: '.$listDatosPaciente->pac_direccion);
-        $y=$y+5;
-        PDF::Text($x,$y,'Sexo: '.$sexo);
-        PDF::Text(120,49,'Historia Clinica: '.$listDatosPaciente->hc_id);
-        //PDF::Text(120,54,'Medico Responsable: '.Auth::user()->user_nombre);
-        PDF::Text(120,54,'Fecha de Consulta: '.$dia."/".$mes."/".$anio);
-        $y=$y+5;
-        PDF::Text($x,$y,'Diagnóstico: '.DB::select("
-      SELECT lib_registro.red_descripcion
-      FROM lib_registro
-         INNER JOIN lib_formulario ON (lib_registro.for_id = lib_formulario.for_id)
-         INNER JOIN paciente_hc ON (lib_registro.pac_id = paciente_hc.pac_id)  AND (lib_registro.hc_id = paciente_hc.hc_id)
-       WHERE
-         (lib_formulario.col_id = 10 OR
-         lib_formulario.col_id = 521) and paciente_hc.hc_id=".$hc_id." limit 1")[0]->red_descripcion);
-        */
-
         PDF::Image(asset('template/dist/img/minsalud-logo.jpg'), 25, 12, 0, 12, 'JPG', '', '', true, 150, 'R', false, false, 0, false, false, false);
         PDF::SetTitle('PLAN DOMICILIARIO - PLAN DE REHABILITACIÓN PARA LA CASA');
         PDF::SetSubject('Reporte de sistema');
@@ -120,27 +99,6 @@ class PlanDomiciliarioController extends Controller
         PDF::SetFont('','B');
         ReportTemplate::printTitle('PLAN DOMICILIARIO - PLAN DE REHABILITACIÓN PARA LA CASA');
         PDF::SetFont('','');
-
-        /*
-        PDF::Text($x,$y,'Paciente: '.$listDatosPaciente->pac_ap_prim." ".$listDatosPaciente->pac_ap_seg." ".$listDatosPaciente->pac_nombre);
-        $y=$y+5;
-        PDF::Text($x,$y,'Domicilio: '.$listDatosPaciente->pac_direccion);
-        $y=$y+5;
-        PDF::Text($x,$y,'Sexo: '.$sexo);
-        PDF::Text(120,49,'Historia Clinica: '.$listDatosPaciente->hc_id);
-        //PDF::Text(120,54,'Medico Responsable: '.Auth::user()->user_nombre);
-        PDF::Text(120,54,'Fecha de Consulta: '.$dia."/".$mes."/".$anio);
-        $y=$y+5;
-        PDF::Text($x,$y,'Diagnóstico: '.DB::select("
-      SELECT lib_registro.red_descripcion
-      FROM lib_registro
-         INNER JOIN lib_formulario ON (lib_registro.for_id = lib_formulario.for_id)
-         INNER JOIN paciente_hc ON (lib_registro.pac_id = paciente_hc.pac_id)  AND (lib_registro.hc_id = paciente_hc.hc_id)
-       WHERE
-         (lib_formulario.col_id = 10 OR
-         lib_formulario.col_id = 521) and paciente_hc.hc_id=".$hc_id." limit 1")[0]->red_descripcion);
-        */
-
         PDF::Image(asset('template/dist/img/minsalud-logo.jpg'), 25, 12, 0, 12, 'JPG', '', '', true, 150, 'R', false, false, 0, false, false, false);
         PDF::SetTitle('PLAN DOMICILIARIO - PLAN DE REHABILITACIÓN PARA LA CASA');
         PDF::SetSubject('Reporte de sistema');

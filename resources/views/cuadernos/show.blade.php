@@ -162,36 +162,36 @@ function bisiesto($anio_actual){
                 ?>
                 <input type="hidden" name="pac_id" id="tb_id_paciente" size="5" readonly>
                 <input type="text" id="tb_nombre_paciente" size="30" required>
-                <?php
-                }
-                ?>
-                        <!-- <input type="button" id="btn-paciente" class="btn btn-edit btn-xs btn-primary" value="Buscar">-->
+            <?php
+            }
+            ?>
+            <!-- <input type="button" id="btn-paciente" class="btn btn-edit btn-xs btn-primary" value="Buscar">-->
 
                 <button type="button" id="btn-paciente" class="btn btn-edit btn-md btn-primary btn_buscar " value="Buscar">
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
 
             </div>
-                <div class="box-body" >
-                    <label for="">Cuadernos</label>
-                    <?php
-                    if(isset($listAgendaPacientes))
-                    {
-                    ?>
-                    <input type="text" id="tb-cuadernos" name="tb-cuadernos" size="40" required value="<?php echo $listAgendaPacientes->cua_nombre;?>">
-                    <?php
-                    }
-                    else
-                    {
-                    ?>
-                    <input type="text" id="tb-cuadernos" name="tb-cuadernos" size="40" required>
-                    <?php
-                    }
-                    ?>
-                    <button type="button" id="btn-cuadernos" name="btn-cuadernos" class="btn btn-edit btn-md btn-primary btn_buscar" value="Buscar">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                </div>
+            <div class="box-body" >
+                <label for="">Cuadernos</label>
+                <?php
+                if(isset($listAgendaPacientes))
+                {
+                ?>
+                <input type="text" id="tb-cuadernos" name="tb-cuadernos" size="40" required value="<?php echo $listAgendaPacientes->cua_nombre;?>">
+                <?php
+                }
+                else
+                {
+                ?>
+                <input type="text" id="tb-cuadernos" name="tb-cuadernos" size="40" required>
+                <?php
+                }
+                ?>
+                <button type="button" id="btn-cuadernos" name="btn-cuadernos" class="btn btn-edit btn-md btn-primary btn_buscar" value="Buscar">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </div>
             <div class="box-body" >
                 <label for="">Referido de Establecimiento</label>
                 <input type="text" id="referido_de_inst_id" name="referido_de_inst_id" size="0" value="-1"  style="visibility:hidden">
@@ -212,232 +212,232 @@ function bisiesto($anio_actual){
             </div>
         </div>
         <button type="button" id="btn-plan-domiciliario" class="btn btn-primary">Plan Domiciliario</button>
-        </div>
+    </div>
 
 
-        <!-- PACIENTES------------------------------------------------------------------------------------------>
-        <div id="myModal_pacientes" class="modal fade" role="dialog">
-            <div class="modal-dialog modal-lg">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Pacientes</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="col-md-10">
-                            <div class="box">
-                                <div class="box-body" >
-
-                                    <table id="t_pacientes" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
-                                        <thead>
-                                        <tr role="row">
-                                            <th class="tr-nro-title">
-                                                Nro HC
-                                            </th>
-                                            <th class="tr-dimencion-title">
-                                                Nombre
-                                            </th>
-                                            <th class="tr-dimencion-title">
-                                                CI
-                                            </th>
-                                            <th class="tr-dimencion-title">
-                                                Edad(AA/MM/DD)
-                                            </th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php
-                                        $estado_pac_id=true;
-                                        $default_pac_id=-1;
-                                        foreach ($listPacientes as $value)
-                                        {
-                                            if ($estado_pac_id)
-                                            {
-                                                $default_pac_id=$value->pac_id;
-                                                $estado_pac_id=false;
-                                                echo '<input type="hidden" name="default_pac_id" id="default_pac_id" value='.$default_pac_id.'>';
-                                            }
-                                        ?>
-                                        <tr role="row">
-                                            <td class="tr-cuadernos tr-nro"
-                                                id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>"
-                                                    >
-                                                <?= $value->pac_id; ?>
-                                            </td>
-                                            <td class="tr-cuadernos tr-dimencion"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
-                                                <?= $value->pac_ap_prim." ".$value->pac_ap_seg." ".$value->pac_nombre; ?>
-                                            </td>
-
-                                            <td class="tr-cuadernos tr-dimencion"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
-                                                <?= $value->pac_nro_ci ?>
-                                            </td>
-                                            <td class="tr-cuadernos tr-dimencion"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
-
-                                                <?= EdadCompleta($value->pac_fecha_nac); ?>
-
-                                            </td>
-                                        </tr>
-                                        <?php
-                                        }
-                                        ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    </div>
+    <!-- PACIENTES------------------------------------------------------------------------------------------>
+    <div id="myModal_pacientes" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Pacientes</h4>
                 </div>
-            </div>
-        </div>
+                <div class="modal-body">
+                    <div class="col-md-10">
+                        <div class="box">
+                            <div class="box-body" >
 
-        <!-- CUADERNOS------------------------------------------------------------------------------------------>
-        <div id="myModal_cuadernos" class="modal fade" role="dialog">
-            <div class="modal-dialog modal-lg">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Cuadernos</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="col-md-10">
-                            <div class="box">
-                                <div class="box-body" >
-
-                                    <table id="table_cuadernos" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
-                                        <thead>
-                                        <tr role="row">
-                                            <th class="tr-dimencion">
-                                                Codigo
-                                            </th>
-                                            <th class="tr-dimencion">
-                                                Nombre
-                                            </th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php
-                                                $default_cua_id=-1;
-                                                $estado_cua_id=true;
-                                                $default_pac_id=-1;
-                                                $default_cua_nombre="";
-                                                $nro_cuadernos=0;
-                                            foreach ($listCuadernos as $value)
-                                            {
-                                                $nro_cuadernos++;
-                                                if ($estado_cua_id)
-                                                {
-                                                    $default_cua_id=$value->cua_id;
-                                                    $estado_cua_id=false;
-                                                    echo '<input type="hidden" name="default_cua_id" id="default_cua_id" value='.$default_cua_id.'>';
-                                                    echo '<input type="hidden" name="default_cua_nombre" id="default_cua_nombre" value='.$value->cua_nombre.'>';
-                                                }
-                                        ?>
-                                        <tr role="row">
-                                            <td class="tr-cuadernos tr-dimencion" id="<?= $value->cua_id; ?>-<?= $value->cua_nombre; ?>"
-                                                    style="width:272px">
-                                                <?= $value->cua_id; ?>
-                                            </td>
-                                            <td class="tr-cuadernos tr-dimencion"   id="<?= $value->cua_id; ?>-<?= $value->cua_nombre; ?>" style="width:370px">
-                                                <?= $value->cua_nombre; ?>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                        }
-                                            echo '<input type="hidden" name="nro_cuadernos" id="nro_cuadernos" value='.$nro_cuadernos.'>';
-                                        ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--- END CUADERNOS -->
-
-
-
-
-
-
-        <!-- PLAN DOMICILIARIO------------------------------------------------------------------------------------------>
-        <div id="myModal_plan_domiciliario" class="modal fade" role="dialog">
-            <div class="modal-dialog modal-lg">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">PLAN DOMICILIARIO - PLAN DE REHABILITACIÓN PARA LA CASA</h4>
-                        Paciente: <label id="plan_domiciliario_tb_nombre_paciente"></label><br>
-                        Especialidad: <label id="plan_domiciliario_tb_cuadernos"></label>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="row">
-                            <div class="col-md-9">
-                                <table class="table">
-                                    <tr>
-                                        <th>Area de trabajo</th>
-                                        <th>Que(Objetivo)</th>
-                                        <th>Como</th>
-                                        <th>Quien</th>
-                                        <th>Tiempo</th>
-                                        <th>Logros</th>
-                                        <th></th>
+                                <table id="t_pacientes" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                    <thead>
+                                    <tr role="row">
+                                        <th class="tr-nro-title">
+                                            Nro HC
+                                        </th>
+                                        <th class="tr-dimencion-title">
+                                            Nombre
+                                        </th>
+                                        <th class="tr-dimencion-title">
+                                            CI
+                                        </th>
+                                        <th class="tr-dimencion-title">
+                                            Edad(AA/MM/DD)
+                                        </th>
                                     </tr>
-                                    <tr>
-                                        <td><textarea name="txtarea-area-trabajo" id="txtarea-area-trabajo" cols="15" rows="2"></textarea></td>
-                                        <td><textarea name="txtarea-area-que" id="txtarea-area-que" cols="15" rows="2"></textarea></td>
-                                        <td><textarea name="txtarea-area-como" id="txtarea-area-como" cols="15" rows="2"></textarea></td>
-                                        <td><textarea name="txtarea-area-quien" id="txtarea-area-quien" cols="15" rows="2"></textarea></td>
-                                        <td><textarea name="txtarea-area-tiempo" id="txtarea-area-tiempo" cols="15" rows="2"></textarea></td>
-                                        <td><textarea name="txtarea-area-logros" id="txtarea-area-logros" cols="15" rows="2"></textarea></td>
-                                        <td>
-                                            <input type="button" value="Agregar" id="btn-agregar-plan" class="btn btn-primary">
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    $estado_pac_id=true;
+                                    $default_pac_id=-1;
+                                    foreach ($listPacientes as $value)
+                                    {
+                                    if ($estado_pac_id)
+                                    {
+                                        $default_pac_id=$value->pac_id;
+                                        $estado_pac_id=false;
+                                        echo '<input type="hidden" name="default_pac_id" id="default_pac_id" value='.$default_pac_id.'>';
+                                    }
+                                    ?>
+                                    <tr role="row">
+                                        <td class="tr-cuadernos tr-nro"
+                                            id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>"
+                                        >
+                                            <?= $value->pac_id; ?>
+                                        </td>
+                                        <td class="tr-cuadernos tr-dimencion"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
+                                            <?= $value->pac_ap_prim." ".$value->pac_ap_seg." ".$value->pac_nombre; ?>
+                                        </td>
+
+                                        <td class="tr-cuadernos tr-dimencion"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
+                                            <?= $value->pac_nro_ci ?>
+                                        </td>
+                                        <td class="tr-cuadernos tr-dimencion"   id="<?= $value->pac_id; ?>-<?= $value->pac_nombre; ?> <?= $value->pac_ap_prim; ?> <?= $value->pac_ap_seg; ?>">
+
+                                            <?= EdadCompleta($value->pac_fecha_nac); ?>
+
                                         </td>
                                     </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div class="row" id="resultado_plan_domiciliario">
-
-                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" class="btn btn-primary">Cerrar</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
-        <!--- END CUADERNOS -->
+    </div>
 
-        <!----- INSTITUCIONES -->
-        <div id="myModal_instituciones_r" class="modal fade" role="dialog">
-            <div class="modal-dialog modal-lg">
+    <!-- CUADERNOS------------------------------------------------------------------------------------------>
+    <div id="myModal_cuadernos" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
 
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Cuadernos</h4>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Cuadernos</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-10">
+                        <div class="box">
+                            <div class="box-body" >
+
+                                <table id="table_cuadernos" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
+                                    <thead>
+                                    <tr role="row">
+                                        <th class="tr-dimencion">
+                                            Codigo
+                                        </th>
+                                        <th class="tr-dimencion">
+                                            Nombre
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    $default_cua_id=-1;
+                                    $estado_cua_id=true;
+                                    $default_pac_id=-1;
+                                    $default_cua_nombre="";
+                                    $nro_cuadernos=0;
+                                    foreach ($listCuadernos as $value)
+                                    {
+                                    $nro_cuadernos++;
+                                    if ($estado_cua_id)
+                                    {
+                                        $default_cua_id=$value->cua_id;
+                                        $estado_cua_id=false;
+                                        echo '<input type="hidden" name="default_cua_id" id="default_cua_id" value='.$default_cua_id.'>';
+                                        echo '<input type="hidden" name="default_cua_nombre" id="default_cua_nombre" value='.$value->cua_nombre.'>';
+                                    }
+                                    ?>
+                                    <tr role="row">
+                                        <td class="tr-cuadernos tr-dimencion" id="<?= $value->cua_id; ?>-<?= $value->cua_nombre; ?>"
+                                            style="width:272px">
+                                            <?= $value->cua_id; ?>
+                                        </td>
+                                        <td class="tr-cuadernos tr-dimencion"   id="<?= $value->cua_id; ?>-<?= $value->cua_nombre; ?>" style="width:370px">
+                                            <?= $value->cua_nombre; ?>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    }
+                                    echo '<input type="hidden" name="nro_cuadernos" id="nro_cuadernos" value='.$nro_cuadernos.'>';
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <div class="col-md-10">
-                            <div class="box">
-                                <div class="box-body" >
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-10">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--- END CUADERNOS -->
+
+
+
+
+
+
+    <!-- PLAN DOMICILIARIO------------------------------------------------------------------------------------------>
+    <div id="myModal_plan_domiciliario" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">PLAN DOMICILIARIO - PLAN DE REHABILITACIÓN PARA LA CASA</h4>
+                    Paciente: <label id="plan_domiciliario_tb_nombre_paciente"></label><br>
+                    Especialidad: <label id="plan_domiciliario_tb_cuadernos"></label>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-9">
+                            <table class="table">
+                                <tr>
+                                    <th>Area de trabajo</th>
+                                    <th>Que(Objetivo)</th>
+                                    <th>Como</th>
+                                    <th>Quien</th>
+                                    <th>Tiempo</th>
+                                    <th>Logros</th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <td><textarea name="txtarea-area-trabajo" id="txtarea-area-trabajo" cols="15" rows="2"></textarea></td>
+                                    <td><textarea name="txtarea-area-que" id="txtarea-area-que" cols="15" rows="2"></textarea></td>
+                                    <td><textarea name="txtarea-area-como" id="txtarea-area-como" cols="15" rows="2"></textarea></td>
+                                    <td><textarea name="txtarea-area-quien" id="txtarea-area-quien" cols="15" rows="2"></textarea></td>
+                                    <td><textarea name="txtarea-area-tiempo" id="txtarea-area-tiempo" cols="15" rows="2"></textarea></td>
+                                    <td><textarea name="txtarea-area-logros" id="txtarea-area-logros" cols="15" rows="2"></textarea></td>
+                                    <td>
+                                        <input type="button" value="Agregar" id="btn-agregar-plan" class="btn btn-primary">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row" id="resultado_plan_domiciliario">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" class="btn btn-primary">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--- END CUADERNOS -->
+
+    <!----- INSTITUCIONES -->
+    <div id="myModal_instituciones_r" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Cuadernos</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-10">
+                        <div class="box">
+                            <div class="box-body" >
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
 
                                     <table id="table_instituciones_r" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
                                         <thead>
@@ -576,13 +576,13 @@ function bisiesto($anio_actual){
                     </div>
                 </div>
                 <div class="col-md-3">
-                        <label for="">Consulta nueva: </label>
-                        <input type="hidden" name='hc_consulta_nueva' value="0">
-                        {!! Form::checkbox('hc_consulta_nueva', '1',false) !!}<br>
+                    <label for="">Consulta nueva: </label>
+                    <input type="hidden" name='hc_consulta_nueva' value="0">
+                    {!! Form::checkbox('hc_consulta_nueva', '1',false) !!}<br>
 
-                        <label for="">Consulta dentro: </label>
-                        <input type="hidden" name='hc_consulta_dentro' value="0">
-                        {!! Form::checkbox('hc_consulta_dentro', '1',true) !!}<br>
+                    <label for="">Consulta dentro: </label>
+                    <input type="hidden" name='hc_consulta_dentro' value="0">
+                    {!! Form::checkbox('hc_consulta_dentro', '1',true) !!}<br>
                 </div>
                 <div class="col-md-2">
                     <button type="submit" id="btn-save" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
@@ -610,6 +610,7 @@ function bisiesto($anio_actual){
 @stop
 @section('script')
     <script src="{{asset('js/ajax/ajax.js')}}"></script>
+    <script src="{{asset('js/ajax/ajax.js')}}"></script>
     <script>
         var url_data='{{$url_cuaderno}}';
         var url_cuaderno_peticion_hc ='{{$url_cuaderno_peticion_hc}}';
@@ -619,19 +620,19 @@ function bisiesto($anio_actual){
         var default_pac_id=$("#default_pac_id").val();
         var default_cua_nombre=$("#default_cua_nombre").val();
         var nro_cuadernos=$("#nro_cuadernos").val();
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $(document).ready(
                 function(){
-                            if(default_cua_id!=-1)
-                            {
-                                if(nro_cuadernos==1)
-                                {
-                                    ajax_cuaderno2(url_cuaderno_peticion_hc,"#t_cuadernos","#cuaderno",'click',"GET",default_cua_id,default_pac_id);
-                                    $("#tb-cuadernos").val(default_cua_nombre);
-                                }
-                            }
-                            if(estado_agenda==true)
-                                ajax_cuaderno2(url_cuaderno_peticion_hc,"#t_cuadernos","#cuaderno",'click',"GET",'{{$AgendaPacidentesCuaId}}','{{$AgendaPacidentesPacId}}');
+                    if(default_cua_id!=-1)
+                    {
+                        if(nro_cuadernos==1)
+                        {
+                            ajax_cuaderno2(url_cuaderno_peticion_hc,"#t_cuadernos","#cuaderno",'click',"GET",default_cua_id,default_pac_id);
+                            $("#tb-cuadernos").val(default_cua_nombre);
+                        }
+                    }
+                    if(estado_agenda==true)
+                        ajax_cuaderno2(url_cuaderno_peticion_hc,"#t_cuadernos","#cuaderno",'click',"GET",'{{$AgendaPacidentesCuaId}}','{{$AgendaPacidentesPacId}}');
 
                 }
         );
@@ -646,16 +647,6 @@ function bisiesto($anio_actual){
             console.log(e.target.id);
             $('#myModal_pacientes').modal('hide');
         });
-        /*
-
-         $("#t_pacientes").on('click', 'td', function(e) {
-         console.log("dsfasdfdasf");
-         console.log(e.target.id);
-         console.log("dsfasdfdasf");
-         $("#pac_id").val(e.target.id);
-         $("#datos-paciente").html("<b>Paciente: </b> "+$(this).html());
-         });*/
-
         $("#btn-paciente").on('click',function(e){
             $("#t_pacientes").DataTable();
             $('#myModal_pacientes').modal('show');
@@ -704,6 +695,7 @@ function bisiesto($anio_actual){
             }
             arr=e.target.id.split("-");
             intIdPac=arr[0];
+            $('#hidden-cua_id').val(intIdPac);
             strNombrePac=arr[1];
             $('#tb-cuadernos').val(strNombrePac);
             $('#myModal_cuadernos').modal('hide');
@@ -800,10 +792,10 @@ function bisiesto($anio_actual){
             $(this).attr('href',url_data);
             console.log(url_data);
             /*
-            $("#plan_domiciliario_tb_nombre_paciente").text($("#tb_nombre_paciente").val());
-            $("#plan_domiciliario_tb_cuadernos").text($("#tb-cuadernos").val());
-            ajaxGET("#resultado_plan_domiciliario",url_data);
-            $('#myModal_plan_domiciliario').modal('show');*/
+             $("#plan_domiciliario_tb_nombre_paciente").text($("#tb_nombre_paciente").val());
+             $("#plan_domiciliario_tb_cuadernos").text($("#tb-cuadernos").val());
+             ajaxGET("#resultado_plan_domiciliario",url_data);
+             $('#myModal_plan_domiciliario').modal('show');*/
         });
 
 
@@ -830,7 +822,7 @@ function bisiesto($anio_actual){
 
             familiar_seg_id="Familiar1";
             persona_ref_id="PersonaReg1";
-            url_data=url_data+"/"+tb_id_paciente+"/"+"23-12-2016/"+familiar_seg_id+"/"+persona_ref_id+"/"+txt_area_trabajo+"/"+txt_area_que+"/"+txt_area_como+"/"+txt_area_quien+"/"+txt_area_tiempo+"/"+txt_area_logros+"/"+cua_id;
+            url_data=url_data+"/"+tb_id_paciente+"/"+familiar_seg_id+"/"+persona_ref_id+"/"+txt_area_trabajo+"/"+txt_area_que+"/"+txt_area_como+"/"+txt_area_quien+"/"+txt_area_tiempo+"/"+txt_area_logros+"/"+cua_id;
             console.log(url_data);
             ajaxGET("#resultado_plan_domiciliario",url_data);
         });

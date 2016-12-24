@@ -6,7 +6,7 @@
                     <div class="modal-header">
                         Paciente: <label id="plan_domiciliario_tb_nombre_paciente"><?php echo $listPlanDomiciliario[0]->pac_ap_prim." ".$listPlanDomiciliario[0]->pac_ap_seg." ".$listPlanDomiciliario[0]->pac_nombre ?></label><br>
                         Especialidad: <label id="plan_domiciliario_tb_cuadernos"><?php echo $listPlanDomiciliario[0]->cua_nombre; ?></label><br>
-                        Fecha: <label id="plan_domiciliario_tb_cuadernos"><?php echo date("Y:m:d"); ?></label>
+                        Fecha: <label id="plan_domiciliario_tb_cuadernos"><?php echo date("d/m/Y"); ?></label>
                     </div>
                     <div class="modal-body">
 
