@@ -209,6 +209,8 @@
                             if(rec_med_nombre=="")
                                 rec_med_nombre=-1;
                         }
+                        rec_med_nombre=rec_med_nombre.replace("/","-");
+                        rec_med_nombre=rec_med_nombre.replace("%","_");
                         $(this).find("input").val("");
                         break;
                     case 2:
@@ -228,7 +230,7 @@
             });
             var urlReciboRecetario='{{$urlreciboRecetario}}';
             ins_med_cod="B";
-            ajaxGET("#Resultado",urlReciboRecetario+'/'+ins_med_cod.replace("/","-")+"/"+rec_indicaciones.replace("/","-")+"/"+rec_cantidad+"/"+rec_med_nombre.replace("/","-"));
+            ajaxGET("#Resultado",urlReciboRecetario+'/'+ins_med_cod.replace("/","-")+"/"+rec_indicaciones.replace("/","-")+"/"+rec_cantidad+"/"+rec_med_nombre);
         });
         $("#btn_ec").on('click',function(e)
         {

@@ -7,7 +7,6 @@
 </style>
 <div class="box box-primary box-solid">
     <div class="box-body">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
         <div class="table-responsive dimension">
             <table id="source" class="table table-bordered table-hover dimension">
                 <thead>
@@ -24,7 +23,7 @@
                     ?>
                     <tr role="row" id="<?= $value->rec_id; ?>">
                          <td class="tr-cuadernos tr-dimencion">
-                            <?= str_replace("-","/",$value->rec_med_nombre); ?>
+                            <?= str_replace("_","%",str_replace("-","/",$value->rec_med_nombre)); ?>
                         </td>
                         <td class="tr-cuadernos tr-dimencion">
                             <?= $value->rec_indicaciones; ?>
